@@ -1,5 +1,7 @@
 package com.example.assignment3;
 
+import android.view.View;
+
 import GameFramework.GameMainActivity;
 import GameFramework.LocalGame;
 import GameFramework.gameConfiguration.GameConfig;
@@ -44,4 +46,8 @@ public class MainActivity extends GameMainActivity {
     //– Call the toString() method on secondInstance and fourthInstance.
     //The two strings should be identical. Your code should verify this.
     //Also, print both strings to the multi-line EditText for visual inspection. Again, append these rather than overwrite previous messages.
+    @Override
+    public void onClick(View button) {
+        super.onClick(button);
+    }
 }
