@@ -2,10 +2,7 @@ package com.example.assignment3;
 
 import android.graphics.Color;
 
-/**
- * @author Ayden Semerak
- */
-public class GameState {
+public class UnoGameState {
     //The current status of the game.
 
     // %10 |Within the same package as the MainActivity class, create a new game
@@ -34,7 +31,7 @@ public class GameState {
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
-    public GameState(int initHandSize,int initNumInPlay, int setPlayerNum ,Color initColorInPlay){
+    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum ,Color initColorInPlay){
         handSize = initHandSize;
         numInPlay = initNumInPlay;
         playerNum = setPlayerNum;
@@ -70,7 +67,7 @@ public class GameState {
     //and so on. If you don’t understand this, please ask. Shallow copies will
     //be penalized.
 
-    public GameState(GameState game){
+    public UnoGameState(UnoGameState game){
         this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay());
     }
 
@@ -103,6 +100,8 @@ public class GameState {
     //actions.
 
     //Get method Row.
+
+
     public int getHandSize() { return handSize; }
     public int getPlayerNum() { return playerNum; }
     public int getNumInPlay() { return numInPlay; }
