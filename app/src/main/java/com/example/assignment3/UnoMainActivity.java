@@ -2,14 +2,12 @@ package com.example.assignment3;
 
 import java.util.ArrayList;
 
-import GameFramework.Game;
 import GameFramework.GameMainActivity;
 import GameFramework.LocalGame;
 import GameFramework.gameConfiguration.GameConfig;
 import GameFramework.gameConfiguration.GamePlayerType;
 import GameFramework.infoMessage.GameState;
 import GameFramework.players.GamePlayer;
-import android.view.View.OnClickListener;
 
 public class UnoMainActivity extends GameMainActivity {
 
@@ -21,30 +19,30 @@ public class UnoMainActivity extends GameMainActivity {
         ArrayList<GamePlayerType> players = new ArrayList<>();
 
         // This adds a human player type to the array list
-        players.add(new GamePlayerType("Human Player"){
-            public GamePlayer createPlayer(String name){
+        players.add(new GamePlayerType("Human Player") {
+            public GamePlayer createPlayer(String name) {
                 return new UnoHumanPlayer(name);
             }
         });
 
         // This adds a dumb AI player to the array list
-        players.add(new GamePlayerType("Dumb AI Player"){
+        players.add(new GamePlayerType("Dumb AI Player") {
 
-            public GamePlayer createPlayer(String name){
+            public GamePlayer createPlayer(String name) {
                 return new DumbAIPlayer(name);
             }
 
         });
 
-        players.add(new GamePlayerType("Smart AI Player"){
+        players.add(new GamePlayerType("Smart AI Player") {
 
-            public GamePlayer createPlayer(String name){
+            public GamePlayer createPlayer(String name) {
                 return new SmartAIPlayer(name);
             }
 
         });
 
-        GameConfig config = new GameConfig(players, 1,3,"Uno", 1234);
+        GameConfig config = new GameConfig(players, 1, 3, "Uno", 1234);
         return config;
     }
 
@@ -77,8 +75,6 @@ public class UnoMainActivity extends GameMainActivity {
     //– Call the toString() method on secondInstance and fourthInstance.
     //The two strings should be identical. Your code should verify this.
     //Also, print both strings to the multi-line EditText for visual inspection. Again, append these rather than overwrite previous messages.
-
-
 
 
 }
