@@ -128,6 +128,7 @@ public class GameConfig {
      * 		the name of the game
      * @param portNum
      */
+
     public GameConfig(ArrayList<GamePlayerType> availTypes, int minPlayers,
                       int maxPlayers, String gameName, int portNum) {
 
