@@ -18,7 +18,7 @@ public class UnoGameState {
     private int playerNum;
 
     private Color colorInPlay; //The current number on the played area.
-    private ArrayList <Color> colorInHandCards; //The array of all the colors in the hand.
+    //private ArrayList <Color> colorInHandCards; //The array of all the colors in the hand.
 
     private boolean isTurn; //Whether the current player can play.
 
@@ -26,7 +26,7 @@ public class UnoGameState {
     //Fix to work in conjunction with Color.
     //private ArrayList <boolean> isCardSelected;
 
-    private Random ran = new Random();
+    //private Random ran = new Random();
     private int colorSelect;
 
     // %5 |Implement a constructor for your class that initializes all the variables to
@@ -84,7 +84,7 @@ public class UnoGameState {
         //State of game is described as such: playerNum ,handSize,
         stateOfGame = "Player Number: " + playerNum + " HandSize: " + handSize + " Number in Play: " + numInPlay + " Color in play: " +
         colorInPlay;
-        for(Color col: colorInHandCards){}
+        //for(Color col: colorInHandCards){}
         return stateOfGame;
     }
 
