@@ -107,7 +107,7 @@ public class UnoMainActivity extends GameMainActivity {
         text.setText("");
 
         // new instance of the UnoGameState class
-        UnoGameState firstInstance = new UnoGameState(7, 7, 2, 1);
+        UnoGameState firstInstance = new UnoGameState();
 
         // deep copy of firstInstance
         UnoGameState secondInstance = new UnoGameState(firstInstance);
@@ -123,7 +123,7 @@ public class UnoMainActivity extends GameMainActivity {
         firstInstance.incremHandSize(3, true);
 
         //Last part of the checkpoint.
-        UnoGameState thirdInstance = new UnoGameState(7, 7, 2, 1);
+        UnoGameState thirdInstance = new UnoGameState();
         UnoGameState fourthInstance = new UnoGameState(thirdInstance);
         String secIns = secondInstance.toString();
         String fourIns = fourthInstance.toString();
@@ -131,7 +131,5 @@ public class UnoMainActivity extends GameMainActivity {
             text.append("Second Instance: " + secIns + "\n");
             text.append("Third Instance: " + fourIns + "\n");
         }
-
     }
-
 }

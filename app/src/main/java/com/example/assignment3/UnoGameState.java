@@ -33,6 +33,35 @@ public class UnoGameState {
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
+
+    //Default constructor.
+    public UnoGameState(){
+        handSize = 7;
+        numInPlay = 7;
+        playerNum = 1;
+        colorInPlay = 1;
+        isTurn = false;
+
+        for(int i = 0; i < handSize; i++){
+            colorSelect = ran.nextInt(4);
+            if(colorSelect == 0){
+                //Represents Red.
+                colorInHandCards.add(colorSelect);
+            }
+            else if(colorSelect == 1){
+                //Represents Green.
+                colorInHandCards.add(colorSelect);
+            }
+            else if(colorSelect == 2){
+                //Represents Blue.
+                colorInHandCards.add(colorSelect);
+            }
+            else{
+                //Represents Yellow.
+                colorInHandCards.add(colorSelect);
+            }
+        }
+    }
     public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay){
         handSize = initHandSize;
         numInPlay = initNumInPlay;
