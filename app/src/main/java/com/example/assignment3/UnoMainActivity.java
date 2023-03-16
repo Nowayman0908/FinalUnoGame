@@ -122,6 +122,15 @@ public class UnoMainActivity extends GameMainActivity {
         firstInstance.setCurrentTurn();
         firstInstance.incremHandSize(3, true);
 
+        //Last part of the checkpoint.
+        UnoGameState thirdInstance = new UnoGameState(7, 7, 2, 1);
+        UnoGameState fourthInstance = new UnoGameState(thirdInstance);
+        String secIns = secondInstance.toString();
+        String fourIns = fourthInstance.toString();
+        if(secIns.equals(fourIns)){
+            text.append("Second Instance: " + secIns + "\n");
+            text.append("Third Instance: " + fourIns + "\n");
+        }
 
     }
 
