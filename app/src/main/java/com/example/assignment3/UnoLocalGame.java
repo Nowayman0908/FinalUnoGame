@@ -7,7 +7,6 @@ import GameFramework.players.GamePlayer;
 public class UnoLocalGame extends LocalGame {
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-
     }
 
     @Override

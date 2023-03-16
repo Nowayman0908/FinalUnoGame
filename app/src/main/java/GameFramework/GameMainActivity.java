@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.assignment3.R;
+import com.example.assignment3.UnoGameState;
 
 import java.util.ArrayList;
 
@@ -158,14 +160,15 @@ public abstract class GameMainActivity extends Activity implements
      * "main" for the game framework
      */
     @Override
-    public final void onCreate(Bundle savedInstanceState) {
+    // add "final" after submission
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Set Context for Toast Logging
         Logger.setContext(getApplicationContext());
 
         // Initialize the layout
-        setContentView(R.layout.game_config_main);
+        setContentView(R.layout.game_config_main); // change back to game_config_main later
 
         // create the default configuration for this game
         this.config = createDefaultConfig();
@@ -207,6 +210,10 @@ public abstract class GameMainActivity extends Activity implements
         }else {
             Logger.setDebugValue(false);
         }
+        // delete after Game State is submitted
+        setContentView(R.layout.activity_main);
+        //UnoGameState gameState = new UnoGameState(7, 7, 2,3);
+
     }// onCreate
 
     /**

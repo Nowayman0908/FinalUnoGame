@@ -1,5 +1,8 @@
 package com.example.assignment3;
 
+import android.os.Bundle;
+import android.widget.Button;
+
 import java.util.ArrayList;
 
 import GameFramework.GameMainActivity;
@@ -8,13 +11,22 @@ import GameFramework.gameConfiguration.GameConfig;
 import GameFramework.gameConfiguration.GamePlayerType;
 import GameFramework.infoMessage.GameState;
 import GameFramework.players.GamePlayer;
+import GameFramework.utilities.Logger;
 
 public class UnoMainActivity extends GameMainActivity {
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //Set Context for Toast Logging
+        Logger.setContext(getApplicationContext());
+
+        // Initialize the layout
+        setContentView(R.layout.activity_main);
+    }
 
     @Override
     public GameConfig createDefaultConfig() {
-        //Work in progress
         // This array list holds different types of players
         ArrayList<GamePlayerType> players = new ArrayList<>();
 
@@ -34,6 +46,7 @@ public class UnoMainActivity extends GameMainActivity {
 
         });
 
+        // This adds a smart AI player to the array list
         players.add(new GamePlayerType("Smart AI Player") {
 
             public GamePlayer createPlayer(String name) {
@@ -41,6 +54,7 @@ public class UnoMainActivity extends GameMainActivity {
             }
 
         });
+
 
         GameConfig config = new GameConfig(players, 1, 3, "Uno", 1234);
         return config;

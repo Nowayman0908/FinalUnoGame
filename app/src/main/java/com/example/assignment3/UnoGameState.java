@@ -19,8 +19,8 @@ public class UnoGameState {
     private int[] numInHandCards; //The array of all the numbers in the hand.
     private int playerNum;
 
-    private Color colorInPlay; //The current number on the played area.
-    private ArrayList <Integer> colorInHandCards; //The array of all the colors in the hand represented as integers.
+    private int colorInPlay; //The current number on the played area.
+    private ArrayList <Integer> colorInHandCards = new ArrayList<>(); //The array of all the colors in the hand represented as integers.
     //Red is 0, Green is 1, Blue is 2, and Yellow is 3.
 
     private boolean isTurn; //Whether the current player can play.
@@ -33,7 +33,7 @@ public class UnoGameState {
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
-    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum ,Color initColorInPlay){
+    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay){
         handSize = initHandSize;
         numInPlay = initNumInPlay;
         playerNum = setPlayerNum;
@@ -110,7 +110,7 @@ public class UnoGameState {
     public int getHandSize() { return handSize; }
     public int getPlayerNum() { return playerNum; }
     public int getNumInPlay() { return numInPlay; }
-    public Color getColorInPlay(){ return colorInPlay; }
+    public int getColorInPlay(){ return colorInPlay; }
 
     //Set method Row.
     //How to use player Number properly.
