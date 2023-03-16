@@ -1,6 +1,8 @@
 package com.example.assignment3;
 
 import android.graphics.Color;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class UnoGameState {
     //The current status of the game.
@@ -18,15 +20,15 @@ public class UnoGameState {
     private int playerNum;
 
     private Color colorInPlay; //The current number on the played area.
-    //private ArrayList <Color> colorInHandCards; //The array of all the colors in the hand.
+    private ArrayList <Integer> colorInHandCards; //The array of all the colors in the hand represented as integers.
+    //Red is 0, Green is 1, Blue is 2, and Yellow is 3.
 
     private boolean isTurn; //Whether the current player can play.
 
     //Used to determine what card will be shown in the selected area.
-    //Fix to work in conjunction with Color.
-    //private ArrayList <boolean> isCardSelected;
+    private ArrayList <Boolean> isCardSelected;
 
-    //private Random ran = new Random();
+    private Random ran = new Random();
     private int colorSelect;
 
     // %5 |Implement a constructor for your class that initializes all the variables to
@@ -39,23 +41,26 @@ public class UnoGameState {
         //Setting this one is odd, may as well initially set it to false.
         isTurn = false;
 
-        //Sets the color for each Card in hand.
-        //Work in progress.
-        /*for(int i = 0; i < handSize; i++){
+
+        for(int i = 0; i < handSize; i++){
             colorSelect = ran.nextInt(4);
             if(colorSelect == 0){
-                colorInHandCards.add(Color.RED);
+                //Represents Red.
+                colorInHandCards.add(colorSelect);
             }
             else if(colorSelect == 1){
-                colorInHandCards.add(Color.GREEN);
+                //Represents Green.
+                colorInHandCards.add(colorSelect);
             }
             else if(colorSelect == 2){
-                colorInHandCards.add(Color.BLUE);
+                //Represents Blue.
+                colorInHandCards.add(colorSelect);
             }
             else{
-                colorInHandCards.add(Color.YELLOW);
+                //Represents Yellow.
+                colorInHandCards.add(colorSelect);
             }
-        }*/
+        }
     }
 
     // %15 |Implement a copy constructor that makes a deep copy of a given instance
