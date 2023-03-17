@@ -4,6 +4,9 @@ import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * @authors Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
+ */
 public class UnoGameState {
     //The current status of the game.
 

@@ -17,6 +17,10 @@ import GameFramework.infoMessage.GameState;
 import GameFramework.players.GamePlayer;
 import GameFramework.utilities.Logger;
 
+/**
+ * @authors Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
+ */
+
 public class UnoMainActivity extends GameMainActivity {
 
     @Override
