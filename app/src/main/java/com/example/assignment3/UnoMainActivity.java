@@ -122,9 +122,14 @@ public class UnoMainActivity extends GameMainActivity {
         text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
         text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
         text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
-        firstInstance.setNumInPlay(1, 1);
-        firstInstance.setCurrentTurn();
-        firstInstance.incremHandSize(3, true);
+        firstInstance.setCurrentTurn(true);
+        text.append("It is now the Players 1's turn: " + firstInstance.isTurn() + "\n");
+        firstInstance.setCardInPlay(1, 7,0);
+        text.append("The player played a card and the new number in play is " + firstInstance.getNumInPlay()
+                + " and the color has changed to " + firstInstance.getColorInPlay() + " or Red in terms of Uno.\n");
+        firstInstance.incremHandSize(0, false);
+        text.append("As it is Player " + firstInstance.getPlayerID() + " turn, they reduced their hand size" +
+                " by one.\n");
 
         //Last part of the checkpoint.
         UnoGameState thirdInstance = new UnoGameState();
@@ -132,8 +137,8 @@ public class UnoMainActivity extends GameMainActivity {
         String secIns = secondInstance.toString();
         String fourIns = fourthInstance.toString();
         if(secIns.equals(fourIns)){
-            text.append("Second Instance: " + secIns + "\n");
-            text.append("Third Instance: " + fourIns + "\n");
+            text.append("Second Instance: " + secIns);
+            text.append("Fourth Instance: " + fourIns);
         }
     }
 }

@@ -20,19 +20,16 @@ public class UnoGameState {
     private int handSize; //The handsize for the current state of the game.
     private int numInPlay; //The current number on the played area.
     private int[] numInHandCards; //The array of all the numbers in the hand.
-    private int playerNum;
-
+    private int playerNum; //Number of players in the game.
+    private int playerID; //ID of the player.
     private int colorInPlay; //The current number on the played area.
     private ArrayList <Integer> colorInHandCards = new ArrayList<>(); //The array of all the colors in the hand represented as integers.
     //Red is 0, Green is 1, Blue is 2, and Yellow is 3.
-
     private boolean isTurn; //Whether the current player can play.
-
     //Used to determine what card will be shown in the selected area.
     private ArrayList <Boolean> isCardSelected;
-
-    private Random ran = new Random();
-    private int colorSelect;
+    private Random ran = new Random(); //The random object used the generate the numbers for colorSelect.
+    private int colorSelect; //Variable used to assign cards a Color int from 0 - 3.
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
@@ -41,9 +38,10 @@ public class UnoGameState {
     public UnoGameState(){
         handSize = 7;
         numInPlay = 7;
-        playerNum = 1;
+        playerNum = 2;
         colorInPlay = 1;
         isTurn = false;
+        playerID = 1;
 
         for(int i = 0; i < handSize; i++){
             colorSelect = ran.nextInt(4);
@@ -65,10 +63,11 @@ public class UnoGameState {
             }
         }
     }
-    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay){
+    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId){
         handSize = initHandSize;
         numInPlay = initNumInPlay;
         playerNum = setPlayerNum;
+        playerID = setPlayerId;
         colorInPlay = initColorInPlay;
         //Setting this one is odd, may as well initially set it to false.
         isTurn = false;
@@ -105,7 +104,7 @@ public class UnoGameState {
     //be penalized.
 
     public UnoGameState(UnoGameState game){
-        this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay());
+        this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay(), game.getPlayerID());
     }
 
     // %5 |Add a toString() method to the game state class the describes the state of
@@ -117,11 +116,8 @@ public class UnoGameState {
     @Override
     public String toString(){
         String stateOfGame;
-        //Is this for the whole game or just the current game state.
-        //State of game is described as such: playerNum ,handSize,
-        stateOfGame = "Player Number: " + playerNum + " HandSize: " + handSize + " Number in Play: " + numInPlay + " Color in play: " +
-        colorInPlay;
-        //for(Color col: colorInHandCards){}
+        stateOfGame = "Number of Players in the game: " + playerNum + " Player ID: " + playerID + " HandSize: " + handSize + " Number in Play: " +
+                numInPlay + " Color in play: " + colorInPlay +"\n";
         return stateOfGame;
     }
 
@@ -137,30 +133,45 @@ public class UnoGameState {
     //actions.
 
     //Get method Row.
-
-
     public int getHandSize() { return handSize; }
     public int getPlayerNum() { return playerNum; }
+    public int getPlayerID() { return playerID; }
     public int getNumInPlay() { return numInPlay; }
     public int getColorInPlay(){ return colorInPlay; }
+    public boolean isTurn() { return isTurn; }
 
     //Set method Row.
-    //How to use player Number properly.
-    public boolean setNumInPlay(int usedPlayerNum, int setNumInPlay){ numInPlay = setNumInPlay; return true; }
-    public boolean setCurrentTurn(){ isTurn = true; return true; }
-    public boolean incremHandSize(int usedPlayerNum, boolean incrHandSize){
-        if(incrHandSize == true){
-            handSize++;
+    //This method checks if either the played number or color match and then changes them in either or
+    //both cases.
+    public boolean setCardInPlay(int usedPlayerID, int usedNum, int usedColor){
+        if(this.playerID == usedPlayerID && this.numInPlay == usedNum || this.colorInPlay == usedColor) {
+            numInPlay = usedNum;
+            colorInPlay = usedColor;
             return true;
         }
         else{
-            if(handSize >= 1) {
-                handSize--;
+            return false;
+        }
+    }
+    public boolean setCurrentTurn(boolean turnSet){ isTurn = turnSet; return true; }
+    //A method to increase handsize or decrease handsize by one whether the boolean is set to
+    //true or false.
+    public boolean incremHandSize(int usedPlayerID, boolean incrHandSize){
+        if(this.playerID == usedPlayerID) {
+            if (incrHandSize == true) {
+                handSize++;
                 return true;
+            } else {
+                if (handSize >= 1) {
+                    handSize--;
+                    return true;
+                } else {
+                    return false;
+                }
             }
-            else{
-                return false;
-            }
+        }
+        else{
+            return false;
         }
     }
 }
