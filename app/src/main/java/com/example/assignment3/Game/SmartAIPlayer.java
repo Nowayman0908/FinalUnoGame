@@ -1,15 +1,15 @@
-package com.example.assignment3;
+package com.example.assignment3.Game;
 
 import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameComputerPlayer;
 
-public class DumbAIPlayer extends GameComputerPlayer {
+public class SmartAIPlayer extends GameComputerPlayer {
     /**
      * constructor
      *
      * @param name the player's name (e.g., "John")
      */
-    public DumbAIPlayer(String name) {
+    public SmartAIPlayer(String name) {
         super(name);
     }
 

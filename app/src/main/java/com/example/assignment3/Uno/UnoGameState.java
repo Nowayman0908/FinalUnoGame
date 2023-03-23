@@ -1,13 +1,14 @@
-package com.example.assignment3;
+package com.example.assignment3.Uno;
 
-import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.Random;
+
+import GameFramework.infoMessage.GameState;
 
 /**
  * @authors Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
  */
-public class UnoGameState {
+public class UnoGameState extends GameState {
     //The current status of the game.
 
     // %10 |Within the same package as the MainActivity class, create a new game
@@ -19,7 +20,7 @@ public class UnoGameState {
     //to make decisions.
     private int handSize; //The handsize for the current state of the game.
     private int numInPlay; //The current number on the played area.
-    private int[] numInHandCards; //The array of all the numbers in the hand.
+    private ArrayList<Integer> numInHandCards = new ArrayList<>(); //The array of all the numbers in the hand.
     private int playerNum; //Number of players in the game.
     private int playerID; //ID of the player.
     private int colorInPlay; //The current number on the played area.
@@ -30,6 +31,7 @@ public class UnoGameState {
     private ArrayList <Boolean> isCardSelected;
     private Random ran = new Random(); //The random object used the generate the numbers for colorSelect.
     private int colorSelect; //Variable used to assign cards a Color int from 0 - 3.
+    private int numSelect; //Variable used to assign cards a number to represent cards from 0 - 14;
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
@@ -42,9 +44,11 @@ public class UnoGameState {
         colorInPlay = 1;
         isTurn = false;
         playerID = 1;
+        int wildCheck;
 
         for(int i = 0; i < handSize; i++){
             colorSelect = ran.nextInt(4);
+            //Convert to switch statement.
             if(colorSelect == 0){
                 //Represents Red.
                 colorInHandCards.add(colorSelect);
@@ -61,7 +65,19 @@ public class UnoGameState {
                 //Represents Yellow.
                 colorInHandCards.add(colorSelect);
             }
+
+            //Note add a way to make the card distrubution the same as Uno.
+            numSelect = ran.nextInt(15);
+            if(numSelect == 0 || numSelect == 13 || numSelect == 14) {
+                //To make the wild card and +4 as likely as a normal game of Uno.
+                wildCheck = ran.nextInt(14);
+                if(wildCheck == 13){
+                    numInHandCards.add(numSelect);
+                }
+            }
+            numInHandCards.add(numSelect);
         }
+
     }
     public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId){
         handSize = initHandSize;
@@ -139,6 +155,7 @@ public class UnoGameState {
     public int getNumInPlay() { return numInPlay; }
     public int getColorInPlay(){ return colorInPlay; }
     public boolean isTurn() { return isTurn; }
+    public ArrayList getColorsInHand(){ return colorInHandCards; }
 
     //Set method Row.
     //This method checks if either the played number or color match and then changes them in either or

@@ -1,4 +1,4 @@
-package com.example.assignment3;
+package com.example.assignment3.Uno;
 
 import GameFramework.LocalGame;
 import GameFramework.actionMessage.GameAction;

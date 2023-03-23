@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,7 +26,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.assignment3.R;
-import com.example.assignment3.UnoGameState;
 
 import java.util.ArrayList;
 

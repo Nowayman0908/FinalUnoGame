@@ -1,11 +1,13 @@
-package com.example.assignment3;
+package com.example.assignment3.Uno;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.example.assignment3.Game.DumbAIPlayer;
+import com.example.assignment3.R;
+import com.example.assignment3.Game.SmartAIPlayer;
 
 import java.util.ArrayList;
 
