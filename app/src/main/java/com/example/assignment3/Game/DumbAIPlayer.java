@@ -29,10 +29,16 @@ public class DumbAIPlayer extends GameComputerPlayer {
     }
     if(gameState.isTurn()){
         //Incomplete, need to determine which random card to play.
-        int randomSelect;
+        int randomSelect = ran.nextInt(13);
         int colorInPlay = gameState.getColorInPlay();
         int numInPlay = gameState.getNumInPlay();
         if(gameState.getColorsInHand().contains(colorInPlay){
+
+        }
+        else if(gameState.getNumInHandCards().contains(colorInPlay)){
+
+        }
+        else{
 
         }
 

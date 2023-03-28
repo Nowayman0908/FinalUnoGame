@@ -156,6 +156,7 @@ public class UnoGameState extends GameState {
     public int getColorInPlay(){ return colorInPlay; }
     public boolean isTurn() { return isTurn; }
     public ArrayList getColorsInHand(){ return colorInHandCards; }
+    public ArrayList getNumInHandCards() { return numInHandCards; }
 
     //Set method Row.
     //This method checks if either the played number or color match and then changes them in either or
