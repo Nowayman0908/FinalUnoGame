@@ -20,22 +20,27 @@ public class SmartAIPlayer extends GameComputerPlayer {
     protected void receiveInfo(GameInfo info) {
         UnoGameState gameState = (UnoGameState) info;
         try {
+            //Adds a pause in the game.
             Thread.sleep(250);
         }
         catch(Exception e){
 
         }
+        //Ranking each card, how will one do this?
         if(gameState.isTurn()){
-            //Incomplete, need to determine which random card to play.
-            //Same as Dumb AI.
-            int randomSelect;
             int colorInPlay = gameState.getColorInPlay();
             int numInPlay = gameState.getNumInPlay();
-            if(gameState.getColorsInHand().contains(colorInPlay){
-
+            int indexOfPlayCard;
+            for(int i = 0; i < gameState.getColorsInHand().size(); i++){
+                if((int) gameState.getColorsInHand().get(i) == colorInPlay && (int) gameState.getNumInHandCards().get(i) == numInPlay){
+                    indexOfPlayCard = i;
+                    gameState.setCardInPlay(this.playerNum,(int) gameState.getNumInHandCards().get(i),(int) gameState.getColorsInHand().get(i));
+                    gameState.getColorsInHand().remove(i);
+                    gameState.getNumInHandCards().remove(i);
+                    gameState.incremHandSize(this.playerNum, false);
+                    break;
+                }
             }
-
-            UnoPlayCardAction action = new UnoPlayCardAction(this);
             gameState.setCurrentTurn(false);
         }
     }
