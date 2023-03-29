@@ -2,6 +2,8 @@ package com.example.assignment3.Game;
 
 import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameComputerPlayer;
+
+import com.example.assignment3.Uno.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoGameState;
 import com.example.assignment3.Uno.UnoPlayCardAction;
 import java.util.Random;
@@ -29,20 +31,23 @@ public class DumbAIPlayer extends GameComputerPlayer {
     }
     if(gameState.isTurn()){
         //Incomplete, need to determine which random card to play.
-        int randomSelect = ran.nextInt(13);
+        int randomSelect = ran.nextInt(14);
         int colorInPlay = gameState.getColorInPlay();
         int numInPlay = gameState.getNumInPlay();
-        if(gameState.getColorsInHand().contains(colorInPlay)){
-
-        }
-        else if(gameState.getNumInHandCards().contains(colorInPlay)){
-
-        }
-        else{
-
-        }
+        if(gameState.getColorsInHand().contains(colorInPlay){
 
         UnoPlayCardAction action = new UnoPlayCardAction(this);
+        UnoDrawCardAction draw = new UnoDrawCardAction(this);
+        if(gameState.getColorsInHand().contains(colorInPlay)){
+            game.sendAction(action);
+        }
+        else if(gameState.getNumInHandCards().contains(colorInPlay)){
+            game.sendAction(action);
+        }
+        else{
+            game.sendAction(draw);
+        }
+
         gameState.setCurrentTurn(false);
     }
 
