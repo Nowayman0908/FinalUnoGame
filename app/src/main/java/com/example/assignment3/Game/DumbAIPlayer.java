@@ -11,6 +11,7 @@ import java.util.Random;
 public class DumbAIPlayer extends GameComputerPlayer {
 
     private Random ran = new Random();
+
     /**
      * constructor
      *
@@ -22,34 +23,29 @@ public class DumbAIPlayer extends GameComputerPlayer {
 
     @Override
     protected void receiveInfo(GameInfo info) {
-    UnoGameState gameState = (UnoGameState) info;
-    try {
+        UnoGameState gameState = (UnoGameState) info;
+        try {
             Thread.sleep(250);
-    }
-    catch(Exception e){
+        } catch (Exception e) {
 
-    }
-    if(gameState.isTurn()){
-        //Incomplete, need to determine which random card to play.
-        int randomSelect = ran.nextInt(14);
-        int colorInPlay = gameState.getColorInPlay();
-        int numInPlay = gameState.getNumInPlay();
-        if(gameState.getColorsInHand().contains(colorInPlay){
-
-        UnoPlayCardAction action = new UnoPlayCardAction(this);
-        UnoDrawCardAction draw = new UnoDrawCardAction(this);
-        if(gameState.getColorsInHand().contains(colorInPlay)){
-            game.sendAction(action);
         }
-        else if(gameState.getNumInHandCards().contains(colorInPlay)){
-            game.sendAction(action);
+        if (gameState.isTurn()) {
+            //Incomplete, need to determine which random card to play.
+            int randomSelect = ran.nextInt(14);
+            int colorInPlay = gameState.getColorInPlay();
+            int numInPlay = gameState.getNumInPlay();
+            if (gameState.getColorsInHand().contains(colorInPlay)) {
+                UnoPlayCardAction action = new UnoPlayCardAction(this);
+                UnoDrawCardAction draw = new UnoDrawCardAction(this);
+                if (gameState.getColorsInHand().contains(colorInPlay)) {
+                    game.sendAction(action);
+                } else if (gameState.getNumInHandCards().contains(colorInPlay)) {
+                    game.sendAction(action);
+                } else {
+                    game.sendAction(draw);
+                }
+                gameState.setCurrentTurn(false);
+            }
         }
-        else{
-            game.sendAction(draw);
-        }
-
-        gameState.setCurrentTurn(false);
-    }
-
     }
 }
