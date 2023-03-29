@@ -1,5 +1,7 @@
 package com.example.assignment3.Uno;
 
+import static com.example.assignment3.Uno.UnoCard.RED;
+
 import GameFramework.LocalGame;
 import GameFramework.actionMessage.GameAction;
 import GameFramework.players.GamePlayer;
@@ -21,6 +23,11 @@ public class UnoLocalGame extends LocalGame {
 
     @Override
     protected boolean makeMove(GameAction action) {
+        UnoCard card = new UnoCard(0);
+        if(card.getColor() == 0)
+        {
+            return true;
+        }
         return false;
     }
 }

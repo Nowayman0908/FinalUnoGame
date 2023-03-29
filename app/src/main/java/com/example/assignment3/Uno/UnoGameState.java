@@ -1,6 +1,7 @@
 package com.example.assignment3.Uno;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import GameFramework.infoMessage.GameState;
@@ -33,6 +34,8 @@ public class UnoGameState extends GameState {
     private int colorSelect; //Variable used to assign cards a Color int from 0 - 3.
     private int numSelect; //Variable used to assign cards a number to represent cards from 0 - 14;
 
+    private ArrayList <UnoCard> deck = new ArrayList<>(); // An array of the deck of cards
+
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
 
@@ -61,11 +64,10 @@ public class UnoGameState extends GameState {
                 //Represents Blue.
                 colorInHandCards.add(colorSelect);
             }
-            else{
+            else {
                 //Represents Yellow.
                 colorInHandCards.add(colorSelect);
             }
-
             //Note add a way to make the card distrubution the same as Uno.
             numSelect = ran.nextInt(15);
             if(numSelect == 0 || numSelect == 13 || numSelect == 14) {
@@ -76,8 +78,73 @@ public class UnoGameState extends GameState {
                 }
             }
             numInHandCards.add(numSelect);
+
         }
 
+        /**
+         * the outer for-loop iterates through the all of the number cards except 0 (1-9)
+         * the inner loop creates 2 copies of the cards (doubles them)
+         * this loops creates a total of 72 cards
+         * at the end, the cards are added to the deck
+         */
+
+        for(int i = 1; i <= 9; i++){
+            for (int j = 0; j < 2; j++){
+                UnoNumberCard redCard = new UnoNumberCard(UnoCard.RED, i);
+                UnoNumberCard greenCard = new UnoNumberCard(UnoCard.GREEN, i);
+                UnoNumberCard blueCard = new UnoNumberCard(UnoCard.BLUE, i);
+                UnoNumberCard yellowCard = new UnoNumberCard(UnoCard.YELLOW, i);
+
+                deck.add(redCard);
+                deck.add(greenCard);
+                deck.add(blueCard);
+                deck.add(yellowCard);
+            }
+        }
+        // these are the 0 cards for each color
+        UnoNumberCard redCard = new UnoNumberCard(UnoCard.RED, 0);
+        UnoNumberCard greenCard = new UnoNumberCard(UnoCard.GREEN, 0);
+        UnoNumberCard blueCard = new UnoNumberCard(UnoCard.BLUE, 0);
+        UnoNumberCard yellowCard = new UnoNumberCard(UnoCard.YELLOW, 0);
+
+        // adding the 0 cards to the deck
+        deck.add(redCard);
+        deck.add(greenCard);
+        deck.add(blueCard);
+        deck.add(yellowCard);
+
+        /**
+         * the outer for-loop increments through the different special cards except for wild cards (SKIP to REVERSE)
+         * the inner for-loop creates 2 copies of the cards (doubles them)
+         * this loop creates a total of 24 cards
+         * and adds them to the deck
+         */
+        for(int i = UnoSpecialCard.SKIP; i <= UnoSpecialCard.REVERSE; i++){
+            for(int j = 0; j < 2; j++){
+                UnoSpecialCard specialRedCard = new UnoSpecialCard(UnoCard.RED, i);
+                UnoSpecialCard specialGreenCard = new UnoSpecialCard(UnoCard.GREEN, i);
+                UnoSpecialCard specialBlueCard = new UnoSpecialCard(UnoCard.BLUE, i);
+                UnoSpecialCard specialYellowCard = new UnoSpecialCard(UnoCard.YELLOW, i);
+
+                deck.add(specialRedCard);
+                deck.add(specialGreenCard);
+                deck.add(specialBlueCard);
+                deck.add(specialYellowCard);
+            }
+        }
+
+        // this for-loop runs 4 times to create and add the wild cards
+        for (int i = 0; i < 4; i++){
+            UnoSpecialCard wildCard = new UnoSpecialCard(UnoCard.COLORLESS, UnoSpecialCard.WILD);
+
+            deck.add(wildCard);
+        }
+
+        // prints the deck before and after it's shuffled
+        printDeck();
+        System.out.println("Shuffling Deck");
+        Collections.shuffle(deck); // this shuffles all of the cards in the deck
+        printDeck();
     }
     public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId){
         handSize = initHandSize;
@@ -171,7 +238,11 @@ public class UnoGameState extends GameState {
             return false;
         }
     }
-    public boolean setCurrentTurn(boolean turnSet){ isTurn = turnSet; return true; }
+    public boolean setCurrentTurn(boolean turnSet){
+        isTurn = turnSet;
+        return true;
+    }
+
     //A method to increase handsize or decrease handsize by one whether the boolean is set to
     //true or false.
     public boolean incremHandSize(int usedPlayerID, boolean incrHandSize){
@@ -192,4 +263,49 @@ public class UnoGameState extends GameState {
             return false;
         }
     }
+
+    // This method is just a way for us to check the deck
+    public void printDeck(){
+        // for each card (c) in the deck
+        for(UnoCard c : deck) {
+            String cardStr = ""; // building a string to print
+
+            // these if-statements check the color
+            if(c.getColor() == UnoCard.RED) {
+                cardStr = cardStr + "Red ";
+            }
+            else if(c.getColor() == UnoCard.GREEN) {
+                cardStr = cardStr + "Green ";
+            }
+            else if(c.getColor() == UnoCard.BLUE) {
+                cardStr = cardStr + "Blue ";
+            }
+            else if(c.getColor() == UnoCard.YELLOW) {
+                cardStr = cardStr + "Yellow ";
+            }
+
+            // the outermost if-statement checks if the card is a special card
+            // if it is, it checks what kind of special card it is
+            if(c instanceof UnoSpecialCard) {
+                if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.SKIP){
+                    cardStr = cardStr + "Skip";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.DRAWTWO){
+                    cardStr = cardStr + "Draw Two";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.REVERSE){
+                    cardStr = cardStr + "Reverse";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.WILD){
+                    cardStr = cardStr + "Wild";
+                }
+            }
+            // if else (not a special card), it gets the number of the card
+            else {
+                cardStr = cardStr + ((UnoNumberCard) c).getNum();
+            }
+            System.out.println(cardStr); // prints the built string
+        }
+    }
+
 }

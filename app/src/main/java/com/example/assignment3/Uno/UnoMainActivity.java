@@ -142,5 +142,6 @@ public class UnoMainActivity extends GameMainActivity {
             text.append("Second Instance: " + secIns);
             text.append("Fourth Instance: " + fourIns);
         }
+
     }
 }

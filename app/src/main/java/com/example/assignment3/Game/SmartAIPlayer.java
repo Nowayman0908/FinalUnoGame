@@ -31,7 +31,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
             int randomSelect;
             int colorInPlay = gameState.getColorInPlay();
             int numInPlay = gameState.getNumInPlay();
-            if(gameState.getColorsInHand().contains(colorInPlay){
+            if(gameState.getColorsInHand().contains(colorInPlay)){
 
             }
 

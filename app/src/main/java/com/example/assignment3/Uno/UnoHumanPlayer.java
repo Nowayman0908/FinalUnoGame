@@ -27,7 +27,6 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
     @Override
     public void receiveInfo(GameInfo info) {
         if(info instanceof UnoGameState){
-
         }
     }
 

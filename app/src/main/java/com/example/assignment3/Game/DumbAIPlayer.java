@@ -32,7 +32,7 @@ public class DumbAIPlayer extends GameComputerPlayer {
         int randomSelect = ran.nextInt(13);
         int colorInPlay = gameState.getColorInPlay();
         int numInPlay = gameState.getNumInPlay();
-        if(gameState.getColorsInHand().contains(colorInPlay){
+        if(gameState.getColorsInHand().contains(colorInPlay)){
 
         }
         else if(gameState.getNumInHandCards().contains(colorInPlay)){
