@@ -7,6 +7,7 @@ public class UnoSpecialCard extends UnoCard{
     public static final int DRAWTWO = 1;
     public static final int REVERSE = 2;
     public static final int WILD = 3;
+    public static final int DRAWFOUR = 4;
 
 
     // instance variable
@@ -23,4 +24,8 @@ public class UnoSpecialCard extends UnoCard{
         return this.ability;
     }
 
+    // copy constructor
+    public UnoSpecialCard(UnoSpecialCard spcCard) {
+        this(spcCard.getColor(), spcCard.getAbility());
+    }
 }

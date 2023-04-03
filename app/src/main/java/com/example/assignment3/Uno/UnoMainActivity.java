@@ -77,7 +77,8 @@ public class UnoMainActivity extends GameMainActivity {
 
     @Override
     public LocalGame createLocalGame(GameState gameState) {
-        return new UnoLocalGame();
+        UnoLocalGame newGame = new UnoLocalGame();
+        return newGame;
     }
 
     // %25 |Implement an onClick() listener method in your MainActivity that’s connected to the Run Test button. When the user clicks this button the

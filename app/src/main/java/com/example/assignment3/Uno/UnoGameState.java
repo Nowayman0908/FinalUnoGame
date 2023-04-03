@@ -1,5 +1,6 @@
 package com.example.assignment3.Uno;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -29,12 +30,14 @@ public class UnoGameState extends GameState {
     //Red is 0, Green is 1, Blue is 2, and Yellow is 3.
     private boolean isTurn; //Whether the current player can play.
     //Used to determine what card will be shown in the selected area.
+
     private ArrayList <Boolean> isCardSelected;
     private Random ran = new Random(); //The random object used the generate the numbers for colorSelect.
     private int colorSelect; //Variable used to assign cards a Color int from 0 - 3.
     private int numSelect; //Variable used to assign cards a number to represent cards from 0 - 14;
-
-    private ArrayList <UnoCard> deck = new ArrayList<>(); // An array of the deck of cards
+    private ArrayList <UnoCard> deck = new ArrayList<>(); // An array list of the deck of cards
+    private ArrayList <UnoCard> discardPile = new ArrayList<>(); // An array list of the played cards (discard pile)
+    private ArrayList<ArrayList<UnoCard>> handArray = new ArrayList<>(); // An array list of player's hands (which are also array lists)
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
@@ -46,7 +49,7 @@ public class UnoGameState extends GameState {
         playerNum = 2;
         colorInPlay = 1;
         isTurn = false;
-        playerID = 1;
+        playerID = 0;
         int wildCheck;
 
         for(int i = 0; i < handSize; i++){
@@ -133,11 +136,12 @@ public class UnoGameState extends GameState {
             }
         }
 
-        // this for-loop runs 4 times to create and add the wild cards
+        // this for-loop runs 4 times to create and add the wild cards and draw 4 cards
         for (int i = 0; i < 4; i++){
             UnoSpecialCard wildCard = new UnoSpecialCard(UnoCard.COLORLESS, UnoSpecialCard.WILD);
-
+            UnoSpecialCard drawFour = new UnoSpecialCard(UnoCard.COLORLESS, UnoSpecialCard.DRAWFOUR);
             deck.add(wildCard);
+            deck.add(drawFour);
         }
 
         // prints the deck before and after it's shuffled
@@ -145,6 +149,19 @@ public class UnoGameState extends GameState {
         System.out.println("Shuffling Deck");
         Collections.shuffle(deck); // this shuffles all of the cards in the deck
         printDeck();
+
+        // this puts the first card of the deck into the discard/played cards pile
+        discardPile.add(deck.remove(0));
+
+        // this adds a player's hand (an array list) into the handArray array list
+        for (int i = 0; i < playerNum; i++){
+            handArray.add(new ArrayList<UnoCard> (handSize));
+            // this adds 7 cards from the deck into the player's hands
+            for(int j = 0; j < 7; j++) {
+                handArray.get(i).add(deck.remove(0));
+            }
+        }
+
     }
     public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId){
         handSize = initHandSize;
@@ -188,6 +205,11 @@ public class UnoGameState extends GameState {
 
     public UnoGameState(UnoGameState game){
         this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay(), game.getPlayerID());
+        ArrayList<UnoCard> newDeck = new ArrayList<>();
+        for(UnoCard card : game.deck)
+        {
+            newDeck.add(new UnoCard(card));
+        }
     }
 
     // %5 |Add a toString() method to the game state class the describes the state of
@@ -224,6 +246,9 @@ public class UnoGameState extends GameState {
     public boolean isTurn() { return isTurn; }
     public ArrayList getColorsInHand(){ return colorInHandCards; }
     public ArrayList getNumInHandCards() { return numInHandCards; }
+    public ArrayList getHandArray(){
+        return handArray;
+    }
 
     //Set method Row.
     //This method checks if either the played number or color match and then changes them in either or
@@ -262,6 +287,24 @@ public class UnoGameState extends GameState {
         else{
             return false;
         }
+    }
+
+    // this method is called on when a player draws a card from the deck.
+    // the card in the deck will be moved to the player's hand
+    public boolean drawCard(){
+        handArray.get(playerID).add(deck.remove(0));
+        return true;
+    }
+
+    // this method is called on when a player plays a card from their hand
+    // the card the player selected will be moved to the discard pile
+    public boolean playCard(){
+        return true;
+    }
+
+    public boolean endTurn(){
+        // if player plays the card, switch the player's index
+        return true;
     }
 
     // This method is just a way for us to check the deck

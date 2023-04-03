@@ -14,4 +14,9 @@ public class UnoNumberCard extends UnoCard{
     public int getNum(){
         return this.num;
     }
+
+    //copy constructor
+    public UnoNumberCard(UnoNumberCard numCard) {
+        this(numCard.getColor(), numCard.getNum());
+    }
 }

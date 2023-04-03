@@ -28,4 +28,9 @@ public class UnoCard {
             color = assignedColor;
         }
     }
+
+    // copy constructor
+    public UnoCard (UnoCard card){
+        this(card.getColor());
+    }
 }
