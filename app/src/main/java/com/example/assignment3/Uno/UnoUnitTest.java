@@ -1,7 +1,13 @@
 package com.example.assignment3.Uno;
 
-// This class will test to make sure the cards in a player's hand do not become mixed up after
-// a certain action is done
+/**
+ * UnitTest
+ *
+ * This class will contain all of the unit tests we have:
+ * 1. making sure the player's card color and number don't get mixed up after an action
+ * 2. making sure all of the special cards work as intended
+ * 3. making sure our AI work and don't bug out
+ */
 
 import com.example.assignment3.Game.DumbAIPlayer;
 import java.util.ArrayList;

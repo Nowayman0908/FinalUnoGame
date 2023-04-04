@@ -205,10 +205,49 @@ public class UnoGameState extends GameState {
 
     public UnoGameState(UnoGameState game){
         this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay(), game.getPlayerID());
-        ArrayList<UnoCard> newDeck = new ArrayList<>();
+
+        ArrayList<UnoCard> copyDeck = new ArrayList<>();
+        ArrayList<UnoCard> copyDiscardPile = new ArrayList<>();
+        ArrayList<ArrayList<UnoCard>> copyHands = new ArrayList<>();
+
+        // goes thru the deck and copies all of the cards
         for(UnoCard card : game.deck)
         {
-            newDeck.add(new UnoCard(card));
+            if(card instanceof UnoNumberCard){
+                copyDeck.add(new UnoNumberCard((UnoNumberCard) card));
+            }
+            else if(card instanceof  UnoSpecialCard){
+                copyDeck.add(new UnoSpecialCard((UnoSpecialCard) card));
+            }
+
+        }
+
+        // goes thru the discard pile and copies all of the cards
+        for(UnoCard card : game.discardPile){
+
+            if(card instanceof UnoNumberCard){
+                copyDiscardPile.add(new UnoNumberCard((UnoNumberCard) card));
+            }
+            else if(card instanceof  UnoSpecialCard){
+                copyDiscardPile.add(new UnoSpecialCard((UnoSpecialCard) card));
+            }
+
+        }
+
+        // goes thru each player's hands and copies the cards in their hand
+        for(ArrayList<UnoCard> hand : handArray){
+            ArrayList<UnoCard> playerHand = new ArrayList<>();
+
+            for(UnoCard card : hand){
+                if(card instanceof UnoNumberCard){
+                    playerHand.add(new UnoNumberCard((UnoNumberCard) card));
+                }
+                else if(card instanceof  UnoSpecialCard){
+                    playerHand.add(new UnoSpecialCard((UnoSpecialCard) card));
+                }
+            }
+
+            copyHands.add(playerHand);
         }
     }
 
