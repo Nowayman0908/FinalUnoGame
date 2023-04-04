@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import com.example.assignment3.Game.DumbAIPlayer;
 import com.example.assignment3.R;
@@ -116,33 +117,32 @@ public class UnoMainActivity extends GameMainActivity {
         // new instance of the UnoGameState class
         UnoGameState firstInstance = new UnoGameState();
 
-        // deep copy of firstInstance
-        UnoGameState secondInstance = new UnoGameState(firstInstance);
 
-        // calling all of the methods in UnoGameState using firstInstance
-        // dummy parameters are used when needed
+
         text.append("The Player's hand size is " + firstInstance.getHandSize() + ".\n");
         text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
         text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
         text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
-        firstInstance.setCurrentTurn(true);
-        text.append("It is now the Players 1's turn: " + firstInstance.isTurn() + "\n");
-        firstInstance.setCardInPlay(1, 7,0);
-        text.append("The player played a card and the new number in play is " + firstInstance.getNumInPlay()
-                + " and the color has changed to " + firstInstance.getColorInPlay() + " or Red in terms of Uno.\n");
-        firstInstance.incremHandSize(0, false);
-        text.append("As it is Player " + firstInstance.getPlayerID() + " turn, they reduced their hand size" +
-                " by one.\n");
+        for(int i = 0; i < firstInstance.getHandSize(); i++){
+            String card = firstInstance.getNumInHandCards().get(i) + " ";
+            int switchy = (int) firstInstance.getColorsInHand().get(i);
+            switch (switchy){
+                case 0:
+                    card = card + "Red, ";
+                    break;
+                case 1:
+                    card = card + "Green, ";
+                    break;
+                case 2:
+                    card = card + "Blue, ";
+                    break;
+                case 3:
+                    card = card + "Yellow, ";
+                    break;
+            }
+            text.append(card);
 
-        //Last part of the checkpoint.
-        UnoGameState thirdInstance = new UnoGameState();
-        UnoGameState fourthInstance = new UnoGameState(thirdInstance);
-        String secIns = secondInstance.toString();
-        String fourIns = fourthInstance.toString();
-        if(secIns.equals(fourIns)){
-            text.append("Second Instance: " + secIns);
-            text.append("Fourth Instance: " + fourIns);
-        }
+    }
 
     }
 }
