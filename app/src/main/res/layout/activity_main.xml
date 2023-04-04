@@ -20,8 +20,27 @@
             android:layout_weight="2"/>
 
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter card you wish to play as the number followed by the color with a space inbetween the color and number.">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="431dp"
+                    android:layout_height="wrap_content"
+                    android:hint="hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="103dp"
+            android:layout_height="200dp"
             android:layout_weight="2"
             android:orientation="horizontal">
 
@@ -29,7 +48,7 @@
                 android:id="@+id/run"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Run test" />
+                android:text="Play game" />
 
             <Button
                 android:id="@+id/drawCard"
