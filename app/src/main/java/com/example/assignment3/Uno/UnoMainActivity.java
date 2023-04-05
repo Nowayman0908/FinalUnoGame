@@ -9,6 +9,7 @@ import android.widget.Switch;
 import com.example.assignment3.Game.DumbAIPlayer;
 import com.example.assignment3.R;
 import com.example.assignment3.Game.SmartAIPlayer;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ import GameFramework.utilities.Logger;
 
 public class UnoMainActivity extends GameMainActivity {
 
+    UnoGameState firstInstance = new UnoGameState();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,10 @@ public class UnoMainActivity extends GameMainActivity {
         // Sets the button's onClickListener to the MainActivity
         Button run = findViewById(R.id.run);
         run.setOnClickListener(this);
+        Button drawCard = findViewById(R.id.drawCard);
+        drawCard.setOnClickListener(this);
+        Button playCard = findViewById(R.id.playCard);
+        playCard.setOnClickListener(this);
 
     }
 
@@ -114,16 +120,54 @@ public class UnoMainActivity extends GameMainActivity {
         EditText text = findViewById(R.id.editText1);
         text.setText("");
 
-        // new instance of the UnoGameState class
-        UnoGameState firstInstance = new UnoGameState();
 
+        //If the Draw Card button is clicked.
+        if(v.equals(findViewById(R.id.drawCard))){
+            firstInstance.incremHandSize(0,true);
+            firstInstance.drawCard();
+        }
+        //If the Play Card button is clicked.
+        else if(v.equals(findViewById(R.id.playCard))){
+            //The text box above the buttons is read to get the card to play.
+            TextInputEditText cardInfo = findViewById(R.id.cardToPlay);
+            String cardInput = cardInfo.getText().toString().toLowerCase();
+            int cardNumber = -1;
+            int cardColor = -1;
+            for(int i = 0; i < cardInput.length(); i++){
+                if(cardInput.charAt(i) == ' '){
+                    cardNumber = cardInput.charAt(i-1);
+                    switch (cardInput.substring(i,cardInput.length())){
+                        case "red":
+                            cardColor = 0;
+                            break;
+                        case "green":
+                            cardColor = 1;
+                            break;
+                        case "blue":
+                            cardColor = 2;
+                            break;
+                        case "yellow":
+                            cardColor = 3;
+                            break;
+                        default:
+                            cardInfo.setText("Error");
+                    }
+                }
 
+            }
+            firstInstance.setCardInPlay(0,cardNumber,cardColor);
+            firstInstance.playCard();
+        }
+        //If the Uno Button is clicked.
+        else if(v.equals(findViewById(R.id.unoButton))){
+        //This should do something.
+        }
 
         text.append("The Player's hand size is " + firstInstance.getHandSize() + ".\n");
         text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
         text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
         text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
-        for(int i = 0; i < firstInstance.getHandSize(); i++){
+        for(int i = 0; i < firstInstance.getHandSize() - 1; i++){
             String card = firstInstance.getNumInHandCards().get(i) + " ";
             int switchy = (int) firstInstance.getColorsInHand().get(i);
             switch (switchy){
