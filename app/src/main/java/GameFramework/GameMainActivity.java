@@ -208,9 +208,6 @@ public abstract class GameMainActivity extends Activity implements
         }else {
             Logger.setDebugValue(false);
         }
-        // delete after Game State is submitted
-        setContentView(R.layout.activity_main);
-        //UnoGameState gameState = new UnoGameState(7, 7, 2,3);
 
     }// onCreate
 

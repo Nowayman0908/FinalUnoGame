@@ -8,11 +8,13 @@ import GameFramework.players.GamePlayer;
 
 public class UnoLocalGame extends LocalGame {
     private UnoGameState gameState;
+
+    public UnoLocalGame() {
+        gameState = new UnoGameState();
+    }
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-        if (this.gameState == null){
-            this.gameState = new UnoGameState();
-        }
+        p.sendInfo(new UnoGameState(gameState));
     }
 
     @Override

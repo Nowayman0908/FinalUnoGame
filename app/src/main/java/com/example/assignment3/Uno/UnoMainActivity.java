@@ -28,24 +28,24 @@ import GameFramework.utilities.Logger;
 public class UnoMainActivity extends GameMainActivity {
 
     UnoGameState firstInstance = new UnoGameState();
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    /*public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Set Context for Toast Logging
         Logger.setContext(getApplicationContext());
 
         // Initialize the layout
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         // Sets the button's onClickListener to the MainActivity
-        Button run = findViewById(R.id.run);
-        run.setOnClickListener(this);
+        //Button run = findViewById(R.id.run);
+        //run.setOnClickListener(this);
+
         Button drawCard = findViewById(R.id.drawCard);
         drawCard.setOnClickListener(this);
         Button playCard = findViewById(R.id.playCard);
         playCard.setOnClickListener(this);
 
-    }
+    }*/
 
     @Override
     public GameConfig createDefaultConfig() {
@@ -79,6 +79,8 @@ public class UnoMainActivity extends GameMainActivity {
 
 
         GameConfig config = new GameConfig(players, 1, 3, "Uno", 1234);
+        config.addPlayer("Human", 0);
+        config.addPlayer("Computer", 1);
         return config;
     }
 
@@ -115,7 +117,7 @@ public class UnoMainActivity extends GameMainActivity {
 
 
     // Everything that will occur when the button is clicked
-    public void onClick(View v){
+    /*public void onClick(View v){
         // This deletes any existing text
         EditText text = findViewById(R.id.editText1);
         text.setText("");
@@ -188,5 +190,5 @@ public class UnoMainActivity extends GameMainActivity {
 
     }
 
-    }
+    }*/
 }
