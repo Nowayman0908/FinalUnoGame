@@ -28,4 +28,30 @@ public class UnoSpecialCard extends UnoCard{
     public UnoSpecialCard(UnoSpecialCard spcCard) {
         this(spcCard.getColor(), spcCard.getAbility());
     }
+
+    @Override
+    public String toString() {
+        String color;
+        String ability;
+        String card;
+        color = super.toString();
+
+        if (this.ability == SKIP){
+            card = color + " Skip";
+        }
+        else if (this.ability == DRAWTWO){
+            card = color + " Draw Two";
+        }
+        else if (this.ability == REVERSE){
+            card = color + " Reverse";
+        }
+        else if (this.ability == WILD){
+            card = color + " Wild";
+        }
+        else{
+            card = color + " Draw Four";
+        }
+
+        return card;
+    }
 }

@@ -14,7 +14,7 @@ import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameHumanPlayer;
 
 public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  {
-    UnoGameState firstInstance = new UnoGameState();
+    UnoGameState gameState;
     UnoLocalGame localGame = new UnoLocalGame();
     /**
      * constructor
@@ -61,8 +61,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
 
         //If the Draw Card button is clicked.
         if(v.equals(myActivity.findViewById(R.id.drawCard))){
-            if(localGame.canMove(firstInstance.getPlayerID())) {
-                firstInstance.incremHandSize(0, true);
+            if(localGame.canMove(gameState.getPlayerID())) {
+                gameState.incremHandSize(0, true);
                 UnoDrawCardAction draw = new UnoDrawCardAction(this);
                 localGame.sendAction(draw);
             }
@@ -70,8 +70,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
         //If the Play Card button is clicked.
         else if(v.equals(myActivity.findViewById(R.id.playCard))){
             //The text box above the buttons is read to get the card to play.
+            /**
+             *
+             */
             UnoPlayCardAction play = new UnoPlayCardAction(this);
-            if(localGame.canMove(firstInstance.getPlayerID())) {
+            if(localGame.canMove(gameState.getPlayerID())) {
                 TextInputEditText cardInfo = myActivity.findViewById(R.id.cardToPlay);
                 String cardInput = cardInfo.getText().toString().toLowerCase();
                 int cardNumber = -1;
@@ -99,40 +102,21 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
 
                 }
 
-                firstInstance.setCardInPlay(0, cardNumber, cardColor);
+                gameState.setCardInPlay(0, cardNumber, cardColor);
                 localGame.makeMove(play);
-                firstInstance.playCard();
+                gameState.playCard();
             }
         }
         //If the Uno Button is clicked.
         else if(v.equals(myActivity.findViewById(R.id.unoButton))){
-            if(localGame.canMove(firstInstance.getPlayerID())) {}
+            if(localGame.canMove(gameState.getPlayerID())) {}
             //This should do something.
         }
-        ArrayList <UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
-        text.append("The Player's hand size is " + firstInstance.getHandSize() + ".\n");
-        text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
-        text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
-        text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
-        for(int i = 0; i < hand.size() - 1; i++){
-            String card = hand.get(i) + " ";
-            int switchy = (int) hand.get(i).getColor();
-            switch (switchy){
-                case 0:
-                    card = card + "Red, ";
-                    break;
-                case 1:
-                    card = card + "Green, ";
-                    break;
-                case 2:
-                    card = card + "Blue, ";
-                    break;
-                case 3:
-                    card = card + "Yellow, ";
-                    break;
-            }
-            text.append(card);
 
-        }
+        text.append("The Player's hand size is " + gameState.getHandArray().get(playerNum).size() + ".\n");
+        text.append("There are " + gameState.getPlayerNum() + " players in the game.\n");
+        text.append("The current card in play is " + gameState.getDiscardPile().get(gameState.getDiscardPile().size() - 1).toString() + ". \n");
+        text.append("The current number in play is " + gameState.getNumInPlay() + ".\n");
+        text.append("The current color in play is " + gameState.getColorInPlay() + ".\n");
     }
 }

@@ -1,5 +1,6 @@
 package com.example.assignment3.Uno;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -232,6 +233,10 @@ public class UnoGameState extends GameState {
 
             copyHands.add(playerHand);
         }
+
+        deck = copyDeck;
+        discardPile = copyDiscardPile;
+        handArray = copyHands;
     }
 
     @Override
@@ -251,8 +256,11 @@ public class UnoGameState extends GameState {
     public boolean isTurn() { return isTurn; }
     public ArrayList getColorsInHand(){ return colorInHandCards; }
     public ArrayList getNumInHandCards() { return numInHandCards; }
-    public ArrayList getHandArray(){
+    public ArrayList<ArrayList<UnoCard>> getHandArray(){
         return handArray;
+    }
+    public ArrayList getDiscardPile(){
+        return discardPile;
     }
 
     //Set method Row.

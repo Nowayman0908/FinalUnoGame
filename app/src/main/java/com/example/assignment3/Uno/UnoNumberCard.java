@@ -19,4 +19,17 @@ public class UnoNumberCard extends UnoCard{
     public UnoNumberCard(UnoNumberCard numCard) {
         this(numCard.getColor(), numCard.getNum());
     }
+
+    @Override
+    public String toString() {
+        String color;
+        String card;
+        color = super.toString();
+
+        card = color + " " + getNum();
+
+        return card;
+
+    }
 }
+
