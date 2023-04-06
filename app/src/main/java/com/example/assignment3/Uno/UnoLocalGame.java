@@ -19,9 +19,13 @@ public class UnoLocalGame extends LocalGame {
 
     @Override
     protected boolean canMove(int playerIdx) {
+        if (playerIdx == gameState.getPlayerID()){
+            return true;
+        }
         return false;
     }
 
+    // apply
     @Override
     protected String checkIfGameOver() {
         return null;
@@ -36,12 +40,12 @@ public class UnoLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
         if(action instanceof UnoPlayCardAction){
-            // write code to check
-            return true;
+            return gameState.playCard(((UnoPlayCardAction) action).index);
+
         }
         else if (action instanceof UnoDrawCardAction){
-            ((UnoGameState)state).drawCard();
-            // switch player's turns
+            gameState.drawCard();
+            gameState.endTurn();
             return true;
         }
         return false;

@@ -14,7 +14,9 @@ public class UnoGameState extends GameState {
     //The current status of the game.
 
     private int handSize; //The handsize for the current state of the game.
-    private int numInPlay; //The current number on the played area.
+    private int numInPlay; //The current number on the played area. (-1 if not a number)
+
+    private int spcInPlay; // the current special number in the played area. (-1 if not special)
     private ArrayList<Integer> numInHandCards = new ArrayList<>(); //The array of all the numbers in the hand.
     private int playerNum; //Number of players in the game.
     private int playerID; //ID of the player.
@@ -145,6 +147,15 @@ public class UnoGameState extends GameState {
 
         // this puts the first card of the deck into the discard/played cards pile
         discardPile.add(deck.remove(0));
+        colorInPlay = discardPile.get(0).getColor();
+        if(discardPile.get(0).isNumber()){
+            numInPlay = ((UnoNumberCard) discardPile.get(0)).getNum();
+            spcInPlay = -1;
+        }
+        else {
+            spcInPlay = ((UnoSpecialCard) discardPile.get(0)).getAbility();
+            numInPlay = -1;
+        }
 
         // this adds a player's hand (an array list) into the handArray array list
         for (int i = 0; i < playerNum; i++){
@@ -219,7 +230,7 @@ public class UnoGameState extends GameState {
         }
 
         // goes thru each player's hands and copies the cards in their hand
-        for(ArrayList<UnoCard> hand : handArray){
+        for(ArrayList<UnoCard> hand : game.handArray){
             ArrayList<UnoCard> playerHand = new ArrayList<>();
 
             for(UnoCard card : hand){
@@ -253,6 +264,7 @@ public class UnoGameState extends GameState {
     public int getPlayerID() { return playerID; }
     public int getNumInPlay() { return numInPlay; }
     public int getColorInPlay(){ return colorInPlay; }
+    public int getSpcInPlay(){return spcInPlay; };
     public boolean isTurn() { return isTurn; }
     public ArrayList getColorsInHand(){ return colorInHandCards; }
     public ArrayList getNumInHandCards() { return numInHandCards; }
@@ -309,14 +321,52 @@ public class UnoGameState extends GameState {
         return true;
     }
 
-    // this method is called on when a player plays a card from their hand
-    // the card the player selected will be moved to the discard pile
-    public boolean playCard(){
-        return true;
+    // this method removes the card from the player's hand
+    // and moves it to the discard pile
+    public boolean playCard(int index){
+        // if it's a wild, it will automatically be red
+        if(handArray.get(playerID).get(index).getColor() == UnoCard.COLORLESS) {
+            discardPile.add(handArray.get(playerID).remove(index));
+            colorInPlay = UnoCard.RED;
+            numInPlay = -1;
+            spcInPlay = ((UnoSpecialCard)discardPile.get(discardPile.size() - 1)).getAbility();
+        }
+        else if(colorInPlay == handArray.get(playerID).get(index).getColor()) {
+            discardPile.add(handArray.get(playerID).remove(index));
+            if(discardPile.get(discardPile.size() - 1).isNumber()){
+                numInPlay = ((UnoNumberCard) discardPile.get(discardPile.size() - 1)).getNum();
+                spcInPlay = -1;
+            }
+            else {
+                spcInPlay = ((UnoSpecialCard) discardPile.get(discardPile.size() - 1)).getAbility();
+                numInPlay = -1;
+            }
+            endTurn();
+            return true;
+        }
+        else if(handArray.get(playerID).get(index).isSpecial() && ((UnoSpecialCard) handArray.get(playerID).get(index)).getAbility() == spcInPlay) {
+            discardPile.add(handArray.get(playerID).remove(index));
+            colorInPlay = discardPile.get(discardPile.size() - 1).getColor();
+            endTurn();
+            return true;
+
+        }
+        else if(handArray.get(playerID).get(index).isNumber() && ((UnoNumberCard) handArray.get(playerID).get(index)).getNum() == numInPlay) {
+            discardPile.add(handArray.get(playerID).remove(index));
+            colorInPlay = discardPile.get(discardPile.size() - 1).getColor();
+            endTurn();
+            return true;
+        }
+        return false;
     }
 
     public boolean endTurn(){
-        // if player plays the card, switch the player's index
+        if(playerID >= playerNum - 1){
+            playerID = 0;
+        }
+        else{
+            playerID = playerID + 1;
+        }
         return true;
     }
 

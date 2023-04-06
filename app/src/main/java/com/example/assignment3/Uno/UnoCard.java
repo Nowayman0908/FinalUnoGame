@@ -56,4 +56,12 @@ public class UnoCard {
         }
         return color;
     }
+
+    public boolean isSpecial() {
+        return (this instanceof UnoSpecialCard);
+    }
+
+    public boolean isNumber() {
+        return (this instanceof UnoNumberCard);
+    }
 }
