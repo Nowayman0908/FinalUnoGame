@@ -29,7 +29,7 @@
                 android:id="@+id/cardInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Enter card you wish to play as the number followed by the color with a space inbetween the color and number.">
+                android:hint="Enter card you wish to play as the color followed by the number with a space inbetween the color and number.">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/cardToPlay"

@@ -41,9 +41,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
             text.setText("");
 
             ArrayList <UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(playerNum);
+            ArrayList <UnoCard> otherHand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(playerNum + 1);
 
             //Adding information to the UI that the player needs to play the game.
             text.append("The Player's hand size is " + hand.size() + ".\n");
+            text.append("CPU Player's hand size is " + otherHand.size() + ".\n");
             text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
             if(firstInstance.getColorInPlay() == -1)
             {
@@ -234,6 +236,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
                             break;
                         case "reverse":
                             cardAbility = UnoSpecialCard.REVERSE;
+                            break;
+                        default:
+                            cardAbility = UnoSpecialCard.WILD;
                             break;
 
                     }
