@@ -27,26 +27,6 @@ import GameFramework.utilities.Logger;
 
 public class UnoMainActivity extends GameMainActivity {
 
-    UnoGameState firstInstance = new UnoGameState();
-    /*public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Set Context for Toast Logging
-        Logger.setContext(getApplicationContext());
-
-        // Initialize the layout
-        //setContentView(R.layout.activity_main);
-
-        // Sets the button's onClickListener to the MainActivity
-        //Button run = findViewById(R.id.run);
-        //run.setOnClickListener(this);
-
-        Button drawCard = findViewById(R.id.drawCard);
-        drawCard.setOnClickListener(this);
-        Button playCard = findViewById(R.id.playCard);
-        playCard.setOnClickListener(this);
-
-    }*/
-
     @Override
     public GameConfig createDefaultConfig() {
         // This array list holds different types of players
@@ -115,80 +95,4 @@ public class UnoMainActivity extends GameMainActivity {
     //The two strings should be identical. Your code should verify this.
     //Also, print both strings to the multi-line EditText for visual inspection. Again, append these rather than overwrite previous messages.
 
-
-    // Everything that will occur when the button is clicked
-    /*public void onClick(View v){
-        // This deletes any existing text
-        EditText text = findViewById(R.id.editText1);
-        text.setText("");
-
-
-        //If the Draw Card button is clicked.
-        if(v.equals(findViewById(R.id.drawCard))){
-            firstInstance.incremHandSize(0,true);
-            firstInstance.drawCard();
-        }
-        //If the Play Card button is clicked.
-        else if(v.equals(findViewById(R.id.playCard))){
-            //The text box above the buttons is read to get the card to play.
-            TextInputEditText cardInfo = findViewById(R.id.cardToPlay);
-            String cardInput = cardInfo.getText().toString().toLowerCase();
-            int cardNumber = -1;
-            int cardColor = -1;
-            for(int i = 0; i < cardInput.length(); i++){
-                if(cardInput.charAt(i) == ' '){
-                    cardNumber = cardInput.charAt(i-1);
-                    switch (cardInput.substring(i,cardInput.length())){
-                        case "red":
-                            cardColor = 0;
-                            break;
-                        case "green":
-                            cardColor = 1;
-                            break;
-                        case "blue":
-                            cardColor = 2;
-                            break;
-                        case "yellow":
-                            cardColor = 3;
-                            break;
-                        default:
-                            cardInfo.setText("Error");
-                    }
-                }
-
-            }
-            firstInstance.setCardInPlay(0,cardNumber,cardColor);
-            firstInstance.playCard();
-        }
-        //If the Uno Button is clicked.
-        else if(v.equals(findViewById(R.id.unoButton))){
-        //This should do something.
-        }
-
-        text.append("The Player's hand size is " + firstInstance.getHandSize() + ".\n");
-        text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
-        text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
-        text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
-        for(int i = 0; i < firstInstance.getHandSize() - 1; i++){
-            String card = firstInstance.getNumInHandCards().get(i) + " ";
-            int switchy = (int) firstInstance.getColorsInHand().get(i);
-            switch (switchy){
-                case 0:
-                    card = card + "Red, ";
-                    break;
-                case 1:
-                    card = card + "Green, ";
-                    break;
-                case 2:
-                    card = card + "Blue, ";
-                    break;
-                case 3:
-                    card = card + "Yellow, ";
-                    break;
-            }
-            text.append(card);
-
-    }
-
-    }*/
 }
