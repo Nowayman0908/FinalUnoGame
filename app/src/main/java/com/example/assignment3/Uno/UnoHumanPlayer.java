@@ -44,6 +44,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
         // Load the layout resource for our GUI
         activity.setContentView(R.layout.activity_main);
 
+        //Retrieves all the buttons on the layout activity and sets the Human Players as the on Click Listener.
         Button playGame = activity.findViewById(R.id.run);
         playGame.setOnClickListener(this);
         Button drawCard = activity.findViewById(R.id.drawCard);
@@ -55,8 +56,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
     @Override
     public void onClick(View v) {
 
+        //Finds the text that is used to display the state of the game and sets it blank.
         EditText text = myActivity.findViewById(R.id.editText1);
         text.setText("");
+
+        ArrayList <UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
 
 
         //If the Draw Card button is clicked.
@@ -71,15 +75,16 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
         else if(v.equals(myActivity.findViewById(R.id.playCard))){
             //The text box above the buttons is read to get the card to play.
             UnoPlayCardAction play = new UnoPlayCardAction(this);
+
             if(localGame.canMove(firstInstance.getPlayerID())) {
                 TextInputEditText cardInfo = myActivity.findViewById(R.id.cardToPlay);
-                String cardInput = cardInfo.getText().toString().toLowerCase();
+                String cardInput = cardInfo.getText().toString().trim().toLowerCase();
                 int cardNumber = -1;
                 int cardColor = -1;
                 for (int i = 0; i < cardInput.length(); i++) {
                     if (cardInput.charAt(i) == ' ') {
                         cardNumber = cardInput.charAt(i - 1);
-                        switch (cardInput.substring(i, cardInput.length())) {
+                        switch (cardInput.substring(i)) {
                             case "red":
                                 cardColor = 0;
                                 break;
@@ -98,8 +103,14 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
                     }
 
                 }
-
-                firstInstance.setCardInPlay(0, cardNumber, cardColor);
+                for(int j = 0; j < hand.size() - 1; j++){
+                    if(hand.get(j) instanceof UnoNumberCard)
+                    if(((UnoNumberCard) hand.get(j)).getNum() == cardNumber && hand.get(j).getColor() == cardColor){
+                        hand.remove(j);
+                        break;
+                    }
+                }
+                firstInstance.setCardInPlay(firstInstance.getPlayerID(), cardNumber, cardColor);
                 localGame.makeMove(play);
                 firstInstance.playCard();
             }
@@ -109,14 +120,36 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
             if(localGame.canMove(firstInstance.getPlayerID())) {}
             //This should do something.
         }
-        ArrayList <UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
+
+        //Adding information to the UI that the player needs to play the game.
         text.append("The Player's hand size is " + firstInstance.getHandSize() + ".\n");
         text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
+        switch (firstInstance.getColorInPlay()){
+            case 0:
+                text.append("The current color in play is Red" + ".\n");
+                break;
+            case 1:
+                text.append("The current color in play is Green" + ".\n");
+                break;
+            case 2:
+                text.append("The current color in play is Blue" + ".\n");
+                break;
+            case 3:
+                text.append("The current color in play is Yellow" + ".\n");
+                break;
+        }
         text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
-        text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
+
         for(int i = 0; i < hand.size() - 1; i++){
-            String card = hand.get(i) + " ";
-            int switchy = (int) hand.get(i).getColor();
+            String card = "-1";
+            if(hand.get(i) instanceof  UnoNumberCard) {
+                card = ((UnoNumberCard) hand.get(i)).getNum() + " ";
+            }
+            else if (hand.get(i) instanceof UnoSpecialCard){
+                card = ((UnoSpecialCard) hand.get(i)).getAbility() + " ";
+            }
+            int switchy = hand.get(i).getColor();
+            //Adds the color to the number to display the string on the UI.
             switch (switchy){
                 case 0:
                     card = card + "Red, ";
