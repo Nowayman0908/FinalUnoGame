@@ -4,9 +4,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import java.util.ArrayList;
 
 import com.example.assignment3.R;
-import com.example.assignment3.Uno.UnoGameState;
 import com.google.android.material.textfield.TextInputEditText;
 
 import GameFramework.GameMainActivity;
@@ -14,6 +14,7 @@ import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameHumanPlayer;
 
 public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  {
+    UnoGameState firstInstance = new UnoGameState();
     /**
      * constructor
      *
@@ -42,6 +43,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
         // Load the layout resource for our GUI
         activity.setContentView(R.layout.activity_main);
 
+        Button playGame = activity.findViewById(R.id.run);
+        playGame.setOnClickListener(this);
         Button drawCard = activity.findViewById(R.id.drawCard);
         drawCard.setOnClickListener(this);
         Button playCard = activity.findViewById(R.id.playCard);
@@ -50,7 +53,6 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
 
     @Override
     public void onClick(View v) {
-        UnoGameState firstInstance = new UnoGameState();
 
         EditText text = myActivity.findViewById(R.id.editText1);
         text.setText("");
@@ -97,14 +99,14 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
         else if(v.equals(myActivity.findViewById(R.id.unoButton))){
             //This should do something.
         }
-
+        ArrayList <UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
         text.append("The Player's hand size is " + firstInstance.getHandSize() + ".\n");
         text.append("There are " + firstInstance.getPlayerNum() + " players in the game.\n");
         text.append("The current number in play is " + firstInstance.getNumInPlay() + ".\n");
         text.append("The current color in play is " + firstInstance.getColorInPlay() + ".\n");
-        for(int i = 0; i < firstInstance.getHandSize() - 1; i++){
-            String card = firstInstance.getNumInHandCards().get(i) + " ";
-            int switchy = (int) firstInstance.getColorsInHand().get(i);
+        for(int i = 0; i < hand.size() - 1; i++){
+            String card = hand.get(i) + " ";
+            int switchy = (int) hand.get(i).getColor();
             switch (switchy){
                 case 0:
                     card = card + "Red, ";
