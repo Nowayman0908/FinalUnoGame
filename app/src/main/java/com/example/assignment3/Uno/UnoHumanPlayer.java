@@ -15,6 +15,7 @@ import GameFramework.players.GameHumanPlayer;
 
 public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  {
     UnoGameState firstInstance = new UnoGameState();
+    UnoLocalGame localGame = new UnoLocalGame();
     /**
      * constructor
      *
@@ -60,43 +61,52 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
 
         //If the Draw Card button is clicked.
         if(v.equals(myActivity.findViewById(R.id.drawCard))){
-            firstInstance.incremHandSize(0,true);
-            firstInstance.drawCard();
+            if(localGame.canMove(firstInstance.getPlayerID())) {
+                firstInstance.incremHandSize(0, true);
+                UnoDrawCardAction draw = new UnoDrawCardAction(this);
+                localGame.sendAction(draw);
+            }
         }
         //If the Play Card button is clicked.
         else if(v.equals(myActivity.findViewById(R.id.playCard))){
             //The text box above the buttons is read to get the card to play.
-            TextInputEditText cardInfo = myActivity.findViewById(R.id.cardToPlay);
-            String cardInput = cardInfo.getText().toString().toLowerCase();
-            int cardNumber = -1;
-            int cardColor = -1;
-            for(int i = 0; i < cardInput.length(); i++){
-                if(cardInput.charAt(i) == ' '){
-                    cardNumber = cardInput.charAt(i-1);
-                    switch (cardInput.substring(i,cardInput.length())){
-                        case "red":
-                            cardColor = 0;
-                            break;
-                        case "green":
-                            cardColor = 1;
-                            break;
-                        case "blue":
-                            cardColor = 2;
-                            break;
-                        case "yellow":
-                            cardColor = 3;
-                            break;
-                        default:
-                            cardInfo.setText("Error");
+            UnoPlayCardAction play = new UnoPlayCardAction(this);
+            if(localGame.canMove(firstInstance.getPlayerID())) {
+                TextInputEditText cardInfo = myActivity.findViewById(R.id.cardToPlay);
+                String cardInput = cardInfo.getText().toString().toLowerCase();
+                int cardNumber = -1;
+                int cardColor = -1;
+                for (int i = 0; i < cardInput.length(); i++) {
+                    if (cardInput.charAt(i) == ' ') {
+                        cardNumber = cardInput.charAt(i - 1);
+                        switch (cardInput.substring(i, cardInput.length())) {
+                            case "red":
+                                cardColor = 0;
+                                break;
+                            case "green":
+                                cardColor = 1;
+                                break;
+                            case "blue":
+                                cardColor = 2;
+                                break;
+                            case "yellow":
+                                cardColor = 3;
+                                break;
+                            default:
+                                cardInfo.setText("Error");
+                        }
                     }
+
                 }
 
+                firstInstance.setCardInPlay(0, cardNumber, cardColor);
+                localGame.makeMove(play);
+                firstInstance.playCard();
             }
-            firstInstance.setCardInPlay(0,cardNumber,cardColor);
-            firstInstance.playCard();
         }
         //If the Uno Button is clicked.
         else if(v.equals(myActivity.findViewById(R.id.unoButton))){
+            if(localGame.canMove(firstInstance.getPlayerID())) {}
             //This should do something.
         }
         ArrayList <UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
