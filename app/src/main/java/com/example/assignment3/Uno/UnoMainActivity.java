@@ -62,6 +62,7 @@ public class UnoMainActivity extends GameMainActivity {
         config.addPlayer("Human", 0);
         config.addPlayer("Computer", 1);
         return config;
+
     }
 
     @Override

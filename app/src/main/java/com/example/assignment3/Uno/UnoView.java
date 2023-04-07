@@ -42,4 +42,26 @@ public class UnoView extends SurfaceView {
                 break;
         }
     }
+
+    public void drawPlayerCards(Canvas canvas, int playerNum){
+        switch (playerNum){
+            case 2:
+                //canvas.drawRect();
+                //canvas.drawText();
+                break;
+            case 3:
+                //canvas.drawRect();
+                //canvas.drawText();
+                break;
+            case 4:
+                //canvas.drawRect();
+                //canvas.drawText();
+                break;
+            default:
+                //canvas.drawRect();
+                //canvas.drawText();
+                break;
+
+        }
+    }
 }

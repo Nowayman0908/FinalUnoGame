@@ -42,6 +42,9 @@ public class DumbAIPlayer extends GameComputerPlayer {
         }
         UnoDrawCardAction draw = new UnoDrawCardAction(this);
         game.sendAction(draw);
+
+        //Work on making the Dumb AI play.
+
         /*
         int colorInPlay = gameState.getColorInPlay();
         int numInPlay = gameState.getNumInPlay();
