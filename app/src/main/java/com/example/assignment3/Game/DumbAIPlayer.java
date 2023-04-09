@@ -3,14 +3,10 @@ package com.example.assignment3.Game;
 import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameComputerPlayer;
 
-import com.example.assignment3.Uno.UnoDrawCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoGameState;
-import com.example.assignment3.Uno.UnoLocalGame;
-import com.example.assignment3.Uno.UnoNumberCard;
-import com.example.assignment3.Uno.UnoPlayCardAction;
-import com.example.assignment3.Uno.UnoCard;
+
 import java.util.Random;
-import java.util.ArrayList;
 
 public class DumbAIPlayer extends GameComputerPlayer {
 

@@ -10,6 +10,9 @@ package com.example.assignment3.Uno;
  */
 
 import com.example.assignment3.Game.DumbAIPlayer;
+import com.example.assignment3.Uno.UnoCard.UnoCard;
+import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
+
 import java.util.ArrayList;
 
 public class UnoUnitTest{

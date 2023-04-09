@@ -1,4 +1,4 @@
-package com.example.assignment3.Uno;
+package com.example.assignment3.Uno.UnoMVC;
 
 import android.content.Context;
 import android.graphics.Canvas;

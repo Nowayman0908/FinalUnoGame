@@ -1,6 +1,6 @@
-package com.example.assignment3.Uno;
+package com.example.assignment3.Uno.UnoCard;
 
-public class UnoNumberCard extends UnoCard{
+public class UnoNumberCard extends UnoCard {
 
     //instance variables
     protected int num;

@@ -1,4 +1,4 @@
-package com.example.assignment3.Uno;
+package com.example.assignment3.Game;
 
 import android.graphics.Color;
 import android.view.View;
@@ -8,6 +8,12 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import com.example.assignment3.R;
+import com.example.assignment3.Uno.UnoCard.UnoCard;
+import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
+import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
+import com.example.assignment3.Uno.UnoGameState;
 import com.google.android.material.textfield.TextInputEditText;
 
 import GameFramework.GameMainActivity;
@@ -88,7 +94,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
 
             for(int i = 0; i < hand.size() - 1; i++){
                 String card = "-1";
-                if(hand.get(i) instanceof  UnoNumberCard) {
+                if(hand.get(i) instanceof UnoNumberCard) {
                     card = "" + ((UnoNumberCard) hand.get(i)).getNum();
                 }
                 else if (hand.get(i) instanceof UnoSpecialCard){

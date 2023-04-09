@@ -1,4 +1,4 @@
-package com.example.assignment3.Uno;
+package com.example.assignment3.Uno.UnoCard;
 
 import GameFramework.actionMessage.GameAction;
 import GameFramework.players.GamePlayer;

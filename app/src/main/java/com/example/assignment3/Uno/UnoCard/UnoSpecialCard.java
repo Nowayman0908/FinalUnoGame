@@ -1,6 +1,6 @@
-package com.example.assignment3.Uno;
+package com.example.assignment3.Uno.UnoCard;
 
-public class UnoSpecialCard extends UnoCard{
+public class UnoSpecialCard extends UnoCard {
 
     // These special cards are constants that can be referenced anywhere
     public static final int SKIP = 0;

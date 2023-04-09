@@ -1,15 +1,8 @@
 package com.example.assignment3.Uno;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Switch;
-
 import com.example.assignment3.Game.DumbAIPlayer;
-import com.example.assignment3.R;
+import com.example.assignment3.Game.UnoHumanPlayer;
 import com.example.assignment3.Game.SmartAIPlayer;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -19,7 +12,6 @@ import GameFramework.gameConfiguration.GameConfig;
 import GameFramework.gameConfiguration.GamePlayerType;
 import GameFramework.infoMessage.GameState;
 import GameFramework.players.GamePlayer;
-import GameFramework.utilities.Logger;
 
 /**
  * @authors Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.

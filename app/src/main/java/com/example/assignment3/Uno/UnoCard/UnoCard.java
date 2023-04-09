@@ -1,6 +1,4 @@
-package com.example.assignment3.Uno;
-
-import androidx.annotation.NonNull;
+package com.example.assignment3.Uno.UnoCard;
 
 public class UnoCard {
 
