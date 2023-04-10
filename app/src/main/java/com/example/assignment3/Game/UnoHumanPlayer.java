@@ -21,7 +21,7 @@ import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameHumanPlayer;
 
 public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  {
-    UnoGameState firstInstance;
+    private UnoGameState firstInstance;
     /**
      * constructor
      *

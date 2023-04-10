@@ -40,34 +40,22 @@ public class DumbAIPlayer extends GameComputerPlayer {
         game.sendAction(draw);
 
         //Work on making the Dumb AI play.
-
-        /*
-        int colorInPlay = gameState.getColorInPlay();
-        int numInPlay = gameState.getNumInPlay();
-        ArrayList <UnoCard> hand = (ArrayList<UnoCard>) gameState.getHandArray().get(gameState.getPlayerID());
-        if (gameState.getColorsInHand().contains(colorInPlay)) {
-
-            UnoPlayCardAction action = new UnoPlayCardAction(this, 0);
-            UnoDrawCardAction draw = new UnoDrawCardAction(this);
-
-            if (gameState.getColorsInHand().contains(colorInPlay)) {
-                //A bit messy but this gets the AI's hand and finds the last card that is of a color and plays it.
-               UnoNumberCard play = (UnoNumberCard) hand.get(hand.lastIndexOf(colorInPlay));
-                gameState.setCardInPlay(gameState.getPlayerID(),play.getNum(),play.getColor());
-                hand.remove(hand.lastIndexOf(colorInPlay));
-                game.sendAction(action);
-            } else if (gameState.getNumInHandCards().contains(numInPlay)) {
-                //A bit messy but this gets the AI's hand and finds the last card that is of a number and plays it.
-                UnoNumberCard play = (UnoNumberCard) hand.get(hand.lastIndexOf(numInPlay));
-                gameState.setCardInPlay(gameState.getPlayerID(),play.getNum(),play.getColor());
-                hand.remove(hand.lastIndexOf(numInPlay));
-                game.sendAction(action);
-            } else {
-                gameState.incremHandSize(gameState.getPlayerNum(), true);
-                game.sendAction(draw);
+        if(gameState.isTurn()){
+            int colorInPlay = gameState.getColorInPlay();
+            int numInPlay = gameState.getNumInPlay();
+            int indexOfPlayCard;
+            for(int i = 0; i < gameState.getColorsInHand().size(); i++){
+                if((int) gameState.getColorsInHand().get(i) == colorInPlay || (int) gameState.getNumInHandCards().get(i) == numInPlay){
+                    indexOfPlayCard = i;
+                    gameState.setCardInPlay(this.playerNum,(int) gameState.getNumInHandCards().get(i),(int) gameState.getColorsInHand().get(i));
+                    gameState.getColorsInHand().remove(i);
+                    gameState.getNumInHandCards().remove(i);
+                    gameState.incremHandSize(this.playerNum, false);
+                    break;
+                }
             }
             gameState.setCurrentTurn(false);
-        }*/
+        }
 
     }
 }
