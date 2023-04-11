@@ -8,7 +8,7 @@ import GameFramework.actionMessage.GameAction;
 import GameFramework.players.GamePlayer;
 
 public class UnoLocalGame extends LocalGame {
-    private UnoGameState gameState;
+    private final UnoGameState gameState;
 
     public UnoLocalGame() {
         gameState = new UnoGameState();
@@ -20,15 +20,17 @@ public class UnoLocalGame extends LocalGame {
 
     @Override
     protected boolean canMove(int playerIdx) {
-        if (playerIdx == gameState.getPlayerID()){
-            return true;
-        }
-        return false;
+        return playerIdx == gameState.getPlayerID();
     }
 
     // apply
     @Override
     protected String checkIfGameOver() {
+        for(int i = 0; i < gameState.getPlayerNum(); i++) {
+            if (gameState.getHandArray().get(i).size() == 0){
+                return "Congratulations Player " + i+1 + " for winning the game.";
+            }
+        }
         return null;
     }
 

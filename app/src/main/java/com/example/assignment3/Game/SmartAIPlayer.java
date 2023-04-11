@@ -27,7 +27,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
             Thread.sleep(250);
         }
         catch(Exception e){
-
+            //What goes in 'ere.
         }
         //Ranking each card, how will one do this?
         if(gameState.isTurn()){
