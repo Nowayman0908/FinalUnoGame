@@ -363,13 +363,67 @@ public class UnoGameState extends GameState {
         return false;
     }
 
-    public boolean endTurn(){
-        if(playerID >= playerNum - 1){
-            playerID = 0;
+    // this method is for the skip ability
+    // if there are two players, it will be the player's
+    // turn who played the card
+    public boolean skip(){
+        playerID = (playerID + 2) % playerNum;
+        return true;
+    }
+
+    // this method is for the reverse ability
+    // if there are two players, it will be the player's
+    // turn who played the card
+    // (may consider using this instead of the endTurn method)
+    public boolean reverse(){
+        int order;
+        int normal = 0;
+        int reverse = -1;
+
+        order = normal;
+        if (order == normal){
+            playerID = (playerID - 1) % playerNum;
+            order = reverse;
         }
         else{
-            playerID = playerID + 1;
+            endTurn();
+            order = normal;
         }
+
+        return true;
+    }
+
+    // this method is for the draw 2 ability
+    // when the player draws 2 cards, their turn is skipped
+    public boolean drawTwo(){
+        for (int i = 0; i > 2; i++){
+            drawCard();
+        }
+        endTurn();
+
+        return true;
+    }
+
+    // this method is for the wild ability
+    public boolean wild(){
+        // write code for this
+        return true;
+    }
+
+    // this method is for the draw four ability
+    // after the next player draws four cards, their turn
+    // will end
+    public boolean drawFour(){
+        // write code to allow the player to select a color
+        for (int i = 0; i > 4; i++){
+            drawCard();
+        }
+        endTurn();
+        return true;
+    }
+
+    public boolean endTurn(){
+            playerID = (playerID + 1) % playerNum;
         return true;
     }
 
