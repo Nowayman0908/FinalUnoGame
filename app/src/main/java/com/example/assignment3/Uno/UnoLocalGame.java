@@ -2,6 +2,7 @@ package com.example.assignment3.Uno;
 
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 
 import GameFramework.LocalGame;
 import GameFramework.actionMessage.GameAction;
@@ -49,6 +50,10 @@ public class UnoLocalGame extends LocalGame {
         else if (action instanceof UnoDrawCardAction){
             gameState.drawCard();
             gameState.endTurn();
+            return true;
+        }
+        else if (action instanceof UnoSelectColorAction){
+            // write code for this
             return true;
         }
         return false;

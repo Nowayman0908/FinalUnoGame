@@ -396,7 +396,7 @@ public class UnoGameState extends GameState {
     // this method is for the draw 2 ability
     // when the player draws 2 cards, their turn is skipped
     public boolean drawTwo(){
-        for (int i = 0; i > 2; i++){
+        for (int i = 0; i < 2; i++){
             drawCard();
         }
         endTurn();
@@ -415,11 +415,18 @@ public class UnoGameState extends GameState {
     // will end
     public boolean drawFour(){
         // write code to allow the player to select a color
-        for (int i = 0; i > 4; i++){
+        for (int i = 0; i < 4; i++){
             drawCard();
         }
         endTurn();
         return true;
+    }
+
+    // this method will allow the player to select a color
+    public boolean selectColor(){
+
+        return true;
+
     }
 
     public boolean endTurn(){
