@@ -382,7 +382,12 @@ public class UnoGameState extends GameState {
 
         order = normal;
         if (order == normal){
-            //write code for this
+            if (playerID - 1 < 0){
+                playerID = 4;
+            }
+            else{
+                playerID = (playerID - 1) % playerNum;
+            }
             order = reverse;
         }
         else{
@@ -424,7 +429,7 @@ public class UnoGameState extends GameState {
 
     // this method is for when a player selects a color
     public boolean selectColor(){
-        // write code for this
+
         return true;
 
     }
