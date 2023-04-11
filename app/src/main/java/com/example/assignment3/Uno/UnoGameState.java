@@ -20,16 +20,9 @@ public class UnoGameState extends GameState {
     private int numInPlay; //The current number on the played area. (-1 if not a number)
 
     private int spcInPlay; // the current special number in the played area. (-1 if not special)
-    private ArrayList<Integer> numInHandCards = new ArrayList<>(); //The array of all the numbers in the hand.
     private int playerNum; //Number of players in the game.
     private int playerID; //ID of the player.
     private int colorInPlay; //The current number on the played area.
-    private ArrayList <Integer> colorInHandCards = new ArrayList<>(); //The array of all the colors in the hand represented as integers.
-    //Red is 0, Green is 1, Blue is 2, and Yellow is 3.
-    private boolean isTurn; //Whether the current player can play.
-    //Used to determine what card will be shown in the selected area.
-
-    private ArrayList <Boolean> isCardSelected;
     private Random ran = new Random(); //The random object used the generate the numbers for colorSelect.
     private int colorSelect; //Variable used to assign cards a Color int from 0 - 3.
     private int numSelect; //Variable used to assign cards a number to represent cards from 0 - 14;
@@ -48,41 +41,10 @@ public class UnoGameState extends GameState {
         numInPlay = 7;
         playerNum = 2;
         colorInPlay = 1;
-        isTurn = false;
         playerID = 0;
         int wildCheck;
 
-        for(int i = 0; i < handSize; i++){
-            colorSelect = ran.nextInt(4);
-            //Convert to switch statement.
-            if(colorSelect == 0){
-                //Represents Red.
-                colorInHandCards.add(colorSelect);
-            }
-            else if(colorSelect == 1){
-                //Represents Green.
-                colorInHandCards.add(colorSelect);
-            }
-            else if(colorSelect == 2){
-                //Represents Blue.
-                colorInHandCards.add(colorSelect);
-            }
-            else {
-                //Represents Yellow.
-                colorInHandCards.add(colorSelect);
-            }
-            //Note add a way to make the card distrubution the same as Uno.
-            numSelect = ran.nextInt(15);
-            if(numSelect == 0 || numSelect == 13 || numSelect == 14) {
-                //To make the wild card and +4 as likely as a normal game of Uno.
-                wildCheck = ran.nextInt(14);
-                if(wildCheck == 13){
-                    numInHandCards.add(numSelect);
-                }
-            }
-            numInHandCards.add(numSelect);
 
-        }
 
         /**
          * the outer for-loop iterates through the all of the number cards except 0 (1-9)
@@ -178,29 +140,6 @@ public class UnoGameState extends GameState {
         playerNum = setPlayerNum;
         playerID = setPlayerId;
         colorInPlay = initColorInPlay;
-        //Setting this one is odd, may as well initially set it to false.
-        isTurn = false;
-
-
-        for(int i = 0; i < handSize; i++){
-            colorSelect = ran.nextInt(4);
-            if(colorSelect == 0){
-                //Represents Red.
-                colorInHandCards.add(colorSelect);
-            }
-            else if(colorSelect == 1){
-                //Represents Green.
-                colorInHandCards.add(colorSelect);
-            }
-            else if(colorSelect == 2){
-                //Represents Blue.
-                colorInHandCards.add(colorSelect);
-            }
-            else{
-                //Represents Yellow.
-                colorInHandCards.add(colorSelect);
-            }
-        }
     }
 
     public UnoGameState(UnoGameState game){
@@ -270,9 +209,6 @@ public class UnoGameState extends GameState {
     public int getNumInPlay() { return numInPlay; }
     public int getColorInPlay(){ return colorInPlay; }
     public int getSpcInPlay(){return spcInPlay; };
-    public boolean isTurn() { return isTurn; }
-    public ArrayList getColorsInHand(){ return colorInHandCards; }
-    public ArrayList getNumInHandCards() { return numInHandCards; }
     public ArrayList<ArrayList<UnoCard>> getHandArray(){
         return handArray;
     }
@@ -292,10 +228,6 @@ public class UnoGameState extends GameState {
         else{
             return false;
         }
-    }
-    public boolean setCurrentTurn(boolean turnSet){
-        isTurn = turnSet;
-        return true;
     }
 
     //A method to increase handsize or decrease handsize by one whether the boolean is set to

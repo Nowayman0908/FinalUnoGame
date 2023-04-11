@@ -3,14 +3,19 @@ package com.example.assignment3.Game;
 import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameComputerPlayer;
 
+import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
+import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
 import com.example.assignment3.Uno.UnoGameState;
 
-import java.util.Random;
+import java.util.ArrayList;
 
+/**
+ * @authoer Ayden Semerak
+ */
 public class DumbAIPlayer extends GameComputerPlayer {
-
-    private Random ran = new Random();
+    //The dumb AI lives, it works.
 
     private UnoGameState gameState;
 
@@ -25,10 +30,9 @@ public class DumbAIPlayer extends GameComputerPlayer {
 
     @Override
     protected void receiveInfo(GameInfo info) {
-        if(info instanceof UnoGameState) {
+        if (info instanceof UnoGameState) {
             gameState = (UnoGameState) info;
-        }
-        else {
+        } else {
             return;
         }
         try {
@@ -36,26 +40,31 @@ public class DumbAIPlayer extends GameComputerPlayer {
         } catch (Exception e) {
 
         }
-        UnoDrawCardAction draw = new UnoDrawCardAction(this);
-        game.sendAction(draw);
 
-        //Work on making the Dumb AI play.
-        if(gameState.isTurn()){
-            int colorInPlay = gameState.getColorInPlay();
-            int numInPlay = gameState.getNumInPlay();
-            int indexOfPlayCard;
-            for(int i = 0; i < gameState.getColorsInHand().size(); i++){
-                if((int) gameState.getColorsInHand().get(i) == colorInPlay || (int) gameState.getNumInHandCards().get(i) == numInPlay){
-                    indexOfPlayCard = i;
-                    gameState.setCardInPlay(this.playerNum,(int) gameState.getNumInHandCards().get(i),(int) gameState.getColorsInHand().get(i));
-                    gameState.getColorsInHand().remove(i);
-                    gameState.getNumInHandCards().remove(i);
-                    gameState.incremHandSize(this.playerNum, false);
+        boolean hasPlayed = false;
+        //Is turn may be redundant as currently it is always false.
+
+        ArrayList<UnoCard> hand = gameState.getHandArray().get(this.playerNum);
+        int colorInPlay = gameState.getColorInPlay();
+        int numInPlay = gameState.getNumInPlay();
+        for (int i = 0; i < gameState.getHandArray().get(this.playerNum).size(); i++) {
+            UnoPlayCardAction play = new UnoPlayCardAction(this, i);
+            if (hand.get(i).getColor() == colorInPlay) {
+                game.sendAction(play);
+                hasPlayed = true;
+                break;
+            }
+            else if (hand.get(i) instanceof UnoNumberCard) {
+                if (((UnoNumberCard) hand.get(i)).getNum() == numInPlay) {
+                    game.sendAction(play);
+                    hasPlayed = true;
                     break;
                 }
             }
-            gameState.setCurrentTurn(false);
         }
-
+        if (!hasPlayed) {
+            UnoDrawCardAction draw = new UnoDrawCardAction(this);
+            game.sendAction(draw);
+        }
     }
 }

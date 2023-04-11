@@ -6,74 +6,116 @@
     android:layout_height="match_parent"
     tools:context=".Uno.UnoMainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+    <ImageButton
+        android:id="@+id/cardSlot1"
+        android:layout_width="108dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="496dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/red_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editText1"
-            android:inputType="textMultiLine"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"/>
+    <ImageButton
+        android:id="@+id/cardSlot2"
+        android:layout_width="108dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="259dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="364dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/red_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/cardSlot3"
+        android:layout_width="108dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="387dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="236dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/red_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cardInput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Enter card you wish to play as the color followed by the number with a space inbetween the color and number.">
+    <ImageButton
+        android:id="@+id/cardSlot4"
+        android:layout_width="108dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="513dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/red_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cardToPlay"
-                    android:layout_width="431dp"
-                    android:layout_height="wrap_content"
-                    android:hint="hint" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+    <ImageButton
+        android:id="@+id/deckSlot"
+        android:layout_width="108dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="574dp"
+        android:layout_marginBottom="234dp"
+        android:src="@drawable/red_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/playedCard"
+        android:layout_width="108dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="311dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="312dp"
+        android:layout_marginBottom="234dp"
+        android:src="@drawable/red_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/run"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Play game" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="294dp"
+        android:layout_marginEnd="621dp"
+        android:layout_marginBottom="69dp"
+        android:text="<--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/drawCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Draw Card" />
-
-            <Button
-                android:id="@+id/playCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Play Card" />
-
-            <Button
-                android:id="@+id/unoButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Uno" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="632dp"
+        android:layout_marginTop="294dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="69dp"
+        android:text="-->"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
