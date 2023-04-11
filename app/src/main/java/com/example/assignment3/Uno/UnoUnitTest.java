@@ -52,5 +52,13 @@ public class UnoUnitTest{
 
         return true;
     }
+    //Implement once the special card actions have been created.
+    public boolean test2(){
+       return false;
+    }
+
+    public boolean test3(){
+        return false;
+    }
 
 }

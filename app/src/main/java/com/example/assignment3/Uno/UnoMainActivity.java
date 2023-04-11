@@ -50,7 +50,7 @@ public class UnoMainActivity extends GameMainActivity {
         });
 
 
-        GameConfig config = new GameConfig(players, 1, 3, "Uno", 1234);
+        GameConfig config = new GameConfig(players, 1, 4, "Uno", 1234);
         config.addPlayer("Human", 0);
         config.addPlayer("Computer", 1);
         return config;

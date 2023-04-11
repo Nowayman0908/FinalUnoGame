@@ -1,6 +1,8 @@
 package com.example.assignment3.Game;
 
+import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
+import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
@@ -19,18 +21,19 @@ public class SmartAIPlayer extends GameComputerPlayer {
         super(name);
     }
 
+    //A work in progress but as is, the code works.
     @Override
     protected void receiveInfo(GameInfo info) {
-        gameState = (UnoGameState) info;
+        if (info instanceof UnoGameState) {
+            gameState = (UnoGameState) info;
+        } else {
+            return;
+        }
         try {
-            //Adds a pause in the game.
             Thread.sleep(250);
+        } catch (Exception e) {
+
         }
-        catch(Exception e){
-            //What goes in 'ere.
-        }
-        //Ranking each card, how will one do this?
-        if(gameState.isTurn()){
             ArrayList<UnoCard> unoCards = gameState.getHandArray().get(this.playerNum);
             ArrayList<UnoCard> playableCards = new ArrayList<>();
            for(int i = 0; i < unoCards.size(); i++){
@@ -46,15 +49,28 @@ public class SmartAIPlayer extends GameComputerPlayer {
                  if((unoCards.get(i).getColor() == gameState.getColorInPlay())){
                      playableCards.add(unoCards.get(i));
                  }
-                 else if(((UnoSpecialCard) unoCards.get(i)).getAbility() == UnoSpecialCard.WILD){
+                 else if(((UnoSpecialCard) unoCards.get(i)).getAbility() == UnoSpecialCard.WILD || ((UnoSpecialCard) unoCards.get(i)).getAbility() == UnoSpecialCard.DRAWFOUR){
                      playableCards.add(unoCards.get(i));
                  }
              }
            }
-            //This will occur at the end.
-            gameState.setCurrentTurn(false);
+           UnoCard bestCard = bestCardToPlay(playableCards);
+        if(bestCard == null){
+            if(unoCards.size() != 0){
+                UnoDrawCardAction draw = new UnoDrawCardAction(this);
+                game.sendAction(draw);
+            }
         }
-    }
+        else {
+            for (int p = 0; p < unoCards.size(); p++) {
+                if (unoCards.get(p) == bestCard) {
+                    UnoPlayCardAction playCardAction = new UnoPlayCardAction(this, p);
+                    game.sendAction(playCardAction);
+                    break;
+                }
+            }
+        }
+        }
 
     //Started to create the method for ranking the cards.
     private UnoCard bestCardToPlay(ArrayList<UnoCard> canPlay){

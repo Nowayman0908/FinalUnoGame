@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceView;
 
+import com.example.assignment3.Uno.UnoGameState;
+
 /**
  * @author Ayden Semerak.
  */
