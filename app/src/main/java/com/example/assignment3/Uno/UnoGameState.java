@@ -374,7 +374,8 @@ public class UnoGameState extends GameState {
     // this method is for the reverse ability
     // if there are two players, it will be the player's
     // turn who played the card
-    // (may consider using this instead of the endTurn method)
+
+    // WIP
     public boolean reverse(){
         int order;
         int normal = 0;
