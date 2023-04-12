@@ -1,5 +1,6 @@
 package com.example.assignment3.Game;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.view.View;
@@ -7,16 +8,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 
 import java.util.ArrayList;
 
 import com.example.assignment3.R;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
+import com.example.assignment3.Uno.UnoCard.UnoColorPopUpWindow;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
+import com.example.assignment3.Uno.UnoMainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import GameFramework.GameMainActivity;
@@ -30,6 +35,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private ImageButton cardSlotThree = null;
     private ImageButton cardSlotFour = null;
 
+    private UnoColorPopUpWindow popUp;
+    private ImageButton card = null;
     /**
      * constructor
      *
@@ -299,7 +306,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     public void onClick(View v) {
 
         ArrayList<UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
-
+        if(popUp == null) {
+            popUp = new UnoColorPopUpWindow(game);
+        }
         //If the Draw Card button is clicked.
         // the local game automatically tells the player if it's a valid/invalid move
         if (v.equals(myActivity.findViewById(R.id.deckSlot))) {
@@ -309,6 +318,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         //If the Play Card button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.cardSlot1)) || v.equals(myActivity.findViewById(R.id.cardSlot2)) || v.equals(myActivity.findViewById(R.id.cardSlot3)) || v.equals(myActivity.findViewById(R.id.cardSlot4))) {
 
+            int cardNumber = -1;
+            int cardAbility = -1;
+            int cardColor = -1;
             setCardView();
                /*for (int j = 0; j < hand.size() - 1; j++) {
                    if (hand.get(j) instanceof UnoNumberCard) {
@@ -332,8 +344,33 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                    }
                }*/
 
-
+            for (int j = 0; j < hand.size() - 1; j++) {
+                if (hand.get(j) instanceof UnoNumberCard) {
+                    if (((UnoNumberCard) hand.get(j)).getNum() == cardNumber && hand.get(j).getColor() == cardColor) {
+                        UnoPlayCardAction play = new UnoPlayCardAction(this, j);
+                        game.sendAction(play);
+                        //This will be checking if the Uno Button has been selected.
+                        if (hand.size() == 1) {
+                            UnoDrawCardAction draw = new UnoDrawCardAction(this);
+                            game.sendAction(draw);
+                            game.sendAction(draw);
+                        }
+                        break;
+                    }
+                } else if (hand.get(j) instanceof UnoSpecialCard) {
+                    if (((UnoSpecialCard) hand.get(j)).getAbility() == cardNumber && hand.get(j).getColor() == cardColor) {
+                        UnoPlayCardAction play = new UnoPlayCardAction(this, j);
+                        if (((UnoSpecialCard) hand.get(j)).getAbility() == UnoSpecialCard.WILD || ((UnoSpecialCard) hand.get(j)).getAbility() == UnoSpecialCard.DRAWFOUR) {
+                            //the pop up window
+                            popUp.displayPopUp((UnoMainActivity) this.getActivity());
+                        }
+                        game.sendAction(play);
+                        break;
+                    }
+                }
+            }
         }
+
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
 

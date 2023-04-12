@@ -3,6 +3,7 @@ package com.example.assignment3.Uno;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
+import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 
 import GameFramework.LocalGame;
 import GameFramework.actionMessage.GameAction;
@@ -44,7 +45,24 @@ public class UnoLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
         if(action instanceof UnoPlayCardAction){
-            return gameState.playCard(((UnoPlayCardAction) action).index);
+            if(gameState.playCard(((UnoPlayCardAction) action).index)){
+                if(gameState.getSpcInPlay() == UnoSpecialCard.SKIP){
+                    gameState.skip();
+                }
+                else if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWTWO){
+                    gameState.drawTwo();
+                }
+                else if(gameState.getSpcInPlay() == UnoSpecialCard.REVERSE){
+                    gameState.reverse();
+                }
+                else if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWFOUR){
+                    gameState.drawFour();
+                }
+                return true;
+            }
+            else {
+                return false;
+            }
 
         }
         else if (action instanceof UnoDrawCardAction){

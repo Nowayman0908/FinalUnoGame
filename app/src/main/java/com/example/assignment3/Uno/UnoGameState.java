@@ -264,7 +264,6 @@ public class UnoGameState extends GameState {
         // if it's a wild, it will automatically be red
         if(handArray.get(playerID).get(index).getColor() == UnoCard.COLORLESS) {
             discardPile.add(handArray.get(playerID).remove(index));
-            colorInPlay = UnoCard.RED;
             numInPlay = -1;
             spcInPlay = ((UnoSpecialCard)discardPile.get(discardPile.size() - 1)).getAbility();
         }
@@ -319,7 +318,7 @@ public class UnoGameState extends GameState {
         else{
             order = 1;
         }
-
+        endTurn();
         return true;
     }
 
@@ -334,16 +333,10 @@ public class UnoGameState extends GameState {
         return true;
     }
 
-    // this method is for the wild ability
-    public boolean wild(){
-        return true;
-    }
-
     // this method is for the draw four ability
     // after the next player draws four cards, their turn
     // will end
     public boolean drawFour(){
-        // write code to allow the player to select a color
         for (int i = 0; i < 4; i++){
             drawCard();
         }
@@ -354,6 +347,7 @@ public class UnoGameState extends GameState {
     // this method is for when a player selects a color
     public boolean selectColor(int colorSelected){
         colorInPlay = colorSelected;
+        endTurn();
         return true;
 
     }
