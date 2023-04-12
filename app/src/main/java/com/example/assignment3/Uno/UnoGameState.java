@@ -29,6 +29,8 @@ public class UnoGameState extends GameState {
     private ArrayList <UnoCard> deck = new ArrayList<>(); // An array list of the deck of cards
     private ArrayList <UnoCard> discardPile = new ArrayList<>(); // An array list of the played cards (discard pile)
     private ArrayList<ArrayList<UnoCard>> handArray = new ArrayList<>(); // An array list of player's hands (which are also array lists)
+    private int order = 1; // this is the order of the player's turn (1 is clockwise, -1 is counterclockwise)
+
 
     // %5 |Implement a constructor for your class that initializes all the variables to
     //reflect the start of the game before any actions have been taken.
@@ -299,7 +301,10 @@ public class UnoGameState extends GameState {
     // if there are two players, it will be the player's
     // turn who played the card
     public boolean skip(){
-        playerID = (playerID + 2) % playerNum;
+        playerID = (playerID - order*2) % playerNum;
+        if(playerID < 0){
+            playerID = playerNum + playerID;
+        }
         return true;
     }
 
@@ -307,25 +312,12 @@ public class UnoGameState extends GameState {
     // if there are two players, it will be the player's
     // turn who played the card
 
-    // WIP
     public boolean reverse(){
-        int order;
-        int normal = 0;
-        int reverse = -1;
-
-        order = normal;
-        if (order == normal){
-            if (playerID - 1 < 0){
-                playerID = 4;
-            }
-            else{
-                playerID = (playerID - 1) % playerNum;
-            }
-            order = reverse;
+        if (order == 1){
+            order = -1;
         }
         else{
-            endTurn();
-            order = normal;
+            order = 1;
         }
 
         return true;
@@ -344,7 +336,7 @@ public class UnoGameState extends GameState {
 
     // this method is for the wild ability
     public boolean wild(){
-        // write code for this
+
         return true;
     }
 
@@ -361,14 +353,17 @@ public class UnoGameState extends GameState {
     }
 
     // this method is for when a player selects a color
-    public boolean selectColor(){
-
+    public boolean selectColor(int colorSelected){
+        colorInPlay = colorSelected;
         return true;
 
     }
 
     public boolean endTurn(){
-            playerID = (playerID + 1) % playerNum;
+            playerID = (playerID + order) % playerNum;
+            if (playerID < 0){
+                playerID = playerNum + playerID;
+            }
         return true;
     }
 

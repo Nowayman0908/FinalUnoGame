@@ -53,7 +53,7 @@ public class UnoLocalGame extends LocalGame {
             return true;
         }
         else if (action instanceof UnoSelectColorAction){
-            // write code for this
+            gameState.selectColor(((UnoSelectColorAction) action).selectedColor);
             return true;
         }
         return false;
