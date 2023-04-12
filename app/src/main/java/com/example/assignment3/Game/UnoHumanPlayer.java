@@ -1,5 +1,6 @@
 package com.example.assignment3.Game;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.view.View;
@@ -7,16 +8,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 
 import java.util.ArrayList;
 
 import com.example.assignment3.R;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
+import com.example.assignment3.Uno.UnoCard.UnoColorPopUpWindow;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
+import com.example.assignment3.Uno.UnoMainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import GameFramework.GameMainActivity;
@@ -281,6 +286,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
                     } else if (hand.get(j) instanceof UnoSpecialCard) {
                         if (((UnoSpecialCard) hand.get(j)).getAbility() == cardNumber && hand.get(j).getColor() == cardColor) {
                             UnoPlayCardAction play = new UnoPlayCardAction(this, j);
+                            if(((UnoSpecialCard) hand.get(j)).getAbility() == UnoSpecialCard.WILD || ((UnoSpecialCard) hand.get(j)).getAbility() == UnoSpecialCard.DRAWFOUR){
+                                //the pop up window
+                                UnoColorPopUpWindow.displayPopUp((UnoMainActivity) this.getActivity());
+                            }
                             game.sendAction(play);
                             break;
                         }
@@ -295,4 +304,5 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener  
             }
 
         }
+
     }

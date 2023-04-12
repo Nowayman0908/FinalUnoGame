@@ -2,6 +2,7 @@ package com.example.assignment3.Uno;
 
 import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 
 import java.util.ArrayList;
@@ -336,7 +337,6 @@ public class UnoGameState extends GameState {
 
     // this method is for the wild ability
     public boolean wild(){
-
         return true;
     }
 
