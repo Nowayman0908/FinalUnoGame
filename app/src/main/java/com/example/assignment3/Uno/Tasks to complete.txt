@@ -8,5 +8,5 @@ play to win/delay the game.
 - Remote play with other players needs to be possible over the internet, which will be a lesson it itself.
 - The Rules of Uno need to be implemented, Special Card Functions, Stating Uno on the last card, etc.
 - Reorganization of the code into different Packages to make it easier to work on and group. (In other Words, an UnoCard package to manage all of the Uno Card Packages.)
-- Add select color action for the Wild and Draw Four Card.
+- Add select color action for the Wild and Draw Four Card. *
 - Add in the Uno Button Rule in which not stating Uno will result in auto drawing cards.

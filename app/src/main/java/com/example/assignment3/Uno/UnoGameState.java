@@ -359,6 +359,8 @@ public class UnoGameState extends GameState {
 
     }
 
+    // based on the order (clockwise or counterclockwise), the playerID
+    // will change accordingly
     public boolean endTurn(){
             playerID = (playerID + order) % playerNum;
             if (playerID < 0){
