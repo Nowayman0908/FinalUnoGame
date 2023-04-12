@@ -43,7 +43,6 @@ public class UnoGameState extends GameState {
         playerNum = 2;
         colorInPlay = 1;
         playerID = 0;
-        int wildCheck;
 
 
 
@@ -368,6 +367,21 @@ public class UnoGameState extends GameState {
             }
         return true;
     }
+
+    public void setPlayerHand (int playerID){
+        UnoSpecialCard wild = new UnoSpecialCard(UnoCard.COLORLESS,UnoSpecialCard.WILD);
+        UnoSpecialCard drawTwo = new UnoSpecialCard(UnoCard.RED,UnoSpecialCard.DRAWTWO);
+        UnoSpecialCard drawFour = new UnoSpecialCard(UnoCard.COLORLESS,UnoSpecialCard.DRAWFOUR);
+        UnoSpecialCard reverse = new UnoSpecialCard(UnoCard.RED,UnoSpecialCard.REVERSE);
+        UnoSpecialCard skip = new UnoSpecialCard(UnoCard.RED,UnoSpecialCard.SKIP);
+        handArray.get(playerID).clear();
+        handArray.get(playerID).add(wild);
+        handArray.get(playerID).add(drawTwo);
+        handArray.get(playerID).add(drawFour);
+        handArray.get(playerID).add(reverse);
+        handArray.get(playerID).add(skip);
+    }
+
 
     // This method is just a way for us to check the deck
     public void printDeck(){
