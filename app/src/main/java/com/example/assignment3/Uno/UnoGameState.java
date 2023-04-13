@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 
+import com.example.assignment3.Game.UnoHumanPlayer;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
@@ -118,6 +119,8 @@ public class UnoGameState extends GameState {
                 handArray.get(i).add(deck.remove(0));
             }
         }
+        System.out.println("Printing player " + getPlayerID() + "'s hand");
+        printHand();
 
     }
     public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId){
@@ -349,9 +352,9 @@ public class UnoGameState extends GameState {
                 @Override
                 public void onFinish() {
                     System.out.println("NO UNO LOSER");
-                    for(int i = 0; i < 3; i++){
-                        drawCard();
-                    }
+                    drawCard();
+                    drawCard();
+
                     playerID = (playerID + order) % playerNum;
                     if (playerID < 0){
                         playerID = playerNum + playerID;
@@ -387,6 +390,49 @@ public class UnoGameState extends GameState {
     public void printDeck(){
         // for each card (c) in the deck
         for(UnoCard c : deck) {
+            String cardStr = ""; // building a string to print
+
+            // these if-statements check the color
+            if(c.getColor() == UnoCard.RED) {
+                cardStr = cardStr + "Red ";
+            }
+            else if(c.getColor() == UnoCard.GREEN) {
+                cardStr = cardStr + "Green ";
+            }
+            else if(c.getColor() == UnoCard.BLUE) {
+                cardStr = cardStr + "Blue ";
+            }
+            else if(c.getColor() == UnoCard.YELLOW) {
+                cardStr = cardStr + "Yellow ";
+            }
+
+            // the outermost if-statement checks if the card is a special card
+            // if it is, it checks what kind of special card it is
+            if(c instanceof UnoSpecialCard) {
+                if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.SKIP){
+                    cardStr = cardStr + "Skip";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.DRAWTWO){
+                    cardStr = cardStr + "Draw Two";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.REVERSE){
+                    cardStr = cardStr + "Reverse";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.WILD){
+                    cardStr = cardStr + "Wild";
+                }
+            }
+            // if else (not a special card), it gets the number of the card
+            else {
+                cardStr = cardStr + ((UnoNumberCard) c).getNum();
+            }
+            System.out.println(cardStr); // prints the built string
+        }
+    }
+
+    public void printHand(){
+        // for each card (c) in the player's hand
+        for(UnoCard c : handArray.get(playerID)) {
             String cardStr = ""; // building a string to print
 
             // these if-statements check the color

@@ -31,7 +31,8 @@ public class SmartAIPlayer extends GameComputerPlayer {
         }
         try {
             Thread.sleep(250);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
 
         }
             ArrayList<UnoCard> unoCards = gameState.getHandArray().get(this.playerNum);

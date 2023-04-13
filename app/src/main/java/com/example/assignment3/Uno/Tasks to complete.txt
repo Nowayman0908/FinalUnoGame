@@ -1,10 +1,9 @@
 Tasks to be done:
 1) The Rules of Uno need to be implemented, Special Card Functions, Stating Uno on the last card, ending the game once a player has Zero Cards and
-showing this on the GUI.
-2) Add in the Uno Button Rule in which not stating Uno will result in auto drawing two cards.
+showing this on the GUI. *
+2) Add in the Uno Button Rule in which not stating Uno will result in auto drawing two cards. *
 3) Smart AI needs to have a ranking system in which it takes into account the other players hand size, current color/number, and determines the
-best possible card to
-play to win/delay the game.
+best possible card to play to win/delay the game. ** looks complete, but we may need to test this
 4) Fully test Special Card functionality for Bugs.
 5) GUI interface needs to be realized with Uno Button, Text that shows other players hand size and the next players turn ID, functioning Hand
 iteration/swap buttons.

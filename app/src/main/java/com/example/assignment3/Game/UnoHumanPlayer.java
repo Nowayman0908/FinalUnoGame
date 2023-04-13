@@ -4,18 +4,24 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import com.example.assignment3.R;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
+import com.example.assignment3.Uno.UnoCard.UnoColorPopUpWindow;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
+import com.example.assignment3.Uno.UnoMainActivity;
+import com.google.android.material.textfield.TextInputEditText;
 
 import GameFramework.GameMainActivity;
 import GameFramework.infoMessage.GameInfo;
@@ -33,9 +39,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private Button rightButton = null;
     private Button unoButton = null;
 
-    private int handCounter = 1;
+    private int handCounter = 0;
     private int indexOfCard = -1;
 
+    private UnoColorPopUpWindow popUp;
+    private ImageButton card = null;
     /**
      * constructor
      *
@@ -56,6 +64,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             firstInstance = (UnoGameState) info;
             setCardView();
             setPlayedCard();
+            System.out.println(((UnoGameState) info).getPlayerID());
+
             if (((UnoGameState) info).getHandSize() == 2){
                 unoButton.setVisibility(View.VISIBLE);
             }
@@ -288,21 +298,24 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
     public void setCardView(){
         ArrayList<UnoCard> playerHand = firstInstance.getHandArray().get(firstInstance.getPlayerID());
-        int arrayLength = Math.min(playerHand.size(), 4);
-        for (int i = handCounter; i <= arrayLength+(handCounter-1); i++) {
+        int arrayLength = 4;
+        if(playerHand.size() < 4){
+            arrayLength = playerHand.size();
+        }
+        for (int i = handCounter ; i < arrayLength + handCounter; i++) {
             //The game crashes if there are less than four cards to display.
-            if(playerHand.size() <= i){
+            if(i >= playerHand.size()){
                 break;
             }
             int cardColor = playerHand.get(i).getColor();
             int cardNum = -1;
             int ability = -1;
-            if (playerHand.get(i-1) instanceof UnoNumberCard) {
-                cardNum = ((UnoNumberCard) playerHand.get(i-1)).getNum();
-            } else if (playerHand.get(i-1) instanceof UnoSpecialCard) {
-                ability = ((UnoSpecialCard) playerHand.get(i-1)).getAbility();
+            if (playerHand.get(i) instanceof UnoNumberCard) {
+                cardNum = ((UnoNumberCard) playerHand.get(i)).getNum();
+            } else if (playerHand.get(i) instanceof UnoSpecialCard) {
+                ability = ((UnoSpecialCard) playerHand.get(i)).getAbility();
             }
-            switch (i-1) {
+            switch (i-handCounter) {
                 case 0:
                     setImage(cardSlotOne, cardColor, cardNum, ability);
                     break;
@@ -359,18 +372,22 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     @Override
     public void onClick(View v) {
 
+        ArrayList<UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(this.playerNum);
+        if(popUp == null) {
+            popUp = new UnoColorPopUpWindow(game);
+        }
         setPlayedCard();
 
-        if(v.equals(leftButton) && handCounter > 1){
+        if(v.equals(leftButton) && handCounter > 0){
             handCounter--;
             setCardView();
         }
-        else if(v.equals(leftButton) && handCounter == 1){
-            flash(Color.RED,100);
-        }
-        else if(v.equals(rightButton)){
+        else if(v.equals(rightButton) && hand.size() > handCounter + 4){
             handCounter++;
             setCardView();
+        }
+        else if(handCounter == 0 || handCounter == hand.size() - 4){
+            flash(Color.RED,500);
         }
 
         //If the Draw Card button is clicked.
@@ -382,21 +399,21 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         //If the Play Card button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.cardSlot1)) || v.equals(myActivity.findViewById(R.id.cardSlot2)) || v.equals(myActivity.findViewById(R.id.cardSlot3)) || v.equals(myActivity.findViewById(R.id.cardSlot4))) {
 
-            setCardView();
+            //setCardView();
             if(v.equals(myActivity.findViewById(R.id.cardSlot1))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 4);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,0 + handCounter);
                 game.sendAction(play);
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot2))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 3);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,1 + handCounter);
                 game.sendAction(play);
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot3))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 2);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,2 + handCounter);
                 game.sendAction(play);
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot4))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 1);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,3 + handCounter);
                 game.sendAction(play);
             }
         }
