@@ -2,6 +2,7 @@ package com.example.assignment3.Uno;
 
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoPressUnoButtonAction;
 import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 
@@ -72,7 +73,12 @@ public class UnoLocalGame extends LocalGame {
         }
         else if (action instanceof UnoSelectColorAction){
             gameState.selectColor(((UnoSelectColorAction) action).selectedColor);
+            gameState.endTurn();
             return true;
+        }
+        else if (action instanceof UnoPressUnoButtonAction){
+            gameState.getTimer().cancel();
+            gameState.endTurn();
         }
         return false;
     }

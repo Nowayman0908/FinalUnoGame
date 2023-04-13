@@ -1,5 +1,7 @@
 package com.example.assignment3.Uno;
 
+import android.os.CountDownTimer;
+
 import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
@@ -31,6 +33,7 @@ public class UnoGameState extends GameState {
     private ArrayList <UnoCard> discardPile = new ArrayList<>(); // An array list of the played cards (discard pile)
     private ArrayList<ArrayList<UnoCard>> handArray = new ArrayList<>(); // An array list of player's hands (which are also array lists)
     private int order = 1; // this is the order of the player's turn (1 is clockwise, -1 is counterclockwise)
+    private CountDownTimer timer;
 
 
     // %5 |Implement a constructor for your class that initializes all the variables to
@@ -215,6 +218,9 @@ public class UnoGameState extends GameState {
     public ArrayList getDiscardPile(){
         return discardPile;
     }
+    public CountDownTimer getTimer() {
+        return timer;
+    }
 
     //Set method Row.
     //This method checks if either the played number or color match and then changes them in either or
@@ -300,10 +306,8 @@ public class UnoGameState extends GameState {
     // if there are two players, it will be the player's
     // turn who played the card
     public boolean skip(){
-        playerID = (playerID - order*2) % playerNum;
-        if(playerID < 0){
-            playerID = playerNum + playerID;
-        }
+        endTurn();
+        endTurn();
         return true;
     }
 
@@ -347,7 +351,6 @@ public class UnoGameState extends GameState {
     // this method is for when a player selects a color
     public boolean selectColor(int colorSelected){
         colorInPlay = colorSelected;
-        endTurn();
         return true;
 
     }
@@ -355,10 +358,32 @@ public class UnoGameState extends GameState {
     // based on the order (clockwise or counterclockwise), the playerID
     // will change accordingly
     public boolean endTurn(){
+        if (handArray.size() == 1){
+            timer = new CountDownTimer(3000, 1000) {
+                @Override
+                public void onTick(long l) {
+                    // do nothing
+                }
+
+                @Override
+                public void onFinish() {
+                    System.out.println("NO UNO LOSER");
+                    for(int i = 0; i < 3; i++){
+                        drawCard();
+                    }
+                    playerID = (playerID + order) % playerNum;
+                    if (playerID < 0){
+                        playerID = playerNum + playerID;
+                    }
+                }
+            }.start();
+        }
+        else {
             playerID = (playerID + order) % playerNum;
             if (playerID < 0){
                 playerID = playerNum + playerID;
             }
+        }
         return true;
     }
 

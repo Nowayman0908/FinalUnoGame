@@ -35,6 +35,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private ImageButton cardSlotThree = null;
     private ImageButton cardSlotFour = null;
 
+    private Button unoButton = null;
+
     private UnoColorPopUpWindow popUp;
     private ImageButton card = null;
     /**
@@ -56,6 +58,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         if (info instanceof UnoGameState) {
             firstInstance = (UnoGameState) info;
             setCardView();
+
+            if (((UnoGameState) info).getHandSize() == 2){
+                unoButton.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -76,6 +82,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         cardSlotFour.setOnClickListener(this);
         ImageButton deckSlot = activity.findViewById(R.id.deckSlot);
         deckSlot.setOnClickListener(this);
+        this.unoButton = activity.findViewById(R.id.unoButton);
+        unoButton.setOnClickListener(this);
 
     }
 
@@ -373,7 +381,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
-
+                v.setVisibility(View.INVISIBLE);
         }
 
     }
