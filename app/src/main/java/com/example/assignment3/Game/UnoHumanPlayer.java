@@ -28,6 +28,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private ImageButton discardPile = null;
     private Button leftButton = null;
     private Button rightButton = null;
+    private Button unoButton = null;
+
     private int handCounter = 1;
 
     /**
@@ -49,6 +51,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         if (info instanceof UnoGameState) {
             firstInstance = (UnoGameState) info;
             setCardView();
+            setPlayedCard();
+        }
+        if (((UnoGameState) info).getHandSize() == 2){
+            unoButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -74,7 +80,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         this.rightButton = activity.findViewById(R.id.rightButton);
         rightButton.setOnClickListener(this);
         this.discardPile = activity.findViewById(R.id.playedCard);
-
+        this.unoButton = activity.findViewById(R.id.unoButton);
+        unoButton.setOnClickListener(this);
     }
 
     public void setImage(ImageButton cardSlot, int color, int num, int ability) {
@@ -111,7 +118,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     cardSlot.setImageResource(R.drawable.red_9);
                     break;
             }
-        } else if (color == UnoCard.RED && ability != -1) {
+        } else if (color == UnoCard.RED) {
             switch (ability) {
                 case UnoSpecialCard.SKIP:
                     cardSlot.setImageResource(R.drawable.red_skip);
@@ -156,7 +163,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     cardSlot.setImageResource(R.drawable.green_9);
                     break;
             }
-        } else if (color == UnoCard.GREEN && ability != -1) {
+        } else if (color == UnoCard.GREEN) {
             switch (ability) {
                 case UnoSpecialCard.SKIP:
                     cardSlot.setImageResource(R.drawable.green_skip);
@@ -201,7 +208,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     cardSlot.setImageResource(R.drawable.blue_9);
                     break;
             }
-        } else if (color == UnoCard.BLUE && ability != -1) {
+        } else if (color == UnoCard.BLUE) {
             switch (ability) {
                 case UnoSpecialCard.SKIP:
                     cardSlot.setImageResource(R.drawable.blue_skip);
@@ -246,7 +253,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     cardSlot.setImageResource(R.drawable.yellow_9);
                     break;
             }
-        } else if (color == UnoCard.YELLOW && ability != -1) {
+        } else if (color == UnoCard.YELLOW) {
             switch (ability) {
                 case UnoSpecialCard.SKIP:
                     cardSlot.setImageResource(R.drawable.yellow_skip);
@@ -388,7 +395,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         }
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
-
+            v.setVisibility(View.INVISIBLE);
         }
 
     }
