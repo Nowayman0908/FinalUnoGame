@@ -1,9 +1,11 @@
 package com.example.assignment3.Game;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,11 +28,13 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private ImageButton cardSlotThree = null;
     private ImageButton cardSlotFour = null;
     private ImageButton discardPile = null;
+    private TextView status = null;
     private Button leftButton = null;
     private Button rightButton = null;
     private Button unoButton = null;
 
     private int handCounter = 1;
+    private int indexOfCard = -1;
 
     /**
      * constructor
@@ -52,10 +56,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             firstInstance = (UnoGameState) info;
             setCardView();
             setPlayedCard();
+            if (((UnoGameState) info).getHandSize() == 2){
+                unoButton.setVisibility(View.VISIBLE);
+            }
         }
-        if (((UnoGameState) info).getHandSize() == 2){
-            unoButton.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
@@ -82,6 +87,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         this.discardPile = activity.findViewById(R.id.playedCard);
         this.unoButton = activity.findViewById(R.id.unoButton);
         unoButton.setOnClickListener(this);
+        this.status = activity.findViewById(R.id.status);
     }
 
     public void setImage(ImageButton cardSlot, int color, int num, int ability) {
@@ -276,17 +282,14 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             }
         }
         else{
-            cardSlot.setImageResource(R.drawable.unocard);
+            cardSlot.setImageResource(R.drawable.unocard_grey);
         }
     }
 
     public void setCardView(){
         ArrayList<UnoCard> playerHand = firstInstance.getHandArray().get(firstInstance.getPlayerID());
-        int arrayLength = 4;
-        if(playerHand.size() < 4){
-            arrayLength = playerHand.size();
-        }
-        for (int i = 1* handCounter ; i <= arrayLength*handCounter; i++) {
+        int arrayLength = Math.min(playerHand.size(), 4);
+        for (int i = handCounter; i <= arrayLength+(handCounter-1); i++) {
             //The game crashes if there are less than four cards to display.
             if(playerHand.size() <= i){
                 break;
@@ -313,6 +316,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     setImage(cardSlotFour, cardColor, cardNum, ability);
                     break;
             }
+            indexOfCard = i;
         }
         if(arrayLength < 4){
             int changeCard = 4 - arrayLength;
@@ -355,17 +359,20 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        ArrayList<UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
         setPlayedCard();
 
         if(v.equals(leftButton) && handCounter > 1){
             handCounter--;
             setCardView();
         }
+        else if(v.equals(leftButton) && handCounter == 1){
+            flash(Color.RED,100);
+        }
         else if(v.equals(rightButton)){
             handCounter++;
             setCardView();
         }
+
         //If the Draw Card button is clicked.
         // the local game automatically tells the player if it's a valid/invalid move
         if (v.equals(myActivity.findViewById(R.id.deckSlot))) {
@@ -377,19 +384,19 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
             setCardView();
             if(v.equals(myActivity.findViewById(R.id.cardSlot1))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,0);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 4);
                 game.sendAction(play);
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot2))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,1);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 3);
                 game.sendAction(play);
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot3))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,2);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 2);
                 game.sendAction(play);
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot4))){
-                UnoPlayCardAction play = new UnoPlayCardAction(this,3);
+                UnoPlayCardAction play = new UnoPlayCardAction(this,indexOfCard - 1);
                 game.sendAction(play);
             }
         }
@@ -397,6 +404,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
             v.setVisibility(View.INVISIBLE);
         }
-
+        status.setText("");
+        for(int k = 1; k < firstInstance.getPlayerNum();k++){
+            String playerText = "Player " + k + " hand size: " + firstInstance.getHandArray().get(k).size();
+            status.setText(playerText);
+        }
     }
 }

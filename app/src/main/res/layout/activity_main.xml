@@ -11,13 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="104dp"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        tools:layout_editor_absoluteY="104dp" />
 
     <ImageButton
         android:id="@+id/cardSlot1"
@@ -137,14 +131,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="200dp"
-        android:visibility="invisible"
         android:text="Uno"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="570dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="292dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,14 +2,14 @@ package com.example.assignment3.Uno;
 
 import android.os.CountDownTimer;
 
+import androidx.annotation.NonNull;
+
 import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
-import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import GameFramework.infoMessage.GameState;
 
@@ -23,12 +23,9 @@ public class UnoGameState extends GameState {
     private int numInPlay; //The current number on the played area. (-1 if not a number)
 
     private int spcInPlay; // the current special number in the played area. (-1 if not special)
-    private int playerNum; //Number of players in the game.
+    private final int playerNum; //Number of players in the game.
     private int playerID; //ID of the player.
     private int colorInPlay; //The current number on the played area.
-    private Random ran = new Random(); //The random object used the generate the numbers for colorSelect.
-    private int colorSelect; //Variable used to assign cards a Color int from 0 - 3.
-    private int numSelect; //Variable used to assign cards a number to represent cards from 0 - 14;
     private ArrayList <UnoCard> deck = new ArrayList<>(); // An array list of the deck of cards
     private ArrayList <UnoCard> discardPile = new ArrayList<>(); // An array list of the played cards (discard pile)
     private ArrayList<ArrayList<UnoCard>> handArray = new ArrayList<>(); // An array list of player's hands (which are also array lists)
@@ -47,14 +44,6 @@ public class UnoGameState extends GameState {
         colorInPlay = 1;
         playerID = 0;
 
-
-
-        /**
-         * the outer for-loop iterates through the all of the number cards except 0 (1-9)
-         * the inner loop creates 2 copies of the cards (doubles them)
-         * this loops creates a total of 72 cards
-         * at the end, the cards are added to the deck
-         */
 
         for(int i = 1; i <= 9; i++){
             for (int j = 0; j < 2; j++){
@@ -81,12 +70,6 @@ public class UnoGameState extends GameState {
         deck.add(blueCard);
         deck.add(yellowCard);
 
-        /**
-         * the outer for-loop increments through the different special cards except for wild cards (SKIP to REVERSE)
-         * the inner for-loop creates 2 copies of the cards (doubles them)
-         * this loop creates a total of 24 cards
-         * and adds them to the deck
-         */
         for(int i = UnoSpecialCard.SKIP; i <= UnoSpecialCard.REVERSE; i++){
             for(int j = 0; j < 2; j++){
                 UnoSpecialCard specialRedCard = new UnoSpecialCard(UnoCard.RED, i);
@@ -129,7 +112,7 @@ public class UnoGameState extends GameState {
 
         // this adds a player's hand (an array list) into the handArray array list
         for (int i = 0; i < playerNum; i++){
-            handArray.add(new ArrayList<UnoCard> (handSize));
+            handArray.add(new ArrayList<>(handSize));
             // this adds 7 cards from the deck into the player's hands
             for(int j = 0; j < 7; j++) {
                 handArray.get(i).add(deck.remove(0));
@@ -197,6 +180,7 @@ public class UnoGameState extends GameState {
         handArray = copyHands;
     }
 
+    @NonNull
     @Override
     public String toString(){
         String stateOfGame;
@@ -211,7 +195,8 @@ public class UnoGameState extends GameState {
     public int getPlayerID() { return playerID; }
     public int getNumInPlay() { return numInPlay; }
     public int getColorInPlay(){ return colorInPlay; }
-    public int getSpcInPlay(){return spcInPlay; };
+    public int getSpcInPlay(){return spcInPlay; }
+
     public ArrayList<ArrayList<UnoCard>> getHandArray(){
         return handArray;
     }
@@ -225,14 +210,10 @@ public class UnoGameState extends GameState {
     //Set method Row.
     //This method checks if either the played number or color match and then changes them in either or
     //both cases.
-    public boolean setCardInPlay(int usedPlayerID, int usedNum, int usedColor){
+    public void setCardInPlay(int usedPlayerID, int usedNum, int usedColor){
         if(this.playerID == usedPlayerID && this.numInPlay == usedNum || this.colorInPlay == usedColor) {
             numInPlay = usedNum;
             colorInPlay = usedColor;
-            return true;
-        }
-        else{
-            return false;
         }
     }
 
