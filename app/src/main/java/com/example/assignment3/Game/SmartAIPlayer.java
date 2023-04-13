@@ -30,7 +30,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
             return;
         }
         try {
-            Thread.sleep(250);
+            Thread.sleep(750);
         }
         catch (Exception e) {
 

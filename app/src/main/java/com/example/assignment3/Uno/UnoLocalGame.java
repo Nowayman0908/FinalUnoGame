@@ -49,17 +49,23 @@ public class UnoLocalGame extends LocalGame {
             if(gameState.playCard(((UnoPlayCardAction) action).index)){
                 if(gameState.getSpcInPlay() == UnoSpecialCard.SKIP){
                     gameState.skip();
+                    sendAllUpdatedState();
                 }
                 else if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWTWO){
                     gameState.drawTwo();
+                    sendAllUpdatedState();
                 }
                 else if(gameState.getSpcInPlay() == UnoSpecialCard.REVERSE){
                     gameState.reverse();
+                    sendAllUpdatedState();
                 }
                 else if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWFOUR){
                     gameState.drawFour();
                 }
-                sendAllUpdatedState();
+                else if(gameState.getSpcInPlay() == -1){
+                    sendAllUpdatedState();
+                    gameState.endTurn();
+                }
                 return true;
             }
             else {

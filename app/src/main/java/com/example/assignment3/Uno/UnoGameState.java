@@ -267,7 +267,6 @@ public class UnoGameState extends GameState {
                 spcInPlay = ((UnoSpecialCard) discardPile.get(discardPile.size() - 1)).getAbility();
                 numInPlay = -1;
             }
-            endTurn();
             return true;
         }
         else if(handArray.get(playerID).get(index).isSpecial() && ((UnoSpecialCard) handArray.get(playerID).get(index)).getAbility() == spcInPlay) {
@@ -300,6 +299,10 @@ public class UnoGameState extends GameState {
     // turn who played the card
 
     public boolean reverse(){
+        if(playerNum == 2){
+            skip();
+            return true;
+        }
         if (order == 1){
             order = -1;
         }
@@ -313,11 +316,11 @@ public class UnoGameState extends GameState {
     // this method is for the draw 2 ability
     // when the player draws 2 cards, their turn is skipped
     public boolean drawTwo(){
+        endTurn();
         for (int i = 0; i < 2; i++){
             drawCard();
         }
         endTurn();
-
         return true;
     }
 
@@ -325,10 +328,18 @@ public class UnoGameState extends GameState {
     // after the next player draws four cards, their turn
     // will end
     public boolean drawFour(){
-        for (int i = 0; i < 4; i++){
-            drawCard();
+        int nextPlayer = playerID + order;
+
+        if(nextPlayer == -1){
+            nextPlayer = playerNum - 1;
         }
-        endTurn();
+        else if (nextPlayer == playerNum){
+            nextPlayer = 0;
+        }
+        for (int i = 0; i < 4; i++){
+            handArray.get(nextPlayer).add(deck.remove(0));
+        }
+
         return true;
     }
 
@@ -342,7 +353,7 @@ public class UnoGameState extends GameState {
     // based on the order (clockwise or counterclockwise), the playerID
     // will change accordingly
     public boolean endTurn(){
-        if (handArray.size() == 1){
+        if (handArray.get(playerID).size() == 1){
             timer = new CountDownTimer(3000, 1000) {
                 @Override
                 public void onTick(long l) {

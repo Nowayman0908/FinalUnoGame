@@ -14,11 +14,10 @@ import GameFramework.utilities.MessageBox;
 
 public class UnoColorPopUpWindow extends MessageBox implements DialogInterface.OnClickListener{
 
-    public int selectedColor;
     // the game to send actions to
-    private Game game;
+    private Game game = null;
     // the gui player that the popup appears on
-    private GamePlayer player;
+    private UnoHumanPlayer player;
     public void displayPopUp(UnoMainActivity activity) {
 
         String[] items = new String[]{"Red", "Green", "Blue", "Yellow"};
@@ -31,7 +30,6 @@ public class UnoColorPopUpWindow extends MessageBox implements DialogInterface.O
 
     @Override
     public void onClick(DialogInterface dialogInterface, int chosen) {
-        UnoSelectColorAction selectedColor = new UnoSelectColorAction(player, chosen);
         if(chosen == UnoCard.RED) {
             System.out.println("Red chosen");
         }
@@ -45,10 +43,11 @@ public class UnoColorPopUpWindow extends MessageBox implements DialogInterface.O
             System.out.println("Yellow chosen");
         }
 
-        game.sendAction(selectedColor);
+        player.chooseColor(chosen);
     }
 
-    public UnoColorPopUpWindow(Game game){
+    public UnoColorPopUpWindow(Game game, UnoHumanPlayer player){
         this.game = game;
+        this.player = player;
     }
 }

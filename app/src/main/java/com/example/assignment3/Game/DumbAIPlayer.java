@@ -36,7 +36,7 @@ public class DumbAIPlayer extends GameComputerPlayer {
             return;
         }
         try {
-            Thread.sleep(500);
+            Thread.sleep(750);
         } catch (Exception e) {
 
         }
