@@ -1,28 +1,19 @@
 package com.example.assignment3.Game;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 
 import java.util.ArrayList;
 
 import com.example.assignment3.R;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
-import com.example.assignment3.Uno.UnoCard.UnoColorPopUpWindow;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
-import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
-import com.example.assignment3.Uno.UnoMainActivity;
-import com.google.android.material.textfield.TextInputEditText;
 
 import GameFramework.GameMainActivity;
 import GameFramework.infoMessage.GameInfo;
@@ -34,11 +25,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private ImageButton cardSlotTwo = null;
     private ImageButton cardSlotThree = null;
     private ImageButton cardSlotFour = null;
+    private ImageButton discardPile = null;
+    private Button leftButton = null;
+    private Button rightButton = null;
+    private int handCounter = 1;
 
-    private Button unoButton = null;
-
-    private UnoColorPopUpWindow popUp;
-    private ImageButton card = null;
     /**
      * constructor
      *
@@ -58,10 +49,6 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         if (info instanceof UnoGameState) {
             firstInstance = (UnoGameState) info;
             setCardView();
-
-            if (((UnoGameState) info).getHandSize() == 2){
-                unoButton.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -82,8 +69,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         cardSlotFour.setOnClickListener(this);
         ImageButton deckSlot = activity.findViewById(R.id.deckSlot);
         deckSlot.setOnClickListener(this);
-        this.unoButton = activity.findViewById(R.id.unoButton);
-        unoButton.setOnClickListener(this);
+        this.leftButton = activity.findViewById(R.id.leftButton);
+        leftButton.setOnClickListener(this);
+        this.rightButton = activity.findViewById(R.id.rightButton);
+        rightButton.setOnClickListener(this);
+        this.discardPile = activity.findViewById(R.id.playedCard);
 
     }
 
@@ -278,20 +268,31 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     break;
             }
         }
+        else{
+            cardSlot.setImageResource(R.drawable.unocard);
+        }
     }
 
     public void setCardView(){
         ArrayList<UnoCard> playerHand = firstInstance.getHandArray().get(firstInstance.getPlayerID());
-        for (int i = 0; i < 4; i++) {
+        int arrayLength = 4;
+        if(playerHand.size() < 4){
+            arrayLength = playerHand.size();
+        }
+        for (int i = 1* handCounter ; i <= arrayLength*handCounter; i++) {
+            //The game crashes if there are less than four cards to display.
+            if(playerHand.size() <= i){
+                break;
+            }
             int cardColor = playerHand.get(i).getColor();
             int cardNum = -1;
             int ability = -1;
-            if (playerHand.get(i) instanceof UnoNumberCard) {
-                cardNum = ((UnoNumberCard) playerHand.get(i)).getNum();
-            } else if (playerHand.get(i) instanceof UnoSpecialCard) {
-                ability = ((UnoSpecialCard) playerHand.get(i)).getAbility();
+            if (playerHand.get(i-1) instanceof UnoNumberCard) {
+                cardNum = ((UnoNumberCard) playerHand.get(i-1)).getNum();
+            } else if (playerHand.get(i-1) instanceof UnoSpecialCard) {
+                ability = ((UnoSpecialCard) playerHand.get(i-1)).getAbility();
             }
-            switch (i) {
+            switch (i-1) {
                 case 0:
                     setImage(cardSlotOne, cardColor, cardNum, ability);
                     break;
@@ -305,17 +306,58 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     setImage(cardSlotFour, cardColor, cardNum, ability);
                     break;
             }
-
-
+        }
+        if(arrayLength < 4){
+            int changeCard = 4 - arrayLength;
+            switch (changeCard){
+                case 1:
+                    setImage(cardSlotFour, -99, -99, -99);
+                    break;
+                case 2:
+                    setImage(cardSlotThree,-99, -99, -99);
+                    setImage(cardSlotFour, -99, -99, -99);
+                    break;
+                case 3:
+                    setImage(cardSlotTwo, -99, -99, -99);
+                    setImage(cardSlotThree,-99, -99, -99);
+                    setImage(cardSlotFour, -99, -99, -99);
+                    break;
+                case 4:
+                    setImage(cardSlotOne,-99, -99, -99);
+                    setImage(cardSlotTwo, -99, -99, -99);
+                    setImage(cardSlotThree,-99, -99, -99);
+                    setImage(cardSlotFour, -99, -99, -99);
+                    break;
+            }
         }
     }
 
+    public void setPlayedCard(){
+        UnoCard playedCard = (UnoCard) firstInstance.getDiscardPile().get(firstInstance.getDiscardPile().size() - 1);
+        int pcColor = playedCard.getColor();
+        int pcNum = -1;
+        int pcAbility = -1;
+        if(playedCard instanceof UnoSpecialCard){
+            pcAbility = ((UnoSpecialCard) playedCard).getAbility();
+        }
+        else if(playedCard instanceof UnoNumberCard){
+            pcNum = ((UnoNumberCard) playedCard).getNum();
+        }
+        setImage(discardPile,pcColor,pcNum,pcAbility);
+    }
     @Override
     public void onClick(View v) {
 
         ArrayList<UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(firstInstance.getPlayerID());
-        if(popUp == null) {
-            popUp = new UnoColorPopUpWindow(game);
+        setPlayedCard();
+
+        if(v.equals(leftButton) && handCounter > 1){
+            handCounter--;
+            setCardView();
+        }
+        else if(v.equals(rightButton)){
+            handCounter++;
+            setCardView();
         }
         //If the Draw Card button is clicked.
         // the local game automatically tells the player if it's a valid/invalid move
@@ -326,62 +368,27 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         //If the Play Card button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.cardSlot1)) || v.equals(myActivity.findViewById(R.id.cardSlot2)) || v.equals(myActivity.findViewById(R.id.cardSlot3)) || v.equals(myActivity.findViewById(R.id.cardSlot4))) {
 
-            int cardNumber = -1;
-            int cardAbility = -1;
-            int cardColor = -1;
             setCardView();
-               /*for (int j = 0; j < hand.size() - 1; j++) {
-                   if (hand.get(j) instanceof UnoNumberCard) {
-                       if (((UnoNumberCard) hand.get(j)).getNum() == cardNumber && hand.get(j).getColor() == cardColor) {
-                           UnoPlayCardAction play = new UnoPlayCardAction(this, j);
-                           game.sendAction(play);
-                           //This will be checking if the Uno Button has been selected.
-                           if(hand.size() == 1){
-                               UnoDrawCardAction draw = new UnoDrawCardAction(this);
-                               game.sendAction(draw);
-                               game.sendAction(draw);
-                           }
-                           break;
-                       }
-                   } else if (hand.get(j) instanceof UnoSpecialCard) {
-                       if (((UnoSpecialCard) hand.get(j)).getAbility() == cardNumber && hand.get(j).getColor() == cardColor) {
-                           UnoPlayCardAction play = new UnoPlayCardAction(this, j);
-                           game.sendAction(play);
-                           break;
-                       }
-                   }
-               }*/
-
-            for (int j = 0; j < hand.size() - 1; j++) {
-                if (hand.get(j) instanceof UnoNumberCard) {
-                    if (((UnoNumberCard) hand.get(j)).getNum() == cardNumber && hand.get(j).getColor() == cardColor) {
-                        UnoPlayCardAction play = new UnoPlayCardAction(this, j);
-                        game.sendAction(play);
-                        //This will be checking if the Uno Button has been selected.
-                        if (hand.size() == 1) {
-                            UnoDrawCardAction draw = new UnoDrawCardAction(this);
-                            game.sendAction(draw);
-                            game.sendAction(draw);
-                        }
-                        break;
-                    }
-                } else if (hand.get(j) instanceof UnoSpecialCard) {
-                    if (((UnoSpecialCard) hand.get(j)).getAbility() == cardNumber && hand.get(j).getColor() == cardColor) {
-                        UnoPlayCardAction play = new UnoPlayCardAction(this, j);
-                        if (((UnoSpecialCard) hand.get(j)).getAbility() == UnoSpecialCard.WILD || ((UnoSpecialCard) hand.get(j)).getAbility() == UnoSpecialCard.DRAWFOUR) {
-                            //the pop up window
-                            popUp.displayPopUp((UnoMainActivity) this.getActivity());
-                        }
-                        game.sendAction(play);
-                        break;
-                    }
-                }
+            if(v.equals(myActivity.findViewById(R.id.cardSlot1))){
+                UnoPlayCardAction play = new UnoPlayCardAction(this,0);
+                game.sendAction(play);
+            }
+            else if(v.equals(myActivity.findViewById(R.id.cardSlot2))){
+                UnoPlayCardAction play = new UnoPlayCardAction(this,1);
+                game.sendAction(play);
+            }
+            else if(v.equals(myActivity.findViewById(R.id.cardSlot3))){
+                UnoPlayCardAction play = new UnoPlayCardAction(this,2);
+                game.sendAction(play);
+            }
+            else if(v.equals(myActivity.findViewById(R.id.cardSlot4))){
+                UnoPlayCardAction play = new UnoPlayCardAction(this,3);
+                game.sendAction(play);
             }
         }
-
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
-                v.setVisibility(View.INVISIBLE);
+
         }
 
     }

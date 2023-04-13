@@ -5,5 +5,6 @@ showing this on the GUI.
 3) Smart AI needs to have a ranking system in which it takes into account the other players hand size, current color/number, and determines the
 best possible card to
 play to win/delay the game.
-4) GUI interface needs to be realized with Uno Button, Text that shows other players hand size and the next players turn ID, functioning Hand
+4) Fully test Special Card functionality for Bugs.
+5) GUI interface needs to be realized with Uno Button, Text that shows other players hand size and the next players turn ID, functioning Hand
 iteration/swap buttons.
