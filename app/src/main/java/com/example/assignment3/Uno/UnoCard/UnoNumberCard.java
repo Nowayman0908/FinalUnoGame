@@ -1,5 +1,7 @@
 package com.example.assignment3.Uno.UnoCard;
 
+import androidx.annotation.NonNull;
+
 public class UnoNumberCard extends UnoCard {
 
     //instance variables
@@ -20,6 +22,7 @@ public class UnoNumberCard extends UnoCard {
         this(numCard.getColor(), numCard.getNum());
     }
 
+    @NonNull
     @Override
     public String toString() {
         String color;

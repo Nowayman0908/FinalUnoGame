@@ -49,6 +49,6 @@ public class UnoGameTest {
         gameState.playCard(3);
         gameState.playCard(4);
         gameState.playCard(0);
-        //assertEquals(2, gameState.getHandArray().get(gameState.getPlayerID()).size());
+        assertEquals(2, gameState.getHandArray().get(gameState.getPlayerID()).size());
     }
 }

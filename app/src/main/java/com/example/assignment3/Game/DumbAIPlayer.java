@@ -12,12 +12,10 @@ import com.example.assignment3.Uno.UnoGameState;
 import java.util.ArrayList;
 
 /**
- * @authoer Ayden Semerak
+ * @author Ayden Semerak, Starr Nakamitsu
  */
 public class DumbAIPlayer extends GameComputerPlayer {
     //The dumb AI lives, it works.
-
-    private UnoGameState gameState;
 
     /**
      * constructor
@@ -30,12 +28,14 @@ public class DumbAIPlayer extends GameComputerPlayer {
 
     @Override
     protected void receiveInfo(GameInfo info) {
+        UnoGameState gameState;
         if (info instanceof UnoGameState) {
             gameState = (UnoGameState) info;
         } else {
             return;
         }
         try {
+            //Makes the game appear as though it is thinking.
             Thread.sleep(750);
         } catch (Exception e) {
 
@@ -47,21 +47,25 @@ public class DumbAIPlayer extends GameComputerPlayer {
         ArrayList<UnoCard> hand = gameState.getHandArray().get(this.playerNum);
         int colorInPlay = gameState.getColorInPlay();
         int numInPlay = gameState.getNumInPlay();
-        for (int i = 0; i < gameState.getHandArray().get(this.playerNum).size(); i++) {
-            UnoPlayCardAction play = new UnoPlayCardAction(this, i);
+        UnoPlayCardAction play;
+
+        for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getColor() == colorInPlay) {
+                play = new UnoPlayCardAction(this, i);
                 game.sendAction(play);
                 hasPlayed = true;
                 break;
             }
             else if (hand.get(i) instanceof UnoNumberCard) {
                 if (((UnoNumberCard) hand.get(i)).getNum() == numInPlay) {
+                    play = new UnoPlayCardAction(this, i);
                     game.sendAction(play);
                     hasPlayed = true;
                     break;
                 }
             }
         }
+
         if (!hasPlayed) {
             UnoDrawCardAction draw = new UnoDrawCardAction(this);
             game.sendAction(draw);

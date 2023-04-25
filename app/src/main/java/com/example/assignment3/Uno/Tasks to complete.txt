@@ -3,4 +3,5 @@ Tasks to be done:
 2) The AI needs to be reworked to not crash upon a specific case.
 3) GUI needs to be enhanced to look better.
 4) Additional feature need to be added, a sort button that sorts the hand between Color and Number, etc.
-Most importantly we need to make sure the game is as bug free as possible.
+* Flash red when the a card is clicked that can not be played.
+* When Color select is played with a Plus 4 or a Wild an indication of the Color that is selected should be shown.

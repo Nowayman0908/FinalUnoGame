@@ -4,9 +4,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
 import com.example.assignment3.Uno.UnoMainActivity;
-import com.google.android.material.textfield.TextInputEditText;
-
 import GameFramework.GameMainActivity;
 import GameFramework.infoMessage.GameInfo;
 import GameFramework.players.GameHumanPlayer;
@@ -40,10 +36,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private Button unoButton = null;
 
     private int handCounter = 0;
-    private int indexOfCard = -1;
 
     private UnoColorPopUpWindow popUp = null;
-    private ImageButton card = null;
     /**
      * constructor
      *
@@ -305,10 +299,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
     public void setCardView(){
         ArrayList<UnoCard> playerHand = firstInstance.getHandArray().get(this.playerNum);
-        int arrayLength = 4;
-        if(playerHand.size() < 4){
-            arrayLength = playerHand.size();
-        }
+        int arrayLength = Math.min(playerHand.size(), 4);
         for (int i = handCounter ; i < arrayLength + handCounter; i++) {
             //The game crashes if there are less than four cards to display.
             if(i >= playerHand.size()){
@@ -336,7 +327,6 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     setImage(cardSlotFour, cardColor, cardNum, ability);
                     break;
             }
-            indexOfCard = i;
         }
         if(arrayLength < 4){
             int changeCard = 4 - arrayLength;
@@ -379,14 +369,16 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        ArrayList<UnoCard> hand = (ArrayList<UnoCard>) firstInstance.getHandArray().get(this.playerNum);
+        ArrayList<UnoCard> hand = firstInstance.getHandArray().get(this.playerNum);
         if(popUp == null) {
-            popUp = new UnoColorPopUpWindow(game, this);
+            popUp = new UnoColorPopUpWindow(this);
         }
         setPlayedCard();
 
         if(v.equals(leftButton)){
             if(handCounter <= 0){
+                //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
+                flash(Color.WHITE,100);
                 flash(Color.RED,100);
             }
             else{
@@ -396,6 +388,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         }
         else if(v.equals(rightButton)){
             if(hand.size() <= handCounter + 4){
+                //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
+                flash(Color.WHITE,100);
                 flash(Color.RED,100);
             }
             else{
@@ -417,7 +411,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
             //setCardView();
             if(v.equals(myActivity.findViewById(R.id.cardSlot1))){
-                index = 0 + handCounter;
+                index = handCounter;
             }
             else if(v.equals(myActivity.findViewById(R.id.cardSlot2))){
                 index = 1 + handCounter;
@@ -432,13 +426,38 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             if(index > hand.size()-1){
                 return;
             }
-
-            UnoPlayCardAction play = new UnoPlayCardAction(this, index);
-            if (hand.get(index).getColor() == UnoCard.COLORLESS){
-                popUp.displayPopUp((UnoMainActivity) getActivity());
+            if(hand.get(index) instanceof UnoNumberCard){
+                if (((UnoNumberCard) hand.get(index)).getNum() == firstInstance.getNumInPlay()){
+                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    game.sendAction(play);
+                }
+                else if((hand.get(index)).getColor() == firstInstance.getColorInPlay()){
+                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    game.sendAction(play);
+                }
+                else{
+                    //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
+                    flash(Color.WHITE,100);
+                    flash(Color.RED,100);
+                }
+            }
+            else if (hand.get(index) instanceof UnoSpecialCard){
+                if((hand.get(index)).getColor() == firstInstance.getColorInPlay()){
+                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    game.sendAction(play);
+                }
+                else if (hand.get(index).getColor() == UnoCard.COLORLESS){
+                    popUp.displayPopUp((UnoMainActivity) getActivity());
+                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    game.sendAction(play);
+                }
+                else{
+                    //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
+                    flash(Color.WHITE,100);
+                    flash(Color.RED,100);
+                }
             }
 
-            game.sendAction(play);
 
 
         }

@@ -1,5 +1,7 @@
 package com.example.assignment3.Uno.UnoCard;
 
+import androidx.annotation.NonNull;
+
 public class UnoSpecialCard extends UnoCard {
 
     // These special cards are constants that can be referenced anywhere
@@ -29,10 +31,10 @@ public class UnoSpecialCard extends UnoCard {
         this(spcCard.getColor(), spcCard.getAbility());
     }
 
+    @NonNull
     @Override
     public String toString() {
         String color;
-        String ability;
         String card;
         color = super.toString();
 

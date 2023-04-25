@@ -1,5 +1,7 @@
 package com.example.assignment3.Uno.UnoCard;
 
+import androidx.annotation.NonNull;
+
 public class UnoCard {
 
     // These colors are constants that can be referenced anywhere
@@ -33,9 +35,10 @@ public class UnoCard {
     public UnoCard (UnoCard card){
         this(card.getColor());
     }
+    @NonNull
     @Override
     public String toString() {
-        String color = "";
+        String color;
 
         if (getColor() == RED){
             color = "Red ";

@@ -4,7 +4,6 @@ import android.os.CountDownTimer;
 
 import androidx.annotation.NonNull;
 
-import com.example.assignment3.Game.UnoHumanPlayer;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
@@ -15,14 +14,13 @@ import java.util.Collections;
 import GameFramework.infoMessage.GameState;
 
 /**
- * @authors Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
+ * @author Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
  */
 public class UnoGameState extends GameState {
     //The current status of the game.
 
-    private int handSize; //The handsize for the current state of the game.
+    private int handSize; //The hand size for the current state of the game.
     private int numInPlay; //The current number on the played area. (-1 if not a number)
-
     private int spcInPlay; // the current special number in the played area. (-1 if not special)
     private final int playerNum; //Number of players in the game.
     private int playerID; //ID of the player.
@@ -44,7 +42,6 @@ public class UnoGameState extends GameState {
         playerNum = 2;
         colorInPlay = 1;
         playerID = 0;
-
 
         for(int i = 1; i <= 9; i++){
             for (int j = 0; j < 2; j++){
@@ -217,27 +214,6 @@ public class UnoGameState extends GameState {
         if(this.playerID == usedPlayerID && this.numInPlay == usedNum || this.colorInPlay == usedColor) {
             numInPlay = usedNum;
             colorInPlay = usedColor;
-        }
-    }
-
-    //A method to increase handsize or decrease handsize by one whether the boolean is set to
-    //true or false.
-    public boolean incremHandSize(int usedPlayerID, boolean incrHandSize){
-        if(this.playerID == usedPlayerID) {
-            if (incrHandSize == true) {
-                handSize++;
-                return true;
-            } else {
-                if (handSize >= 1) {
-                    handSize--;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-        else{
-            return false;
         }
     }
 

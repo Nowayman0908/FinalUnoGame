@@ -3,9 +3,7 @@ package com.example.assignment3.Uno;
 import com.example.assignment3.Game.DumbAIPlayer;
 import com.example.assignment3.Game.UnoHumanPlayer;
 import com.example.assignment3.Game.SmartAIPlayer;
-
 import java.util.ArrayList;
-
 import GameFramework.GameMainActivity;
 import GameFramework.LocalGame;
 import GameFramework.gameConfiguration.GameConfig;
@@ -14,7 +12,7 @@ import GameFramework.infoMessage.GameState;
 import GameFramework.players.GamePlayer;
 
 /**
- * @authors Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
+ * @author Starr Nakamitsu, Eduardo Gonon, Ayden Semerak.
  */
 
 public class UnoMainActivity extends GameMainActivity {
