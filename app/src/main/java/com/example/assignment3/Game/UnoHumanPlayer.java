@@ -300,7 +300,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     public void setCardView(){
         ArrayList<UnoCard> playerHand = firstInstance.getHandArray().get(this.playerNum);
         int arrayLength = Math.min(playerHand.size(), 4);
-        for (int i = handCounter ; i < arrayLength + handCounter; i++) {
+        for (int i = handCounter; i < arrayLength + handCounter; i++) {
             //The game crashes if there are less than four cards to display.
             if(i >= playerHand.size()){
                 break;
@@ -426,13 +426,20 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             if(index > hand.size()-1){
                 return;
             }
+
             if(hand.get(index) instanceof UnoNumberCard){
                 if (((UnoNumberCard) hand.get(index)).getNum() == firstInstance.getNumInPlay()){
                     UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    if(handCounter == hand.size() - 4 && handCounter > 0){
+                        handCounter--;
+                    }
                     game.sendAction(play);
                 }
                 else if((hand.get(index)).getColor() == firstInstance.getColorInPlay()){
                     UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    if(handCounter == hand.size() - 4 && handCounter > 0){
+                        handCounter--;
+                    }
                     game.sendAction(play);
                 }
                 else{
@@ -444,11 +451,17 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             else if (hand.get(index) instanceof UnoSpecialCard){
                 if((hand.get(index)).getColor() == firstInstance.getColorInPlay()){
                     UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    if(handCounter == hand.size() - 4 && handCounter > 0){
+                        handCounter--;
+                    }
                     game.sendAction(play);
                 }
                 else if (hand.get(index).getColor() == UnoCard.COLORLESS){
                     popUp.displayPopUp((UnoMainActivity) getActivity());
                     UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                    if(handCounter == hand.size() - 4 && handCounter > 0){
+                        handCounter--;
+                    }
                     game.sendAction(play);
                 }
                 else{

@@ -227,7 +227,6 @@ public class UnoGameState extends GameState {
     // this method removes the card from the player's hand
     // and moves it to the discard pile
     public boolean playCard(int index){
-        // if it's a wild, it will automatically be red
         if(handArray.get(playerID).get(index).getColor() == UnoCard.COLORLESS) {
             discardPile.add(handArray.get(playerID).remove(index));
             numInPlay = -1;
