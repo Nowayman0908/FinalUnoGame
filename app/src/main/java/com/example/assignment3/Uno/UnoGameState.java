@@ -29,7 +29,7 @@ public class UnoGameState extends GameState {
     private ArrayList <UnoCard> discardPile = new ArrayList<>(); // An array list of the played cards (discard pile)
     private ArrayList<ArrayList<UnoCard>> handArray = new ArrayList<>(); // An array list of player's hands (which are also array lists)
     private int order = 1; // this is the order of the player's turn (1 is clockwise, -1 is counterclockwise)
-    private CountDownTimer timer;
+    public CountDownTimer timer;
 
 
     // %5 |Implement a constructor for your class that initializes all the variables to
@@ -97,15 +97,13 @@ public class UnoGameState extends GameState {
         printDeck();
 
         // this puts the first card of the deck into the discard/played cards pile
-        discardPile.add(deck.remove(0));
-        colorInPlay = discardPile.get(0).getColor();
-        if(discardPile.get(0).isNumber()){
-            numInPlay = ((UnoNumberCard) discardPile.get(0)).getNum();
-            spcInPlay = -1;
-        }
-        else {
-            while(discardPile.get(0).isSpecial()){
-                discardPile.add(deck.remove(0));
+        numInPlay = -1;
+        while(numInPlay == -1){
+            discardPile.add(deck.remove(0));
+            colorInPlay = discardPile.get(0).getColor();
+            if(discardPile.get(discardPile.size()-1).isNumber()){
+                numInPlay = ((UnoNumberCard) discardPile.get(discardPile.size()-1)).getNum();
+                spcInPlay = -1;
             }
         }
 
@@ -339,7 +337,6 @@ public class UnoGameState extends GameState {
                 public void onTick(long l) {
                     // do nothing
                 }
-
                 @Override
                 public void onFinish() {
                     System.out.println("NO UNO LOSER");

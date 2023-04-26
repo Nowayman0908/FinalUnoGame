@@ -15,6 +15,7 @@ import com.example.assignment3.Uno.UnoCard.UnoColorPopUpWindow;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoPressUnoButtonAction;
 import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
@@ -513,8 +514,11 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         }
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
+            UnoPressUnoButtonAction press = new UnoPressUnoButtonAction(this);
             v.setVisibility(View.INVISIBLE);
+            game.sendAction(press);
         }
+
     }
     public void chooseColor(int color){
         UnoSelectColorAction selectColor = new UnoSelectColorAction(this, color);

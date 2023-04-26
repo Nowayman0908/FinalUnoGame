@@ -86,7 +86,8 @@ public class UnoLocalGame extends LocalGame {
             return true;
         }
         else if (action instanceof UnoPressUnoButtonAction){
-            gameState.getTimer().cancel();
+            gameState.timer.cancel();
+            gameState.timer = null;
             gameState.endTurn();
             sendAllUpdatedState();
             return true;
