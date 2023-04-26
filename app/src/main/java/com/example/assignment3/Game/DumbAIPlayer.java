@@ -65,7 +65,7 @@ public class DumbAIPlayer extends GameComputerPlayer {
                 }
             }
         }
-
+        //If the Dumb AI has not played, then draw a card.
         if (!hasPlayed) {
             UnoDrawCardAction draw = new UnoDrawCardAction(this);
             game.sendAction(draw);

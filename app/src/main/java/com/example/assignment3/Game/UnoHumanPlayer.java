@@ -34,8 +34,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private Button leftButton = null;
     private Button rightButton = null;
     private Button unoButton = null;
-
     private int handCounter = 0;
+    private int pcColor;
+    private int pcNum;
+    private int pcAbility;
 
     private UnoColorPopUpWindow popUp = null;
     /**
@@ -355,9 +357,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
     public void setPlayedCard(){
         UnoCard playedCard = (UnoCard) firstInstance.getDiscardPile().get(firstInstance.getDiscardPile().size() - 1);
-        int pcColor = playedCard.getColor();
-        int pcNum = -1;
-        int pcAbility = -1;
+        pcColor = playedCard.getColor();
+        pcNum = -1;
+        pcAbility = -1;
         if(playedCard instanceof UnoSpecialCard){
             pcAbility = ((UnoSpecialCard) playedCard).getAbility();
         }
@@ -449,7 +451,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                 }
             }
             else if (hand.get(index) instanceof UnoSpecialCard){
-                if((hand.get(index)).getColor() == firstInstance.getColorInPlay()){
+                if((hand.get(index)).getColor() == firstInstance.getColorInPlay() || ((UnoSpecialCard)hand.get(index)).getAbility() == pcAbility){
                     UnoPlayCardAction play = new UnoPlayCardAction(this, index);
                     if(handCounter == hand.size() - 4 && handCounter > 0){
                         handCounter--;

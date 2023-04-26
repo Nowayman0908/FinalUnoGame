@@ -5,3 +5,6 @@ Tasks to be done:
 4) Additional feature need to be added, a sort button that sorts the hand between Color and Number, etc.
 * Flash red when the a card is clicked that can not be played.
 * When Color select is played with a Plus 4 or a Wild an indication of the Color that is selected should be shown.
+//Add Comments into the whole code.
+- Add a sort button for extra points.
+- Add Icon and name for the game. (DONE)
