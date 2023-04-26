@@ -104,9 +104,11 @@ public class UnoGameState extends GameState {
             spcInPlay = -1;
         }
         else {
-            spcInPlay = ((UnoSpecialCard) discardPile.get(0)).getAbility();
-            numInPlay = -1;
+            while(discardPile.get(0).isSpecial()){
+                discardPile.add(deck.remove(0));
+            }
         }
+
 
         // this adds a player's hand (an array list) into the handArray array list
         for (int i = 0; i < playerNum; i++){
