@@ -227,6 +227,9 @@ public class UnoGameState extends GameState {
     // this method removes the card from the player's hand
     // and moves it to the discard pile
     public boolean playCard(int index){
+        if(handArray.get(playerID).size() <= index){
+            return false;
+        }
         if(handArray.get(playerID).get(index).getColor() == UnoCard.COLORLESS) {
             discardPile.add(handArray.get(playerID).remove(index));
             numInPlay = -1;
