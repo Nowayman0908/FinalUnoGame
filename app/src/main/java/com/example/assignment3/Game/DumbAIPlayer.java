@@ -36,7 +36,7 @@ public class DumbAIPlayer extends GameComputerPlayer {
         }
         try {
             //Makes the game appear as though it is thinking.
-            Thread.sleep(750);
+            Thread.sleep(1500);
         } catch (Exception e) {
 
         }

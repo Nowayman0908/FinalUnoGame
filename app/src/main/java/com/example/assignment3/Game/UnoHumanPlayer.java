@@ -285,17 +285,53 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     break;
             }
         } else if (color == UnoCard.COLORLESS) {
-            switch (ability) {
-                case UnoSpecialCard.WILD:
-                    cardSlot.setImageResource(R.drawable.wild);
+            //The issue with this is if the AI or other players play a Wild or Draw Four, it will not show.
+                switch (ability) {
+                    case UnoSpecialCard.WILD:
+                        cardSlot.setImageResource(R.drawable.wild);
+                        break;
+                    case UnoSpecialCard.DRAWFOUR:
+                        cardSlot.setImageResource(R.drawable.drawfour);
+                        break;
+                }
+        }
+        else{
+            cardSlot.setImageResource(R.drawable.unocard_grey);
+        }
+    }
+
+    public void setImage(int color) {
+        if(pcAbility == UnoSpecialCard.DRAWFOUR) {
+            switch (color) {
+                case UnoCard.RED:
+                    discardPile.setImageResource(R.drawable.red_drawfour);
                     break;
-                case UnoSpecialCard.DRAWFOUR:
-                    cardSlot.setImageResource(R.drawable.drawfour);
+                case UnoCard.BLUE:
+                    discardPile.setImageResource(R.drawable.blue_drawfour);
+                    break;
+                case UnoCard.GREEN:
+                    discardPile.setImageResource(R.drawable.green_drawfour);
+                    break;
+                case UnoCard.YELLOW:
+                    discardPile.setImageResource(R.drawable.yellow_drawfour);
                     break;
             }
         }
         else{
-            cardSlot.setImageResource(R.drawable.unocard_grey);
+            switch(color){
+                case UnoCard.RED:
+                    discardPile.setImageResource(R.drawable.red_wild);
+                    break;
+                case UnoCard.BLUE:
+                    discardPile.setImageResource(R.drawable.blue_wild);
+                    break;
+                case UnoCard.GREEN:
+                    discardPile.setImageResource(R.drawable.green_wild);
+                    break;
+                case UnoCard.YELLOW:
+                    discardPile.setImageResource(R.drawable.yellow_wild);
+                    break;
+            }
         }
     }
 
@@ -366,7 +402,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         else if(playedCard instanceof UnoNumberCard){
             pcNum = ((UnoNumberCard) playedCard).getNum();
         }
-        setImage(discardPile,pcColor,pcNum,pcAbility);
+        if(pcAbility != UnoSpecialCard.WILD && pcAbility != UnoSpecialCard.DRAWFOUR) {
+            setImage(discardPile, pcColor, pcNum, pcAbility);
+        }
     }
     @Override
     public void onClick(View v) {
@@ -472,18 +510,16 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     flash(Color.RED,100);
                 }
             }
-
-
-
         }
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
             v.setVisibility(View.INVISIBLE);
         }
-
     }
     public void chooseColor(int color){
         UnoSelectColorAction selectColor = new UnoSelectColorAction(this, color);
+        //This code below changes the played Wild or Draw Four card to the selected Color.
         game.sendAction(selectColor);
+        setImage(color);
     }
 }
