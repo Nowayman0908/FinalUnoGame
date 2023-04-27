@@ -100,13 +100,15 @@ public class UnoGameState extends GameState {
         numInPlay = -1;
         while(numInPlay == -1){
             discardPile.add(deck.remove(0));
-            colorInPlay = discardPile.get(0).getColor();
+            colorInPlay = discardPile.get(discardPile.size()-1).getColor();
             if(discardPile.get(discardPile.size()-1).isNumber()){
                 numInPlay = ((UnoNumberCard) discardPile.get(discardPile.size()-1)).getNum();
                 spcInPlay = -1;
             }
         }
 
+        System.out.println("Printing Discard Pile");
+        printDiscardPile();
 
         // this adds a player's hand (an array list) into the handArray array list
         for (int i = 0; i < playerNum; i++){
@@ -153,7 +155,7 @@ public class UnoGameState extends GameState {
             if(card instanceof UnoNumberCard){
                 copyDiscardPile.add(new UnoNumberCard((UnoNumberCard) card));
             }
-            else if(card instanceof  UnoSpecialCard){
+            else if(card instanceof UnoSpecialCard){
                 copyDiscardPile.add(new UnoSpecialCard((UnoSpecialCard) card));
             }
 
@@ -332,7 +334,7 @@ public class UnoGameState extends GameState {
     // will change accordingly
     public boolean endTurn(){
         if (handArray.get(playerID).size() == 1){
-            timer = new CountDownTimer(3000, 1000) {
+            timer = new CountDownTimer (3000, 1000) {
                 @Override
                 public void onTick(long l) {
                     // do nothing
@@ -348,6 +350,8 @@ public class UnoGameState extends GameState {
                         playerID = playerNum + playerID;
                     }
                 }
+
+
             }.start();
         }
         else {
@@ -357,6 +361,15 @@ public class UnoGameState extends GameState {
             }
         }
         return true;
+    }
+
+    public void stopTimer() {
+        timer.cancel();
+        timer = null;
+        playerID = (playerID + order) % playerNum;
+        if (playerID < 0){
+            playerID = playerNum + playerID;
+        }
     }
 
     public void setPlayerHand (int playerID){
@@ -421,6 +434,49 @@ public class UnoGameState extends GameState {
     public void printHand(){
         // for each card (c) in the player's hand
         for(UnoCard c : handArray.get(playerID)) {
+            String cardStr = ""; // building a string to print
+
+            // these if-statements check the color
+            if(c.getColor() == UnoCard.RED) {
+                cardStr = cardStr + "Red ";
+            }
+            else if(c.getColor() == UnoCard.GREEN) {
+                cardStr = cardStr + "Green ";
+            }
+            else if(c.getColor() == UnoCard.BLUE) {
+                cardStr = cardStr + "Blue ";
+            }
+            else if(c.getColor() == UnoCard.YELLOW) {
+                cardStr = cardStr + "Yellow ";
+            }
+
+            // the outermost if-statement checks if the card is a special card
+            // if it is, it checks what kind of special card it is
+            if(c instanceof UnoSpecialCard) {
+                if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.SKIP){
+                    cardStr = cardStr + "Skip";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.DRAWTWO){
+                    cardStr = cardStr + "Draw Two";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.REVERSE){
+                    cardStr = cardStr + "Reverse";
+                }
+                else if(((UnoSpecialCard) c).getAbility() == UnoSpecialCard.WILD){
+                    cardStr = cardStr + "Wild";
+                }
+            }
+            // if else (not a special card), it gets the number of the card
+            else {
+                cardStr = cardStr + ((UnoNumberCard) c).getNum();
+            }
+            System.out.println(cardStr); // prints the built string
+        }
+    }
+
+    public void printDiscardPile(){
+        // for each card (c) in the deck
+        for(UnoCard c : discardPile) {
             String cardStr = ""; // building a string to print
 
             // these if-statements check the color
