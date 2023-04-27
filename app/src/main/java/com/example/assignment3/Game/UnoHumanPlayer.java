@@ -68,6 +68,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                 String playerText = "Player " + k + " hand size: " + firstInstance.getHandArray().get(k).size();
                 status.append(playerText + "\n");
             }
+            //An idea to show when it is the Players Turn.
+            if(firstInstance.getPlayerID() == 0){
+                status.append("It is your turn.");
+            }
 
             if(firstInstance.getHandArray().get(playerNum).size() == 1 && buttonPressed == true) {
                 unoButton.setVisibility(View.INVISIBLE);
