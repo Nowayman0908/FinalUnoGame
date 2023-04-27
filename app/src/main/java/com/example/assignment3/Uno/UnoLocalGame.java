@@ -60,9 +60,6 @@ public class UnoLocalGame extends LocalGame {
                     gameState.reverse();
                     sendAllUpdatedState();
                 }
-                else if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWFOUR){
-                    gameState.drawFour();
-                }
                 else if(gameState.getSpcInPlay() == -1){
                     sendAllUpdatedState();
                     gameState.endTurn();
@@ -82,6 +79,9 @@ public class UnoLocalGame extends LocalGame {
         }
         else if (action instanceof UnoSelectColorAction){
             gameState.selectColor(((UnoSelectColorAction) action).selectedColor);
+            if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWFOUR){
+                gameState.drawFour();
+            }
             gameState.endTurn();
             sendAllUpdatedState();
             return true;
