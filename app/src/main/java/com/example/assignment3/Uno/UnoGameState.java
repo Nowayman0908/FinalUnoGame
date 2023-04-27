@@ -308,18 +308,27 @@ public class UnoGameState extends GameState {
     // after the next player draws four cards, their turn
     // will end
     public boolean drawFour(){
-        int nextPlayer = playerID + order;
+        if(playerNum == 2){
+            endTurn();
+            for (int i = 0; i < 4; i++){
+                drawCard();
+            }
+            endTurn();
+        }
+        else{
+            int nextPlayer = playerID + order;
 
-        if(nextPlayer == -1){
-            nextPlayer = playerNum - 1;
+            if(nextPlayer == -1){
+                nextPlayer = playerNum - 1;
+            }
+            else if (nextPlayer == playerNum){
+                nextPlayer = 0;
+            }
+            for (int i = 0; i < 4; i++){
+                handArray.get(nextPlayer).add(deck.remove(0));
+            }
         }
-        else if (nextPlayer == playerNum){
-            nextPlayer = 0;
-        }
-        for (int i = 0; i < 4; i++){
-            handArray.get(nextPlayer).add(deck.remove(0));
-        }
-
+        System.out.println("The opponent drew 4 cards");
         return true;
     }
 
