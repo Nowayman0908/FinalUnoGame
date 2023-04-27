@@ -39,8 +39,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private int pcColor;
     private int pcNum;
     private int pcAbility;
-
     private UnoColorPopUpWindow popUp = null;
+    private boolean buttonPressed = false;
+    private boolean lastCard = false;
     /**
      * constructor
      *
@@ -67,10 +68,17 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                 String playerText = "Player " + k + " hand size: " + firstInstance.getHandArray().get(k).size();
                 status.append(playerText + "\n");
             }
-            if (firstInstance.getHandArray().get(playerNum).size() <= 2){
+
+            if(firstInstance.getHandArray().get(playerNum).size() == 1 && buttonPressed == true) {
+                unoButton.setVisibility(View.INVISIBLE);
+            }
+            else if (firstInstance.getHandArray().get(playerNum).size() <= 2){
+                buttonPressed = false;
                 unoButton.setVisibility(View.VISIBLE);
+
             }
             else{
+                lastCard = true;
                 unoButton.setVisibility(View.INVISIBLE);
             }
         }
@@ -514,8 +522,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         }
         //If the Uno Button is clicked.
         else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
+            buttonPressed = true;
+            lastCard = true;
             UnoPressUnoButtonAction press = new UnoPressUnoButtonAction(this);
-            v.setVisibility(View.INVISIBLE);
+            //v.setVisibility(View.INVISIBLE);
             game.sendAction(press);
         }
 
