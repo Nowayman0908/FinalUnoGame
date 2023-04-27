@@ -122,16 +122,19 @@ public class UnoGameState extends GameState {
         printHand();
 
     }
-    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId){
+    public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId, int initSpcInPlay, int initOrder, CountDownTimer initTimer){
         handSize = initHandSize;
         numInPlay = initNumInPlay;
         playerNum = setPlayerNum;
         playerID = setPlayerId;
         colorInPlay = initColorInPlay;
+        spcInPlay = initSpcInPlay;
+        order = initOrder;
+        timer = initTimer;
     }
 
     public UnoGameState(UnoGameState game){
-        this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay(), game.getPlayerID());
+        this(game.getHandSize(),game.getNumInPlay(), game.getPlayerNum(),game.getColorInPlay(), game.getPlayerID(), game.getSpcInPlay(), game.getOrder(), game.getTimer());
 
         ArrayList<UnoCard> copyDeck = new ArrayList<>();
         ArrayList<UnoCard> copyDiscardPile = new ArrayList<>();
@@ -197,7 +200,8 @@ public class UnoGameState extends GameState {
     public int getPlayerID() { return playerID; }
     public int getNumInPlay() { return numInPlay; }
     public int getColorInPlay(){ return colorInPlay; }
-    public int getSpcInPlay(){return spcInPlay; }
+    public int getSpcInPlay(){ return spcInPlay; }
+    public int getOrder() { return order; }
 
     public ArrayList<ArrayList<UnoCard>> getHandArray(){
         return handArray;

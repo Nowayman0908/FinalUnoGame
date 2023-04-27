@@ -29,25 +29,28 @@ public class SmartAIPlayer extends GameComputerPlayer {
         } else {
             return;
         }
+
         try {
             Thread.sleep(750);
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
 
         }
             ArrayList<UnoCard> unoCards = gameState.getHandArray().get(this.playerNum);
             ArrayList<UnoCard> playableCards = new ArrayList<>();
+            int colorInPlay = gameState.getColorInPlay();
+            int numInPlay = gameState.getNumInPlay();
            for(int i = 0; i < unoCards.size(); i++){
              if(unoCards.get(i) instanceof UnoNumberCard){
-                 if(((UnoNumberCard) unoCards.get(i)).getNum() == gameState.getNumInPlay()){
+                 if(((UnoNumberCard) unoCards.get(i)).getNum() == numInPlay){
                      playableCards.add(unoCards.get(i));
                  }
-                 else if((unoCards.get(i)).getColor() == gameState.getColorInPlay()){
+                 else if((unoCards.get(i)).getColor() == colorInPlay){
                      playableCards.add(unoCards.get(i));
                  }
              }
              else if(unoCards.get(i) instanceof UnoSpecialCard){
-                 if((unoCards.get(i).getColor() == gameState.getColorInPlay())){
+                 if((unoCards.get(i).getColor() == colorInPlay)){
                      playableCards.add(unoCards.get(i));
                  }
                  else if(((UnoSpecialCard) unoCards.get(i)).getAbility() == UnoSpecialCard.WILD || ((UnoSpecialCard) unoCards.get(i)).getAbility() == UnoSpecialCard.DRAWFOUR){
@@ -64,7 +67,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
         }
         else {
             for (int p = 0; p < unoCards.size(); p++) {
-                if (unoCards.get(p) == bestCard) {
+                if (bestCard == unoCards.get(p)) {
                     UnoPlayCardAction playCardAction = new UnoPlayCardAction(this, p);
                     game.sendAction(playCardAction);
                     break;
@@ -78,7 +81,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
         if(canPlay.size() == 0){
             return null;
         }
-        if(canPlay.size() == 1){
+        else if(canPlay.size() == 1){
             return canPlay.get(0);
         }
         boolean prioDraw = false;
@@ -95,9 +98,6 @@ public class SmartAIPlayer extends GameComputerPlayer {
                     if(((UnoSpecialCard) select).getAbility() != UnoSpecialCard.WILD){
                         return select;
                     }
-                    else{
-                        break;
-                    }
                 }
                 else if(select instanceof UnoNumberCard){
                     if(((UnoNumberCard) select).getNum() == gameState.getNumInPlay() && select.getColor() != gameState.getColorInPlay()){
@@ -105,10 +105,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
                     }
                 }
             }
-            return canPlay.get(0);
         }
-        else{
-            return canPlay.get(0);
-        }
+        return canPlay.get(0);
     }
 }

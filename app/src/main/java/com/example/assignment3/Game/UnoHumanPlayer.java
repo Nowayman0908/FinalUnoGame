@@ -421,118 +421,110 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     }
     @Override
     public void onClick(View v) {
+        if(firstInstance.getPlayerID() == this.playerNum) {
+            ArrayList<UnoCard> hand = firstInstance.getHandArray().get(this.playerNum);
+            if (popUp == null) {
+                popUp = new UnoColorPopUpWindow(this);
+            }
+            setPlayedCard();
 
-        ArrayList<UnoCard> hand = firstInstance.getHandArray().get(this.playerNum);
-        if(popUp == null) {
-            popUp = new UnoColorPopUpWindow(this);
-        }
-        setPlayedCard();
-
-        if(v.equals(leftButton)){
-            if(handCounter <= 0){
-                //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
-                flash(Color.WHITE,100);
-                flash(Color.RED,100);
-            }
-            else{
-                handCounter--;
-                setCardView();
-            }
-        }
-        else if(v.equals(rightButton)){
-            if(hand.size() <= handCounter + 4){
-                //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
-                flash(Color.WHITE,100);
-                flash(Color.RED,100);
-            }
-            else{
-                handCounter++;
-                setCardView();
-            }
-        }
-
-        //If the Draw Card button is clicked.
-        // the local game automatically tells the player if it's a valid/invalid move
-        if (v.equals(myActivity.findViewById(R.id.deckSlot))) {
-            UnoDrawCardAction draw = new UnoDrawCardAction(this);
-            game.sendAction(draw);
-        }
-        //If the Play Card button is clicked.
-        else if (v.equals(myActivity.findViewById(R.id.cardSlot1)) || v.equals(myActivity.findViewById(R.id.cardSlot2)) || v.equals(myActivity.findViewById(R.id.cardSlot3)) || v.equals(myActivity.findViewById(R.id.cardSlot4)))
-        {
-            int index = 0;
-
-            //setCardView();
-            if(v.equals(myActivity.findViewById(R.id.cardSlot1))){
-                index = handCounter;
-            }
-            else if(v.equals(myActivity.findViewById(R.id.cardSlot2))){
-                index = 1 + handCounter;
-            }
-            else if(v.equals(myActivity.findViewById(R.id.cardSlot3))){
-                index = 2 + handCounter;
-            }
-            else if(v.equals(myActivity.findViewById(R.id.cardSlot4))){
-                index = 3 + handCounter;
-            }
-
-            if(index > hand.size()-1){
-                return;
-            }
-
-            if(hand.get(index) instanceof UnoNumberCard){
-                if (((UnoNumberCard) hand.get(index)).getNum() == firstInstance.getNumInPlay()){
-                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
-                    if(handCounter == hand.size() - 4 && handCounter > 0){
-                        handCounter--;
-                    }
-                    game.sendAction(play);
-                }
-                else if((hand.get(index)).getColor() == firstInstance.getColorInPlay()){
-                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
-                    if(handCounter == hand.size() - 4 && handCounter > 0){
-                        handCounter--;
-                    }
-                    game.sendAction(play);
-                }
-                else{
+            if (v.equals(leftButton)) {
+                if (handCounter <= 0) {
                     //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
-                    flash(Color.WHITE,100);
-                    flash(Color.RED,100);
+                    flash(Color.WHITE, 100);
+                    flash(Color.RED, 100);
+                } else {
+                    handCounter--;
+                    setCardView();
                 }
-            }
-            else if (hand.get(index) instanceof UnoSpecialCard){
-                if((hand.get(index)).getColor() == firstInstance.getColorInPlay() || ((UnoSpecialCard)hand.get(index)).getAbility() == pcAbility){
-                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
-                    if(handCounter == hand.size() - 4 && handCounter > 0){
-                        handCounter--;
-                    }
-                    game.sendAction(play);
-                }
-                else if (hand.get(index).getColor() == UnoCard.COLORLESS){
-                    popUp.displayPopUp((UnoMainActivity) getActivity());
-                    UnoPlayCardAction play = new UnoPlayCardAction(this, index);
-                    if(handCounter == hand.size() - 4 && handCounter > 0){
-                        handCounter--;
-                    }
-                    game.sendAction(play);
-                }
-                else{
+            } else if (v.equals(rightButton)) {
+                if (hand.size() <= handCounter + 4) {
                     //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
-                    flash(Color.WHITE,100);
-                    flash(Color.RED,100);
+                    flash(Color.WHITE, 100);
+                    flash(Color.RED, 100);
+                } else {
+                    handCounter++;
+                    setCardView();
                 }
             }
-        }
-        //If the Uno Button is clicked.
-        else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
-            buttonPressed = true;
-            lastCard = true;
-            UnoPressUnoButtonAction press = new UnoPressUnoButtonAction(this);
-            //v.setVisibility(View.INVISIBLE);
-            game.sendAction(press);
-        }
 
+            //If the Draw Card button is clicked.
+            // the local game automatically tells the player if it's a valid/invalid move
+            if (v.equals(myActivity.findViewById(R.id.deckSlot))) {
+                UnoDrawCardAction draw = new UnoDrawCardAction(this);
+                game.sendAction(draw);
+            }
+            //If the Play Card button is clicked.
+            else if (v.equals(myActivity.findViewById(R.id.cardSlot1)) || v.equals(myActivity.findViewById(R.id.cardSlot2)) || v.equals(myActivity.findViewById(R.id.cardSlot3)) || v.equals(myActivity.findViewById(R.id.cardSlot4))) {
+                int index = 0;
+
+                //setCardView();
+                if (v.equals(myActivity.findViewById(R.id.cardSlot1))) {
+                    index = handCounter;
+                } else if (v.equals(myActivity.findViewById(R.id.cardSlot2))) {
+                    index = 1 + handCounter;
+                } else if (v.equals(myActivity.findViewById(R.id.cardSlot3))) {
+                    index = 2 + handCounter;
+                } else if (v.equals(myActivity.findViewById(R.id.cardSlot4))) {
+                    index = 3 + handCounter;
+                }
+
+                if (index > hand.size() - 1) {
+                    return;
+                }
+
+                if (hand.get(index) instanceof UnoNumberCard) {
+                    if (((UnoNumberCard) hand.get(index)).getNum() == firstInstance.getNumInPlay()) {
+                        UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                        if (handCounter == hand.size() - 4 && handCounter > 0) {
+                            handCounter--;
+                        }
+                        game.sendAction(play);
+                    } else if ((hand.get(index)).getColor() == firstInstance.getColorInPlay()) {
+                        UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                        if (handCounter == hand.size() - 4 && handCounter > 0) {
+                            handCounter--;
+                        }
+                        game.sendAction(play);
+                    } else {
+                        //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
+                        flash(Color.WHITE, 100);
+                        flash(Color.RED, 100);
+                    }
+                } else if (hand.get(index) instanceof UnoSpecialCard) {
+                    if ((hand.get(index)).getColor() == firstInstance.getColorInPlay() || ((UnoSpecialCard) hand.get(index)).getAbility() == pcAbility) {
+                        UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                        if (handCounter == hand.size() - 4 && handCounter > 0) {
+                            handCounter--;
+                        }
+                        game.sendAction(play);
+                    } else if (hand.get(index).getColor() == UnoCard.COLORLESS) {
+                        popUp.displayPopUp((UnoMainActivity) getActivity());
+                        UnoPlayCardAction play = new UnoPlayCardAction(this, index);
+                        if (handCounter == hand.size() - 4 && handCounter > 0) {
+                            handCounter--;
+                        }
+                        game.sendAction(play);
+                    } else {
+                        //This is a bit old but the game needs to be flashed twice for the background to remain the same color.
+                        flash(Color.WHITE, 100);
+                        flash(Color.RED, 100);
+                    }
+                }
+            }
+            //If the Uno Button is clicked.
+            else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
+                buttonPressed = true;
+                lastCard = true;
+                UnoPressUnoButtonAction press = new UnoPressUnoButtonAction(this);
+                //v.setVisibility(View.INVISIBLE);
+                game.sendAction(press);
+            }
+        }
+        else{
+            flash(Color.WHITE, 100);
+            flash(Color.YELLOW, 100);
+        }
     }
     public void chooseColor(int color){
         UnoSelectColorAction selectColor = new UnoSelectColorAction(this, color);
