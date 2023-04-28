@@ -1,7 +1,6 @@
 package com.example.assignment3.Uno;
 
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
-import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoPressUnoButtonAction;
 import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
@@ -46,53 +45,47 @@ public class UnoLocalGame extends LocalGame {
      */
     @Override
     protected boolean makeMove(GameAction action) {
-        if(action instanceof UnoPlayCardAction){
-            if(gameState.playCard(((UnoPlayCardAction) action).index)){
-                if(gameState.getSpcInPlay() == UnoSpecialCard.SKIP){
-                    gameState.skip();
-                    sendAllUpdatedState();
+        if (action instanceof UnoPlayCardAction) {
+                if (gameState.playCard(((UnoPlayCardAction) action).index)) {
+                    if (gameState.getSpcInPlay() == UnoSpecialCard.SKIP) {
+                        gameState.skip();
+                        sendAllUpdatedState();
+                    } else if (gameState.getSpcInPlay() == UnoSpecialCard.DRAWTWO) {
+                        gameState.drawTwo();
+                        sendAllUpdatedState();
+                    } else if (gameState.getSpcInPlay() == UnoSpecialCard.REVERSE) {
+                        gameState.reverse();
+                        sendAllUpdatedState();
+                    } else if (gameState.getSpcInPlay() == -1) {
+                        gameState.endTurn();
+                        sendAllUpdatedState();
+                    }
+                    return true;
+                } else {
+                    return false;
                 }
-                else if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWTWO){
-                    gameState.drawTwo();
-                    sendAllUpdatedState();
+
+            }
+        else if (action instanceof UnoDrawCardAction) {
+                gameState.drawCard();
+                gameState.endTurn();
+                sendAllUpdatedState();
+                return true;
+            } else if (action instanceof UnoSelectColorAction) {
+                gameState.selectColor(((UnoSelectColorAction) action).selectedColor);
+                if (gameState.getSpcInPlay() == UnoSpecialCard.DRAWFOUR) {
+                    gameState.drawFour();
                 }
-                else if(gameState.getSpcInPlay() == UnoSpecialCard.REVERSE){
-                    gameState.reverse();
-                    sendAllUpdatedState();
+                gameState.endTurn();
+                sendAllUpdatedState();
+                return true;
+            } else if (action instanceof UnoPressUnoButtonAction) {
+                if (gameState.timer != null) {
+                    gameState.stopTimer();
                 }
-                else if(gameState.getSpcInPlay() == -1){
-                    sendAllUpdatedState();
-                    gameState.endTurn();
-                }
+                sendAllUpdatedState();
                 return true;
             }
-            else {
-                return false;
-            }
-
-        }
-        else if (action instanceof UnoDrawCardAction){
-            gameState.drawCard();
-            gameState.endTurn();
-            sendAllUpdatedState();
-            return true;
-        }
-        else if (action instanceof UnoSelectColorAction){
-            gameState.selectColor(((UnoSelectColorAction) action).selectedColor);
-            if(gameState.getSpcInPlay() == UnoSpecialCard.DRAWFOUR){
-                gameState.drawFour();
-            }
-            gameState.endTurn();
-            sendAllUpdatedState();
-            return true;
-        }
-        else if (action instanceof UnoPressUnoButtonAction){
-            if(gameState.timer != null){
-                gameState.stopTimer();
-            }
-            sendAllUpdatedState();
-            return true;
-        }
-        return false;
+            return false;
     }
 }

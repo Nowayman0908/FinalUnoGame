@@ -84,9 +84,10 @@ public class SmartAIPlayer extends GameComputerPlayer {
         else if(canPlay.size() == 1){
             return canPlay.get(0);
         }
+        //prioDraw is used to focus on playing cards that force the player to draw cards or skip turns if other players are close to reaching Uno.
         boolean prioDraw = false;
         for(int l = 0; l < gameState.getHandArray().size(); l++){
-            if(gameState.getHandArray().get(l).size() <= 3){
+            if(gameState.getHandArray().get(l).size() <= 3 && gameState.getHandArray().get(l) != gameState.getHandArray().get(this.playerNum)){
                 prioDraw = true;
             }
         }

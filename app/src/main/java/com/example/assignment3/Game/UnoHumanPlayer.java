@@ -36,12 +36,10 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private Button rightButton = null;
     private Button unoButton = null;
     private int handCounter = 0;
-    private int pcColor;
-    private int pcNum;
     private int pcAbility;
     private UnoColorPopUpWindow popUp = null;
     private boolean buttonPressed = false;
-    private boolean lastCard = false;
+
     /**
      * constructor
      *
@@ -64,29 +62,25 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             setPlayedCard();
             System.out.println(((UnoGameState) info).getPlayerID());
             status.setText("");
-            for(int k = 0; k < firstInstance.getPlayerNum();k++){
+            for (int k = 0; k < firstInstance.getPlayerNum(); k++) {
                 String playerText = "Player " + k + " hand size: " + firstInstance.getHandArray().get(k).size();
                 status.append(playerText + "\n");
             }
             //An idea to show when it is the Players Turn.
-            if(firstInstance.getPlayerID() == 0){
+            if (firstInstance.getPlayerID() == 0) {
                 status.append("It is your turn.");
             }
 
-            if(firstInstance.getHandArray().get(playerNum).size() == 1 && buttonPressed == true) {
+            if (firstInstance.getHandArray().get(playerNum).size() == 1 && buttonPressed) {
                 unoButton.setVisibility(View.INVISIBLE);
-            }
-            else if (firstInstance.getHandArray().get(playerNum).size() <= 2){
+            } else if (firstInstance.getHandArray().get(playerNum).size() <= 2) {
                 buttonPressed = false;
                 unoButton.setVisibility(View.VISIBLE);
 
-            }
-            else{
-                lastCard = true;
+            } else {
                 unoButton.setVisibility(View.INVISIBLE);
             }
         }
-
     }
 
     @Override
@@ -406,8 +400,8 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
     public void setPlayedCard(){
         UnoCard playedCard = (UnoCard) firstInstance.getDiscardPile().get(firstInstance.getDiscardPile().size() - 1);
-        pcColor = playedCard.getColor();
-        pcNum = -1;
+        int pcColor = playedCard.getColor();
+        int pcNum = -1;
         pcAbility = -1;
         if(playedCard instanceof UnoSpecialCard){
             pcAbility = ((UnoSpecialCard) playedCard).getAbility();
@@ -515,7 +509,6 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
             //If the Uno Button is clicked.
             else if (v.equals(myActivity.findViewById(R.id.unoButton))) {
                 buttonPressed = true;
-                lastCard = true;
                 UnoPressUnoButtonAction press = new UnoPressUnoButtonAction(this);
                 //v.setVisibility(View.INVISIBLE);
                 game.sendAction(press);
