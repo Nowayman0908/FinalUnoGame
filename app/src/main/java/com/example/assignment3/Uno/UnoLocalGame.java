@@ -50,17 +50,20 @@ public class UnoLocalGame extends LocalGame {
                     if (gameState.getSpcInPlay() == UnoSpecialCard.SKIP) {
                         gameState.skip();
                         sendAllUpdatedState();
+                        return true;
                     } else if (gameState.getSpcInPlay() == UnoSpecialCard.DRAWTWO) {
                         gameState.drawTwo();
                         sendAllUpdatedState();
+                        return true;
                     } else if (gameState.getSpcInPlay() == UnoSpecialCard.REVERSE) {
                         gameState.reverse();
                         sendAllUpdatedState();
+                        return true;
                     } else if (gameState.getSpcInPlay() == -1) {
                         gameState.endTurn();
                         sendAllUpdatedState();
+                        return true;
                     }
-                    return true;
                 } else {
                     return false;
                 }

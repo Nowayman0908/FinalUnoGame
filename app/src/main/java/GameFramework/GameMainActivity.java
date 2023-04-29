@@ -499,9 +499,7 @@ public abstract class GameMainActivity extends Activity implements
         initSettingsTab();
 
         // Set myself as the listener for the buttons
-        View v = findViewById(R.id.addPlayerButton);
-        v.setOnClickListener(this);
-        v = findViewById(R.id.saveConfigButton);
+        View v = findViewById(R.id.saveConfigButton);
         v.setOnClickListener(this);
         v = findViewById(R.id.playGameButton);
         v.setOnClickListener(this);
@@ -509,7 +507,6 @@ public abstract class GameMainActivity extends Activity implements
         v.setOnClickListener(this);
         v = findViewById(R.id.debugLogging);
         v.setOnClickListener(this);
-
 
         String ipCode = IPCoder.encodeLocalIP();
         String ipAddress = IPCoder.getLocalIpAddress();
@@ -568,30 +565,8 @@ public abstract class GameMainActivity extends Activity implements
             return;
         }
 
-        // Add Player Button
-        if (button.getId() == R.id.addPlayerButton) {
-            addPlayer();
-            this.playerTable.invalidate(); // show the user the change
-        }
-
-        // Delete Player Button
-        else if (button.getId() == R.id.delPlayerButton) {
-            // Search the existing players to find out which delete button got
-            // clicked
-            for (int i = 0; i < this.tableRows.size(); i++) {
-                TableRow row = tableRows.get(i);
-
-                View v = row.findViewById(R.id.delPlayerButton);
-                if (v == button) {
-                    // found it! remove from the layout and the list
-                    removePlayer(row);
-                }
-            }
-
-        }// else if (delete button)
-
         //Save Config Button
-        else if (button.getId() == R.id.saveConfigButton) {
+        if (button.getId() == R.id.saveConfigButton) {
             GameConfig configTemp = scrapeData();
             if (configTemp.saveConfig(saveFileName(), this)) {
                 MessageBox.popUpMessage(getString(R.string.Saved_Config_Msg), this);
