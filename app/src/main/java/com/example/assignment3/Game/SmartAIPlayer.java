@@ -3,6 +3,7 @@ package com.example.assignment3.Game;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
 import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
 import com.example.assignment3.Uno.UnoCard.UnoCard;
@@ -65,6 +66,31 @@ public class SmartAIPlayer extends GameComputerPlayer {
                 game.sendAction(draw);
             }
         }
+        else if (bestCard instanceof UnoSpecialCard){
+            if (bestCard.getColor() == UnoCard.COLORLESS){
+                for (int p = 0; p < unoCards.size(); p++) {
+                    if (bestCard == unoCards.get(p)) {
+                        UnoPlayCardAction playCardAction = new UnoPlayCardAction(this, p);
+                        game.sendAction(playCardAction);
+                        break;
+                    }
+                }
+                UnoSelectColorAction selectColor = new UnoSelectColorAction(this, UnoCard.YELLOW);
+                double random = Math.random();
+                if(random < 0.25){
+                    selectColor = new UnoSelectColorAction(this, UnoCard.RED);
+                } else if (random < 0.5) {
+                    selectColor = new UnoSelectColorAction(this, UnoCard.GREEN);
+                } else if (random < 0.75) {
+                    selectColor = new UnoSelectColorAction(this, UnoCard.BLUE);
+                } else {
+                    // its already initialized to yellow, send it
+                }
+                game.sendAction(selectColor);
+                System.out.println("playing wild");
+            }
+
+        }
         else {
             for (int p = 0; p < unoCards.size(); p++) {
                 if (bestCard == unoCards.get(p)) {
@@ -74,6 +100,8 @@ public class SmartAIPlayer extends GameComputerPlayer {
                 }
             }
         }
+
+
         }
 
     //Started to create the method for ranking the cards.
@@ -96,9 +124,7 @@ public class SmartAIPlayer extends GameComputerPlayer {
             for(int u = 0; u < canPlay.size(); u++){
                 select = canPlay.get(u);
                 if(select instanceof UnoSpecialCard){
-                    if(((UnoSpecialCard) select).getAbility() != UnoSpecialCard.WILD){
                         return select;
-                    }
                 }
                 else if(select instanceof UnoNumberCard){
                     if(((UnoNumberCard) select).getNum() == gameState.getNumInPlay() && select.getColor() != gameState.getColorInPlay()){
