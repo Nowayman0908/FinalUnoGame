@@ -7,6 +7,8 @@ import com.example.assignment3.Uno.UnoCard.UnoCard;
 import com.example.assignment3.Uno.UnoCard.UnoDrawCardAction;
 import com.example.assignment3.Uno.UnoCard.UnoNumberCard;
 import com.example.assignment3.Uno.UnoCard.UnoPlayCardAction;
+import com.example.assignment3.Uno.UnoCard.UnoSelectColorAction;
+import com.example.assignment3.Uno.UnoCard.UnoSpecialCard;
 import com.example.assignment3.Uno.UnoGameState;
 
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ public class DumbAIPlayer extends GameComputerPlayer {
         UnoGameState gameState;
         if (info instanceof UnoGameState) {
             gameState = (UnoGameState) info;
+            if(gameState.getPlayerID() != this.playerNum) {
+                return;
+            }
         } else {
             return;
         }
@@ -63,6 +68,30 @@ public class DumbAIPlayer extends GameComputerPlayer {
                     hasPlayed = true;
                     break;
                 }
+            }
+            // if there's a wild or draw four, it will always choose red
+            // *INCOMPLETE*
+            else if (hand.get(i) instanceof UnoSpecialCard){
+                if (hand.get(i).getColor() == UnoCard.COLORLESS){
+                    play = new UnoPlayCardAction(this, i);
+                    UnoSelectColorAction selectColor = new UnoSelectColorAction(this, UnoCard.YELLOW);
+                    game.sendAction(play);
+                    double random = Math.random();
+                    if(random < 0.25){
+                        selectColor = new UnoSelectColorAction(this, UnoCard.RED);
+                    } else if (random < 0.5) {
+                        selectColor = new UnoSelectColorAction(this, UnoCard.GREEN);
+                    } else if (random < 0.75) {
+                        selectColor = new UnoSelectColorAction(this, UnoCard.BLUE);
+                    } else {
+                        // its already initialized to yellow, send it
+                    }
+                    game.sendAction(selectColor);
+                    hasPlayed = true;
+                    System.out.println("playing wild");
+                    break;
+                }
+
             }
         }
         //If the Dumb AI has not played, then draw a card.

@@ -118,8 +118,8 @@ public class UnoGameState extends GameState {
                 handArray.get(i).add(deck.remove(0));
             }
         }
-        System.out.println("Printing player " + getPlayerID() + "'s hand");
-        printHand();
+        System.out.println("Printing player " + "1" + "'s hand");
+        printHand(1);
 
     }
     public UnoGameState(int initHandSize,int initNumInPlay, int setPlayerNum , int initColorInPlay, int setPlayerId, int initSpcInPlay, int initOrder, CountDownTimer initTimer){
@@ -266,6 +266,7 @@ public class UnoGameState extends GameState {
             endTurn();
             return true;
         }
+
         return false;
     }
 
@@ -444,9 +445,9 @@ public class UnoGameState extends GameState {
         }
     }
 
-    public void printHand(){
+    public void printHand(int player){
         // for each card (c) in the player's hand
-        for(UnoCard c : handArray.get(playerID)) {
+        for(UnoCard c : handArray.get(player)) {
             String cardStr = ""; // building a string to print
 
             // these if-statements check the color

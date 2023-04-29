@@ -155,6 +155,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                 case UnoSpecialCard.REVERSE:
                     cardSlot.setImageResource(R.drawable.red_reverse);
                     break;
+                default:
+                    setImage(color);
+                    break;
             }
         } else if (color == UnoCard.GREEN && ability == -1) {
             switch (num) {
@@ -199,6 +202,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                     break;
                 case UnoSpecialCard.REVERSE:
                     cardSlot.setImageResource(R.drawable.green_reverse);
+                    break;
+                default:
+                    setImage(color);
                     break;
             }
         } else if (color == UnoCard.BLUE && ability == -1) {
@@ -245,6 +251,9 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                 case UnoSpecialCard.REVERSE:
                     cardSlot.setImageResource(R.drawable.blue_reverse);
                     break;
+                default:
+                    setImage(color);
+                    break;
             }
         } else if (color == UnoCard.YELLOW && ability == -1) {
             switch (num) {
@@ -290,17 +299,20 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
                 case UnoSpecialCard.REVERSE:
                     cardSlot.setImageResource(R.drawable.yellow_reverse);
                     break;
+                default:
+                    setImage(color);
+                    break;
             }
         } else if (color == UnoCard.COLORLESS) {
             //The issue with this is if the AI or other players play a Wild or Draw Four, it will not show.
-                switch (ability) {
-                    case UnoSpecialCard.WILD:
-                        cardSlot.setImageResource(R.drawable.wild);
-                        break;
-                    case UnoSpecialCard.DRAWFOUR:
-                        cardSlot.setImageResource(R.drawable.drawfour);
-                        break;
-                }
+            switch (ability) {
+                case UnoSpecialCard.WILD:
+                    cardSlot.setImageResource(R.drawable.wild);
+                    break;
+                case UnoSpecialCard.DRAWFOUR:
+                    cardSlot.setImageResource(R.drawable.drawfour);
+                    break;
+            }
         }
         else{
             cardSlot.setImageResource(R.drawable.unocard_grey);
@@ -400,7 +412,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
 
     public void setPlayedCard(){
         UnoCard playedCard = (UnoCard) firstInstance.getDiscardPile().get(firstInstance.getDiscardPile().size() - 1);
-        int pcColor = playedCard.getColor();
+        int pcColor = firstInstance.getColorInPlay();
         int pcNum = -1;
         pcAbility = -1;
         if(playedCard instanceof UnoSpecialCard){
@@ -409,7 +421,7 @@ public class UnoHumanPlayer extends GameHumanPlayer implements OnClickListener {
         else if(playedCard instanceof UnoNumberCard){
             pcNum = ((UnoNumberCard) playedCard).getNum();
         }
-        if(pcAbility != UnoSpecialCard.WILD && pcAbility != UnoSpecialCard.DRAWFOUR) {
+        if(true) {
             setImage(discardPile, pcColor, pcNum, pcAbility);
         }
     }
