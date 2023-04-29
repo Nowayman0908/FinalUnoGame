@@ -70,22 +70,11 @@ public class DumbAIPlayer extends GameComputerPlayer {
                 }
             }
             // if there's a wild or draw four, it will always choose red
-            // *INCOMPLETE*
             else if (hand.get(i) instanceof UnoSpecialCard){
                 if (hand.get(i).getColor() == UnoCard.COLORLESS){
                     play = new UnoPlayCardAction(this, i);
-                    UnoSelectColorAction selectColor = new UnoSelectColorAction(this, UnoCard.YELLOW);
+                    UnoSelectColorAction selectColor = new UnoSelectColorAction(this, UnoCard.RED);
                     game.sendAction(play);
-                    double random = Math.random();
-                    if(random < 0.25){
-                        selectColor = new UnoSelectColorAction(this, UnoCard.RED);
-                    } else if (random < 0.5) {
-                        selectColor = new UnoSelectColorAction(this, UnoCard.GREEN);
-                    } else if (random < 0.75) {
-                        selectColor = new UnoSelectColorAction(this, UnoCard.BLUE);
-                    } else {
-                        // its already initialized to yellow, send it
-                    }
                     game.sendAction(selectColor);
                     hasPlayed = true;
                     System.out.println("playing wild");
